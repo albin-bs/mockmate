@@ -59,7 +59,7 @@ For prod-grade quality, add TypeScript and [`typescript-eslint`](https://typescr
 
 ## 👏 Contributors
 
-[![](https://contrib.rocks/image?repo=albin-bs/mockmate)](https://github.com/albin-bs/mockmate/graphs/contributors)
+- [![AswinAsokan2004](https://github.com/AswinAsokan2004.png?size=40)](https://github.com/AswinAsokan2004) [Aswin Asokan](https://github.com/AswinAsokan2004)
 
 ---
 
