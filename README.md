@@ -60,6 +60,9 @@ For prod-grade quality, add TypeScript and [`typescript-eslint`](https://typescr
 ## 👏 Contributors
 
 [![](https://contrib.rocks/image?repo=albin-bs/mockmate)](https://github.com/albin-bs/mockmate/graphs/contributors)
+[![](https://contrib.rocks/image?repo=albin-bs/mockmate)](https://github.com/albin-bs/mockmate/graphs/contributors)
+[![](https://contrib.rocks/image?repo=albin-bs/mockmate)](https://github.com/albin-bs/mockmate/graphs/contributors)
+[![](https://contrib.rocks/image?repo=albin-bs/mockmate)](https://github.com/albin-bs/mockmate/graphs/contributors)
 
 ---
 
@@ -68,12 +71,6 @@ For prod-grade quality, add TypeScript and [`typescript-eslint`](https://typescr
 - Built with [Vite](https://vitejs.dev/guide/) & [React](https://react.dev/)
 - UI inspired by [Tailwind UI Blocks](https://tailwindcss.com/blocks)
 - Badges via [shields.io](https://shields.io/), [SimpleIcons](https://simpleicons.org/)
-
----
-
-## 🪪 License
-
-MIT
 
 ---
 
