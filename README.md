@@ -12,8 +12,11 @@
 
 ## 🛠 Tech Stack
 
-| [<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg" width="40"/>](https://react.dev) <br/>[React](https://react.dev) | [<img src="https://vitejs.dev/logo.svg" width="40"/>](https://vitejs.dev) <br/>[Vite](https://vitejs.dev) | [<img src="https://tailwindcss.com/_next/static/media/mark.b5b0119.svg" width="40"/>](https://tailwindcss.com) <br/>[Tailwind CSS](https://tailwindcss.com) | [<img src="https://headlessui.com/images/logo.svg" width="40"/>](https://headlessui.com) <br/>[Headless UI](https://headlessui.com) | [<img src="https://heroicons.com/_next/static/media/favicon.8ddc9f36.svg" width="40"/>](https://heroicons.com) <br/>[HeroIcons](https://heroicons.com) |
-|:--------------------------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------:|
+[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://react.dev/)
+[![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=FFD62E)](https://vitejs.dev/)
+[![TailwindCSS](https://img.shields.io/badge/TailwindCSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
+[![HeadlessUI](https://img.shields.io/badge/HeadlessUI-fff?style=for-the-badge&logo=headlessui&logoColor=4B5563)](https://headlessui.com/)
+[![HeroIcons](https://img.shields.io/badge/HeroIcons-4B5563?style=for-the-badge&logo=heroicons&logoColor=06B6D4)](https://heroicons.com/)
 
 ---
 
@@ -87,6 +90,9 @@
 <a href="https://www.buymeacoffee.com/albinbs" target="_blank">
   <img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174">
 </a>
+
+![Profile views](https://komarev.com/ghpvc/?username=albin-bs&color=blue)
+![Website](https://img.shields.io/website-up-down-green-red/http/https://mockmate.tech)
 
 <div align="center">
 <img src="https://user-images.githubusercontent.com/74038190/212257465-7ce8d493-cac5-494e-982a-5a9deb852c4b.gif" width="100">
