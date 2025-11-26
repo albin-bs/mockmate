@@ -30,30 +30,10 @@
 
 ---
 
-## 🚀 Getting Started
-
-Install dependencies
-npm install
-
-Start the dev server
-npm run dev
-
-Build for production
-npm run build
-
-
----
-
 ## 📚 Documentation
 
 - **Setup:** See [`docs/setup.md`](docs/setup.md) for deployment tips.
 - **Components:** Browse UI blocks in [`src/components`](src/components).
-
----
-
-## 🧰 Linting & Type Checking
-
-For prod-grade quality, add TypeScript and [`typescript-eslint`](https://typescript-eslint.io).
 
 ---
 
