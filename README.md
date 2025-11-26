@@ -10,27 +10,13 @@
 
 ---
 
-## 🛠️ Tech Stack
+## 🛠 Tech Stack
 
-<table>
-  <tr>
-    <td>
-      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" width="20" /> <b style="color:#fff; font-family:monospace;">REACT</b>
-    </td>
-    <td>
-      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vite/vite-original.svg" width="20"/> <b style="color:#fff; font-family:monospace;">VITE</b>
-    </td>
-    <td>
-      <img src="https://www.vectorlogo.zone/logos/tailwindcss/tailwindcss-icon.svg" width="20"/> <b style="color:#fff; font-family:monospace;">TAILWINDCSS</b>
-    </td>
-    <td>
-      <img src="https://raw.githubusercontent.com/tailwindlabs/headlessui/main/.github/logo-dark.png" width="20" /> <b style="color: #222; background: #fff; border-radius: 3px; font-family:monospace;">HEADLESSUI</b>
-    </td>
-    <td>
-      <img src="https://raw.githubusercontent.com/tailwindlabs/heroicons/master/.github/logo-dark.png" width="20" /> <b style="color:#fff; font-family:monospace;">HEROICONS</b>
-    </td>
-  </tr>
-</table>
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=FFD62E)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![HeadlessUI](https://img.shields.io/badge/HeadlessUI-fff?style=for-the-badge&logo=headlessui&logoColor=4B5563)
+![HeroIcons](https://img.shields.io/badge/HeroIcons-4B5563?style=for-the-badge&logo=heroicons&logoColor=06B6D4)
 
 ---
 
