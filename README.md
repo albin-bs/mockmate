@@ -74,6 +74,8 @@
 - Built with [Vite](https://vitejs.dev/guide/) & [React](https://react.dev/)
 - UI inspired by [Tailwind UI Blocks](https://tailwindcss.com/blocks)
 - Badges via [shields.io](https://shields.io/), [SimpleIcons](https://simpleicons.org/)
+  
+<img src="https://github.com/fnky/fnky/raw/fnky/img/smile.gif" alt="Smiley" align="center" data-animated-image="" style="max-width: 100%;">
 
 ---
 
