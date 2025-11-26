@@ -59,8 +59,13 @@ For prod-grade quality, add TypeScript and [`typescript-eslint`](https://typescr
 
 ## 👏 Contributors
 
-[<img src="https://github.com/AswinAsokan2004.png" width="40" alt="AswinAsokan2004"/>](https://github.com/AswinAsokan2004)
-[<img src="https://github.com/albin-bs.png" width="40" alt="albin-bs"/>](https://github.com/albin-bs)
+## 👏 Contributors
+
+[![](https://contrib.rocks/image?repo=albin-bs/mockmate)](https://github.com/albin-bs/mockmate/graphs/contributors)
+
+| [Aswin Asokan](https://github.com/AswinAsokan2004) | [Albin B S](https://github.com/albin-bs) | [Actinker](https://github.com/Actinker) |
+|:---------------------------------------------------:|:----------------------------------------:|:---------------------------------------:|
+| <img src="https://github.com/AswinAsokan2004.png" width="60"/> | <img src="https://github.com/albin-bs.png" width="60"/> | <img src="https://github.com/Actinker.png" width="60"/> |
 
 ---
 
