@@ -1,4 +1,4 @@
-<img src="public/mockmate.png" alt="Mockmate AI logo" width="200"/>
+<img src="public/mockmate.png" alt="Mockmate AI logo" width="400"/>
 
 <img src="public/mockmateai.gif" alt="Mockmate AI Demo" width="200"/>
 
