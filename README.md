@@ -1,6 +1,6 @@
-# Mockmate 🚀
+# Mockmate AI: Your personal Interview coach  🚀
 
-> **Modern, AI-powered interview preparation and coaching platform — built for next-gen software engineers and career builders.**
+> **Mockmate is a comprehensive, AI-powered interview preparation and coaching platform designed for next-gen software engineers, technical candidates, and career builders. With personalized feedback, realistic mock interviews, and adaptive practice prompts, Mockmate helps users overcome interview anxiety, master diverse technical and behavioral questions, and confidently showcase their skills to employers. The platform leverages advanced AI to analyze responses, track improvement, and provide actionable insights—ensuring every candidate can practice on demand, focus on their weaknesses, and prepare for job-specific roles in any industry. Whether you’re a student, developer, or executive, Mockmate delivers real-time coaching, progress analytics, and unlimited practice to help you land your dream job faster and smarter in today’s competitive market.**
 
 ---
 
@@ -22,18 +22,42 @@
 
 ## ✨ Features
 
-- 🏠 Responsive Home, Interview, and Dashboard pages
-- 🎨 Glassmorphism, animated blocks, and clean branding
-- 🤖 Real-time AI feedback and analytics
-- 🎯 Practice prompts for coding, behavioral, and technical interviews
-- 📈 Progress dashboard with stats and history
+- 🏠 **Responsive Home, Interview, and Dashboard Pages**  
+  Adaptive modern UI with real-time updates and seamless navigation for all devices.
+
+- 🤖 **Multimodal Mock Interview Simulation**  
+  Practice with AI-generated, context-aware questions; answer via video, audio, or text, and interact with an AI interviewer for rich, realistic experiences.
+
+- 🎤 **Real-Time AI Feedback & Analytics**  
+  Get instant, structured critique on answer content, speaking clarity, facial expressions, tone, pacing, and confidence—driven by advanced LLMs, Whisper transcription, and computer vision AI.
+
+- 📋 **Personalized, Role-Specific Interview Prompts**  
+  Automatic question generation tuned to your resume, target job, or location; supports both technical and behavioral interviews, plus campus placement scenarios.
+
+- 📈 **Progress Dashboard & Skill Gap Analysis**  
+  Visualize your growth, review analytics on strengths and weaknesses, and get actionable insights for ongoing improvement with session history and trend charts.
+
+- 🛡️ **Bias & Fairness Aware Scoring**  
+  Transparent feedback calibrated for fairness, inclusivity, and bias mitigation—suitable for both individual users and institutional pilot programs.
+
+- 🔒 **Privacy-First, Secure by Design**  
+  All interview data is user-controlled, anonymized, and protected; users have clear consent and data export options.
+
+- 💬 **Feedback Export and Sharing**  
+  Download interview transcripts and analytic reports, or share highlights with mentors and career coaches.
 
 ---
 
 ## 📚 Documentation
 
-- **Setup:** See [`docs/setup.md`](docs/setup.md) for deployment tips.
-- **Components:** Browse UI blocks in [`src/components`](src/components).
+- **Setup:** See [`docs/setup.md`](docs/setup.md) for deployment, environment, and configuration tips.
+- **Components:** Browse all reusable UI blocks in [`src/components`](src/components).
+- **AI & Backend:** API, inference, and analytics endpoints are documented in [`docs/api.md`](docs/api.md) and [`docs/ai.md`](docs/ai.md).
+- **Customization:** Guidance for theming, custom question sets, and editing UI in [`docs/customization.md`](docs/customization.md).
+- **Testing:** End-to-end and unit testing strategies are detailed in [`docs/testing.md`](docs/testing.md).
+- **Contributing:** Want to help improve Mockmate? See [`CONTRIBUTING.md`](CONTRIBUTING.md) for guidelines on reporting issues, proposing new features, and contributing code or documentation.
+- **Changelog:** Track all major updates and new features in [`CHANGELOG.md`](CHANGELOG.md).
+- **FAQ:** Common questions and troubleshooting tips are in [`docs/faq.md`](docs/faq.md).
 
 ---
 
