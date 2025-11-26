@@ -1,4 +1,4 @@
-<img width="200" height="200" src="public/logo.svg" alt="Particle Light" align="right" />
+<img width="200" height="200" src="public/logo.png" alt="Particle Light" align="right" />
 
 # Mockmate AI: Your personal Interview coach  🚀
 
