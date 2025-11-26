@@ -1,10 +1,6 @@
-<img src="public/preview.png" alt="Mockmate AI Social Preview Card" style="max-width: 100%;">
+<img src="public/mockmate.png" alt="Mockmate AI logo" style="max-width: 100%;">
 
-<img width="200" height="200" src="public/logo.png" alt="Particle Light" align="right" />
-
-# Mockmate AI: Your personal Interview coach  🚀
-
-> **Mockmate is a comprehensive, AI-powered interview preparation and coaching platform designed for next-gen software engineers, technical candidates, and career builders. With personalized feedback, realistic mock interviews, and adaptive practice prompts, Mockmate helps users overcome interview anxiety, master diverse technical and behavioral questions, and confidently showcase their skills to employers. The platform leverages advanced AI to analyze responses, track improvement, and provide actionable insights—ensuring every candidate can practice on demand, focus on their weaknesses, and prepare for job-specific roles in any industry. Whether you’re a student, developer, or executive, Mockmate delivers real-time coaching, progress analytics, and unlimited practice to help you land your dream job faster and smarter in today’s competitive market.**
+> **Mockmate is a comprehensive, AI-powered interview preparation and coaching platform designed for next-gen software engineers, technical candidates, and career builders. With personalized feedback, realistic mock interviews, and adaptive practice prompts, Mockmate helps users overcome interview anxiety, master diverse technical and behavioral questions, and confidently showcase their skills to employers. The platform leverages advanced AI to analyze responses, track improvement, and provide actionable insights, ensuring every candidate can practice on demand, focus on their weaknesses, and prepare for job-specific roles in any industry. Whether you’re a student, developer, or executive, Mockmate delivers real-time coaching, progress analytics, and unlimited practice to help you land your dream job faster and smarter in today’s competitive market.**
 
 ---
 
@@ -78,8 +74,6 @@
 - Built with [Vite](https://vitejs.dev/guide/) & [React](https://react.dev/)
 - UI inspired by [Tailwind UI Blocks](https://tailwindcss.com/blocks)
 - Badges via [shields.io](https://shields.io/), [SimpleIcons](https://simpleicons.org/)
-  
-<img src="https://github.com/fnky/fnky/raw/fnky/img/smile.gif" alt="Smiley" align="center" data-animated-image="" style="max-width: 100%;">
 
 ---
 
@@ -89,4 +83,19 @@
 
 ---
 
-© 2025 Mockmate — Built with care.
+## Kindly support the developers by
+
+<a href="https://www.buymeacoffee.com/albinbs" target="_blank">
+  <img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174">
+</a>
+
+![Profile views](https://komarev.com/ghpvc/?username=albin-bs&color=blue)
+![Website](https://img.shields.io/website-up-down-green-red/https/mockmate.tech)
+
+© 2025 Mockmate — Built with dedication.
+
+<div align="center">
+<img src="https://user-images.githubusercontent.com/74038190/212257465-7ce8d493-cac5-494e-982a-5a9deb852c4b.gif" width="100">
+<img src="https://user-images.githubusercontent.com/74038190/212284087-bbe7e430-757e-4901-90bf-4cd2ce3e1852.gif" width="100" data-animated-image="" style="max-width: 100%;">
+<img src="https://user-images.githubusercontent.com/74038190/212257468-1e9a91f1-b626-4baa-b15d-5c385dfa7ed2.gif" width="100">
+</div>
