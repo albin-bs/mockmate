@@ -1,48 +1,86 @@
-# Mockmate
+# Mockmate 🚀
 
-Mockmate is a modern, AI-powered interview preparation and coaching platform.  
-This project provides a clean, professional React UI built with [Vite](https://vitejs.dev/) and styled using Tailwind CSS.
+> **Modern, AI-powered interview preparation and coaching platform — built for next-gen software engineers and career builders.**
 
 ---
 
-## Tech Stack
+### 🔥 Demo Preview
 
-- [React](https://react.dev/)
-- [Vite](https://vitejs.dev/) for blazing fast development and builds
-- [Tailwind CSS](https://tailwindcss.com/) for rapid styling
-- [Headless UI](https://headlessui.com/) for accessible component primitives
-- [Heroicons](https://heroicons.com/) for icons
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-mockmate.tech-blue?style=for-the-badge&logo=vercel)](https://mockmate.tech)
 
-## Features
+---
 
-- Home, Interview, and Dashboard pages
-- Responsive modern UI blocks, glassmorphism, and clean branding
-- AI Feedback, realistic practice prompts, and progress analytics
+## 🛠 Tech Stack
 
-## Getting Started
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=FFD62E)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![HeadlessUI](https://img.shields.io/badge/HeadlessUI-fff?style=for-the-badge&logo=headlessui&logoColor=4B5563)
+![HeroIcons](https://img.shields.io/badge/HeroIcons-4B5563?style=for-the-badge&logo=heroicons&logoColor=06B6D4)
 
-Install dependencies and start the dev server:
+---
 
+## ✨ Features
+
+- 🏠 Responsive Home, Interview, and Dashboard pages
+- 🎨 Glassmorphism, animated blocks, and clean branding
+- 🤖 Real-time AI feedback and analytics
+- 🎯 Practice prompts for coding, behavioral, and technical interviews
+- 📈 Progress dashboard with stats and history
+
+---
+
+## 🚀 Getting Started
+
+Install dependencies
 npm install
+
+Start the dev server
 npm run dev
 
-### Building for Production
-
+Build for production
 npm run build
 
----
-
-## Linting & Type Checking
-
-If you want production-grade quality, add TypeScript and enable type-aware linting using [`typescript-eslint`](https://typescript-eslint.io).
 
 ---
 
-## Credits
+## 📚 Documentation
 
-Template originally based on [Vite React Template](https://vitejs.dev/guide/).  
-UI inspired by [Tailwind UI Blocks](https://tailwindcss.com/blocks).
+- **Setup:** See [`docs/setup.md`](docs/setup.md) for deployment tips.
+- **Components:** Browse UI blocks in [`src/components`](src/components).
 
 ---
 
-© {CURRENT_YEAR} Mockmate — Built with care.
+## 🧰 Linting & Type Checking
+
+For prod-grade quality, add TypeScript and [`typescript-eslint`](https://typescript-eslint.io).
+
+---
+
+## 👏 Contributors
+
+[![](https://contrib.rocks/image?repo=albin-bs/mockmate)](https://github.com/albin-bs/mockmate/graphs/contributors)
+
+---
+
+## 🏆 Credits
+
+- Built with [Vite](https://vitejs.dev/guide/) & [React](https://react.dev/)
+- UI inspired by [Tailwind UI Blocks](https://tailwindcss.com/blocks)
+- Badges via [shields.io](https://shields.io/), [SimpleIcons](https://simpleicons.org/)
+
+---
+
+## 🪪 License
+
+MIT
+
+---
+
+## 🖤 Community & Contact
+
+*Contribute features, open issues, or reach out via [Twitter](#), [LinkedIn](#), or [Email](mailto:team@mockmate.tech).*
+
+---
+
+© 2025 Mockmate — Built with care.
