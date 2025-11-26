@@ -59,22 +59,9 @@ For prod-grade quality, add TypeScript and [`typescript-eslint`](https://typescr
 
 ## 👏 Team members
 
-<div align="center">
-  <a href="https://github.com/AswinAsokan2004">
-    <img src="https://github.com/AswinAsokan2004.png" width="80" style="border-radius:50%;" /><br />
-    <b>Aswin Asokan</b>
-  </a>
-  &nbsp;&nbsp;&nbsp;&nbsp;
-  <a href="https://github.com/albin-bs">
-    <img src="https://github.com/albin-bs.png" width="80" style="border-radius:50%;" /><br />
-    <b>Albin B S</b>
-  </a>
-  &nbsp;&nbsp;&nbsp;&nbsp;
-  <a href="https://github.com/Actinker">
-    <img src="https://github.com/Actinker.png" width="80" style="border-radius:50%;" /><br />
-    <b>Actinker</b>
-  </a>
-</div>
+| [Aswin Asokan](https://github.com/AswinAsokan2004) | [Albin B S](https://github.com/albin-bs) | [Actinker](https://github.com/Actinker) |
+|:---:|:---:|:---:|
+| <img src="https://github.com/AswinAsokan2004.png" width="80" style="border-radius:50%" /> | <img src="https://github.com/albin-bs.png" width="80" style="border-radius:50%" /> | <img src="https://github.com/Actinker.png" width="80" style="border-radius:50%" /> |
 
 ---
 
