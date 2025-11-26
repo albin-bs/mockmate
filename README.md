@@ -60,28 +60,20 @@ For prod-grade quality, add TypeScript and [`typescript-eslint`](https://typescr
 ## 👏 Team members
 
 <div align="center">
-
-  <!-- Aswin Asokan -->
-  <a href="https://github.com/AswinAsokan2004" style="margin: 0 24px; text-align: center;">
-    <img src="https://github.com/AswinAsokan2004.png" width="80" style="border-radius: 50%; margin-bottom: 8px;" />
-    <br>
-    <span style="font-size:1.1em; font-weight:bold; color:#1976d2;">Aswin Asokan</span>
+  <a href="https://github.com/AswinAsokan2004">
+    <img src="https://github.com/AswinAsokan2004.png" width="80" style="border-radius:50%;" /><br />
+    <b>Aswin Asokan</b>
   </a>
-
-  <!-- Albin B S -->
-  <a href="https://github.com/albin-bs" style="margin: 0 24px; text-align: center;">
-    <img src="https://github.com/albin-bs.png" width="80" style="border-radius:50%; margin-bottom: 8px;" />
-    <br>
-    <span style="font-size:1.1em; font-weight:bold; color:#1976d2;">Albin B S</span>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <a href="https://github.com/albin-bs">
+    <img src="https://github.com/albin-bs.png" width="80" style="border-radius:50%;" /><br />
+    <b>Albin B S</b>
   </a>
-
-  <!-- Actinker -->
-  <a href="https://github.com/Actinker" style="margin: 0 24px; text-align: center;">
-    <img src="https://github.com/Actinker.png" width="80" style="border-radius:50%; margin-bottom: 8px;" />
-    <br>
-    <span style="font-size:1.1em; font-weight:bold; color:#1976d2;">Actinker</span>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <a href="https://github.com/Actinker">
+    <img src="https://github.com/Actinker.png" width="80" style="border-radius:50%;" /><br />
+    <b>Actinker</b>
   </a>
-
 </div>
 
 ---
