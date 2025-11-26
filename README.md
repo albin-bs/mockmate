@@ -83,8 +83,6 @@
 
 ---
 
-© 2025 Mockmate — Built with care.
-
 ## Kindly support the developers by
 
 <a href="https://www.buymeacoffee.com/albinbs" target="_blank">
@@ -99,3 +97,5 @@
 <img src="https://user-images.githubusercontent.com/74038190/212284087-bbe7e430-757e-4901-90bf-4cd2ce3e1852.gif" width="100" data-animated-image="" style="max-width: 100%;">
 <img src="https://user-images.githubusercontent.com/74038190/212257468-1e9a91f1-b626-4baa-b15d-5c385dfa7ed2.gif" width="100">
 </div>
+
+© 2025 Mockmate — Built with dedication.
