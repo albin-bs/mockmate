@@ -5,7 +5,7 @@ import Pricing from "./components/Pricing";
 import Testimonials from "./components/Testimonials";
 import Footer from "./components/Footer";
 import { useEffect, useState } from "react";
-import { Analytics } from "@vercel/analytics/next"
+import { Analytics } from "@vercel/analytics/react";
 
 function App() {
   const [scrolled, setScrolled] = useState(false);
@@ -14,11 +14,10 @@ function App() {
     function handleScroll() {
       setScrolled(window.scrollY > 50);
     }
-
     window.addEventListener("scroll", handleScroll);
-
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
   return (
     <div className="min-h-screen bg-slate-950 text-white overflow-hidden">
       <Navbar scrolled={scrolled} />
@@ -27,6 +26,7 @@ function App() {
       <Pricing />
       <Testimonials />
       <Footer />
+      <Analytics /> {/* ← Add this here */}
     </div>
   );
 }
