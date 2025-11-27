@@ -117,7 +117,7 @@ export default function Footer() {
                             >
                               {link}
                             </Link>
-                          ) : category === "Company" && link === "About" ? (
+                          ) : category === "Company" && link === "About us" ? (
                             <Link
                               to="/about"
                               className="text-gray-400 hover:text-white transition-colors duration-200 text-xs sm:text-sm"
