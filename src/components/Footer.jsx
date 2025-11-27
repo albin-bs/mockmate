@@ -4,7 +4,7 @@ import { Github, Linkedin } from "lucide-react";
 
 const footerLinks = {
   Product: ["AI Feedback", "Practice Sets", "Progress Tracking"],
-  Company: ["About us"],
+  Company: ["About us", "Contact us", "FAQ"],
   Resources: ["Documentation", "Help Center", "Community", "Demo Video"],
   Legal: ["Licenses", "Compliance"],
 };
@@ -34,11 +34,12 @@ export default function Footer() {
                 </div>
                 <span className="text-lg sm:text-xl font-bold">
                   <span className="text-white">Mock</span>
-                  <span className="text-blue-400">mate</span>
+                  <span className="text-blue-400">MateAI</span>
                 </span>
               </div>
               <p className="text-gray-400 mb-4 sm:mb-6 max-w-xs mx-auto sm:mx-0 text-sm sm:text-base">
-                Ace your next interview with AI-powered practice, feedback, and tools for every stage of your career.
+                Ace your next interview with AI-powered practice, feedback, and
+                tools for every stage of your career.
               </p>
 
               {/* Social + member links */}
@@ -50,7 +51,9 @@ export default function Footer() {
                   className="group inline-flex items-center justify-center px-4 py-2 rounded-xl bg-slate-900/60 hover:bg-slate-800 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blue-500/10"
                 >
                   <Github className="w-4 h-4 mr-2 text-slate-200 transition-transform duration-200 group-hover:rotate-3" />
-                  <span className="text-sm text-slate-200">View project on GitHub</span>
+                  <span className="text-sm text-slate-200">
+                    View project on GitHub
+                  </span>
                 </a>
 
                 <p className="text-blue-300 mb-2 max-w-xs mx-auto sm:mx-0 text-sm sm:text-base font-semibold tracking-wide uppercase">
@@ -112,7 +115,9 @@ export default function Footer() {
                           {category === "Product" &&
                           (link === "Features" || link === "Pricing") ? (
                             <Link
-                              to={link === "Features" ? "/#features" : "/#pricing"}
+                              to={
+                                link === "Features" ? "/#features" : "/#pricing"
+                              }
                               className="text-gray-400 hover:text-white transition-colors duration-200 text-xs sm:text-sm"
                             >
                               {link}
@@ -124,7 +129,23 @@ export default function Footer() {
                             >
                               {link}
                             </Link>
-                          ) : category === "Resources" && link === "Demo Video" ? (
+                          ) : category === "Company" &&
+                            link === "Contact us" ? (
+                            <Link
+                              to="/contact"
+                              className="text-gray-400 hover:text-white transition-colors duration-200 text-xs sm:text-sm"
+                            >
+                              {link}
+                            </Link>
+                          ) : category === "Company" && link === "FAQ" ? (
+                            <Link
+                              to="/faq"
+                              className="text-gray-400 hover:text-white transition-colors duration-200 text-xs sm:text-sm"
+                            >
+                              {link}
+                            </Link>
+                          ) : category === "Resources" &&
+                            link === "Demo Video" ? (
                             <button
                               type="button"
                               onClick={() => setIsVideoOpen(true)}
@@ -149,6 +170,7 @@ export default function Footer() {
             </div>
           </div>
 
+          {/* Bottom bar */}
           <div className="pt-6 sm:pt-8 border-t-0 sm:border-t border-slate-800">
             <div className="flex flex-col sm:flex-row justify-between items-center space-y-3 sm:space-y-0">
               <p className="text-gray-400 text-xs sm:text-sm">
@@ -228,10 +250,10 @@ export default function Footer() {
               Cookie Settings
             </h2>
             <p className="text-sm sm:text-base text-gray-300 mb-6 leading-relaxed">
-              Mockmate uses cookies to make the site work properly, understand how it
-              is used, and improve your experience. You can choose which categories
-              you want to allow. Blocking some types of cookies may impact how the
-              site performs.
+              Mockmate uses cookies to make the site work properly, understand
+              how it is used, and improve your experience. You can choose which
+              categories you want to allow. Blocking some types of cookies may
+              impact how the site performs.
             </p>
 
             <div className="space-y-4 mb-6">
@@ -241,8 +263,8 @@ export default function Footer() {
                     Strictly necessary
                   </p>
                   <p className="text-xs sm:text-sm text-gray-400">
-                    Required for core features such as security and basic navigation.
-                    These cannot be turned off.
+                    Required for core features such as security and basic
+                    navigation. These cannot be turned off.
                   </p>
                 </div>
                 <span className="px-3 py-1 rounded-full bg-green-500/20 text-green-400 text-xs font-semibold">
@@ -256,8 +278,8 @@ export default function Footer() {
                     Performance cookies
                   </p>
                   <p className="text-xs sm:text-sm text-gray-400">
-                    Help us understand how visitors use Mockmate so we can improve the
-                    product.
+                    Help us understand how visitors use Mockmate so we can
+                    improve the product.
                   </p>
                 </div>
                 <button
@@ -281,7 +303,8 @@ export default function Footer() {
                     Functional cookies
                   </p>
                   <p className="text-xs sm:text-sm text-gray-400">
-                    Remember preferences like saved sessions and interface settings.
+                    Remember preferences like saved sessions and interface
+                    settings.
                   </p>
                 </div>
                 <button

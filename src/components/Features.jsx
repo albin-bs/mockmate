@@ -4,6 +4,7 @@ import { nightOwl } from "react-syntax-highlighter/dist/esm/styles/hljs";
 const features = [
   {
     title: "AI Interview Simulation",
+    heading: "Mobile friendly AI practice",
     description:
       "Practice with realistic, adaptive interview questions tailored by Mockmate’s AI. Get better every session with scenario-based and behavioral prompts.",
     codeSnippet: `const question = await mockmate.generatePrompt({
@@ -11,10 +12,12 @@ const features = [
   difficulty: "medium"
 });
 /* Output: "Describe a challenging bug you fixed in a past project." */`,
-    imagePosition: "left",
+    imageSrc:
+      "https://tailwindcss.com/plus-assets/img/component-images/bento-03-mobile-friendly.png",
   },
   {
     title: "Instant AI Feedback",
+    heading: "Performance you can measure",
     description:
       "Receive actionable feedback on your answers—including structure, depth, and communication style. Mockmate AI catches strengths and areas to improve instantly.",
     codeSnippet: `const feedback = await mockmate.analyzeAnswer({
@@ -24,10 +27,12 @@ const features = [
 - Clear intro & examples (✔️)
 - Needs more detail on teamwork (⚠️)
 - Avoid too many filler words (💡) */`,
-    imagePosition: "right",
+    imageSrc:
+      "https://tailwindcss.com/plus-assets/img/component-images/dark-bento-03-performance.png",
   },
   {
     title: "Progress Analytics & Insights",
+    heading: "Security & insights that scale",
     description:
       "Track your performance and see growth over time. View analytics on content, confidence, tone, and highlight trends to optimize your practice plan.",
     codeSnippet: `const stats = mockmate.getProgress("user-id");
@@ -39,96 +44,157 @@ const features = [
   suggestions: ["Add more data-driven examples"]
 }
 */`,
-    imagePosition: "left",
+    imageSrc:
+      "https://tailwindcss.com/plus-assets/img/component-images/dark-bento-03-security.png",
   },
 ];
 
 export default function Features() {
   return (
-    <section
-      id="features"
-      className="py-16 sm:py-20 px-10 sm:px-6 lg:px-8 relative"
-    >
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-12 sm:mb-16 lg:mb-20">
-          <h2 className="text-5xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6">
-            <span className="bg-gradient-to-b from-white to-gray-300 bg-clip-text text-transparent">
-              Mockmate Interview
-            </span>
-            <br />
-            <span className="bg-gradient-to-b from-blue-400 to-cyan-400 bg-clip-text text-transparent">
-              Practice Suite
-            </span>
-          </h2>
-        </div>
+    <section id="features" className="bg-gray-900 py-24 sm:py-32">
+      <div className="mx-auto max-w-2xl px-6 lg:max-w-7xl lg:px-8">
+        <h2 className="text-center text-sm font-semibold text-indigo-400">
+          Mockmate Interview Practice Suite
+        </h2>
+        <p className="mx-auto mt-2 max-w-xl text-center text-3xl sm:text-4xl font-semibold tracking-tight text-balance text-white">
+          Everything you need to prep smarter and ace real interviews
+        </p>
 
-        <div className="space-y-16 sm:space-y-20 lg:space-y-32">
-          {features.map((feature, key) => (
-            <div
-              key={key}
-              className={`flex flex-col lg:flex-row items-center gap-8 sm:gap-12 ${
-                feature.imagePosition === "right" ? "lg:flex-row-reverse" : ""
-              }`}
-            >
-              {/* Code Section */}
-              <div className="flex-1 w-full">
-                <div className="relative group">
-                  <div
-                    className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-500/20 
-                    rounded-xl sm:rounded-2xl transition-all duration-500"
-                  />
-                  <div
-                    className="relative bg-gray-900/50 backdrop-blur-sm border border-gray-700/50 
-                    rounded-xl sm:rounded-2xl p-4 sm:p-6 overflow-hidden group-hover:border-1 
-                    group-hover:border-blue-600/50 transition-all duration-300"
-                  >
-                    {/* Ide Interface */}
-                    <div className="bg-gray-950 rounded-lg p-3 sm:p-4 font-mono text-xs sm:text-sm">
-                      <div className="flex items-center space-x-1 sm:space-x-2 mb-3 sm:mb-4">
-                        <div className="flex items-center space-x-1 sm:space-x-2">
-                          <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-red-500" />
-                          <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-yellow-500" />
-                          <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-green-500" />
-                        </div>
-                        <span className="text-gray-400 ml-2 sm:ml-4 text-xs sm:text-sm">
-                          {feature.title}
-                        </span>
-                      </div>
-                      <div>
-                        <SyntaxHighlighter
-                          language="javascript"
-                          style={nightOwl}
-                          customStyle={{
-                            margin: 0,
-                            background: "transparent",
-                            borderRadius: "8px",
-                            fontSize: "0.75rem",
-                            lineHeight: "1.4",
-                            height: "100%",
-                          }}
-                          wrapLines={true}
-                        >
-                          {feature.codeSnippet}
-                        </SyntaxHighlighter>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+        <div className="mt-10 grid gap-4 sm:mt-16 lg:grid-cols-3 lg:grid-rows-2">
+          {/* Card 1 – AI Interview Simulation */}
+          <div className="relative lg:row-span-2">
+            <div className="absolute inset-px rounded-lg bg-gray-800 lg:rounded-l-4xl"></div>
+            <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)] lg:rounded-l-[calc(2rem+1px)]">
+              <div className="px-8 pt-8 pb-3 sm:px-10 sm:pt-10 sm:pb-0">
+                <p className="mt-1 text-xs font-semibold uppercase tracking-[0.18em] text-indigo-300 max-lg:text-center">
+                  {features[0].title}
+                </p>
+                <p className="mt-2 text-lg font-medium tracking-tight text-white max-lg:text-center">
+                  {features[0].heading}
+                </p>
+                <p className="mt-2 max-w-lg text-sm leading-6 text-gray-400 max-lg:text-center">
+                  {features[0].description}
+                </p>
               </div>
-
-              {/* text section */}
-              <div className="flex-1 w-full">
-                <div className="max-w-lg mx-auto lg:mx-0 text-center lg:text-left">
-                  <h3 className="text-4xl sm:text-3xl lg:text-4xl font-bold mb-4 sm:mb-6 text-white">
-                    {feature.title}
-                  </h3>
-                  <p className="text-gray-300 text-base text-xl sm:text-lg leading-relaxed">
-                    {feature.description}
-                  </p>
+              <div className="@container relative min-h-60 w-full grow max-lg:mx-auto max-lg:max-w-sm">
+                <div className="absolute inset-x-10 top-10 bottom-0 overflow-hidden rounded-t-[12cqw] border-x-[3cqw] border-t-[3cqw] border-gray-700 bg-gray-900 outline outline-white/20">
+                  <img
+                    src={features[0].imageSrc}
+                    alt=""
+                    className="size-full object-cover object-top"
+                  />
                 </div>
               </div>
             </div>
-          ))}
+            <div className="pointer-events-none absolute inset-px rounded-lg shadow-sm outline outline-white/15 lg:rounded-l-4xl"></div>
+          </div>
+
+          {/* Card 2 – Instant AI Feedback */}
+          <div className="relative max-lg:row-start-1">
+            <div className="absolute inset-px rounded-lg bg-gray-800 max-lg:rounded-t-4xl"></div>
+            <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)] max-lg:rounded-t-[calc(2rem+1px)]">
+              <div className="px-8 pt-8 sm:px-10 sm:pt-10">
+                <p className="mt-1 text-xs font-semibold uppercase tracking-[0.18em] text-indigo-300 max-lg:text-center">
+                  {features[1].title}
+                </p>
+                <p className="mt-2 text-lg font-medium tracking-tight text-white max-lg:text-center">
+                  {features[1].heading}
+                </p>
+                <p className="mt-2 max-w-lg text-sm leading-6 text-gray-400 max-lg:text-center">
+                  {features[1].description}
+                </p>
+              </div>
+              <div className="flex flex-1 items-center justify-center px-8 max-lg:pt-10 max-lg:pb-12 sm:px-10 lg:pb-2">
+                <img
+                  src={features[1].imageSrc}
+                  alt=""
+                  className="w-full max-lg:max-w-xs"
+                />
+              </div>
+            </div>
+            <div className="pointer-events-none absolute inset-px rounded-lg shadow-sm outline outline-white/15 max-lg:rounded-t-4xl"></div>
+          </div>
+
+          {/* Card 3 – Progress Analytics & Insights */}
+          <div className="relative max-lg:row-start-3 lg:col-start-2 lg:row-start-2">
+            <div className="absolute inset-px rounded-lg bg-gray-800"></div>
+            <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)]">
+              <div className="px-8 pt-8 sm:px-10 sm:pt-10">
+                <p className="mt-1 text-xs font-semibold uppercase tracking-[0.18em] text-indigo-300 max-lg:text-center">
+                  {features[2].title}
+                </p>
+                <p className="mt-2 text-lg font-medium tracking-tight text-white max-lg:text-center">
+                  {features[2].heading}
+                </p>
+                <p className="mt-2 max-w-lg text-sm leading-6 text-gray-400 max-lg:text-center">
+                  {features[2].description}
+                </p>
+              </div>
+              <div className="@container flex flex-1 items-center max-lg:py-6 lg:pb-2">
+                <img
+                  src={features[2].imageSrc}
+                  alt=""
+                  className="h-[min(152px,40cqw)] object-cover"
+                />
+              </div>
+            </div>
+            <div className="pointer-events-none absolute inset-px rounded-lg shadow-sm outline outline-white/15"></div>
+          </div>
+
+          {/* Card 4 – Code panel using your snippets */}
+          <div className="relative lg:row-span-2">
+            <div className="absolute inset-px rounded-lg bg-gray-800 max-lg:rounded-b-4xl lg:rounded-r-4xl"></div>
+            <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)] max-lg:rounded-b-[calc(2rem+1px)] lg:rounded-r-[calc(2rem+1px)]">
+              <div className="px-8 pt-8 pb-3 sm:px-10 sm:pt-10 sm:pb-0">
+                <p className="mt-1 text-xs font-semibold uppercase tracking-[0.18em] text-indigo-300 max-lg:text-center">
+                  Developer-friendly APIs
+                </p>
+                <p className="mt-2 text-lg font-medium tracking-tight text-white max-lg:text-center">
+                  Powerful prompts, feedback, and analytics in code
+                </p>
+                <p className="mt-2 max-w-lg text-sm leading-6 text-gray-400 max-lg:text-center">
+                  Use MockMate’s SDK to generate prompts, analyze answers, and pull
+                  progress stats directly into your own tools or dashboards.
+                </p>
+              </div>
+              <div className="relative min-h-60 w-full grow">
+                <div className="absolute top-10 right-0 bottom-0 left-10 overflow-hidden rounded-tl-xl bg-gray-900/60 outline outline-white/10">
+                  <div className="flex bg-gray-900 outline outline-white/5">
+                    <div className="-mb-px flex text-sm font-medium text-gray-400">
+                      <div className="border-r border-b border-r-white/10 border-b-white/20 bg-white/5 px-4 py-2 text-white">
+                        prompts.ts
+                      </div>
+                      <div className="border-r border-gray-600/10 px-4 py-2">
+                        feedback.ts
+                      </div>
+                      <div className="border-r border-gray-600/10 px-4 py-2">
+                        analytics.ts
+                      </div>
+                    </div>
+                  </div>
+                  <div className="px-6 pt-6 pb-10 text-xs sm:text-sm font-mono text-gray-100">
+                    <SyntaxHighlighter
+                      language="javascript"
+                      style={nightOwl}
+                      customStyle={{
+                        margin: 0,
+                        background: "transparent",
+                        fontSize: "0.8rem",
+                        lineHeight: "1.4",
+                      }}
+                    >
+{`${features[0].codeSnippet}
+
+${features[1].codeSnippet}
+
+${features[2].codeSnippet}`}
+                    </SyntaxHighlighter>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="pointer-events-none absolute inset-px rounded-lg shadow-sm outline outline-white/15 max-lg:rounded-b-4xl lg:rounded-r-4xl"></div>
+          </div>
         </div>
       </div>
     </section>

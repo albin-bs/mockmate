@@ -26,67 +26,73 @@ const testimonials = [
 ];
 
 export default function Testimonials() {
+  const main = testimonials[1]; // highlight Marcus
+
   return (
     <section
       id="testimonials"
-      className="py-16 sm:py-20 px-10 sm:px-6 lg:px-8 relative"
+      className="relative isolate overflow-hidden bg-slate-950 px-6 py-24 sm:py-28 lg:px-8"
     >
-      <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col lg:flex-row items-start gap-8 sm:gap-12 lg:gap-16">
-          {/* Left side - Header */}
-          <div className="lg:w-1/2 w-full text-center lg:text-left">
-            <h2 className="text-5xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6">
-              Mockmate interview success stories
-            </h2>
-            <p className="text-gray-400 text-base text-xl sm:text-lg max-w-2xl mx-auto">
-              Discover how people are landing jobs and boosting interview skills with Mockmate’s AI-powered coaching and feedback.
-            </p>
-          </div>
+      <div className="absolute inset-0 -z-10 bg-[radial-gradient(45rem_50rem_at_top,#4f46e5,transparent)] opacity-20" />
+      <div className="absolute inset-y-0 right-1/2 -z-10 mr-16 w-[200%] origin-bottom-left skew-x-[-30deg] bg-slate-950 shadow-xl ring-1 shadow-blue-500/5 ring-white/5 sm:mr-28 lg:mr-0 xl:mr-16 xl:origin-center" />
 
-          {/* Right side - testimonials */}
-          <div className="lg:w-1/2 w-full">
-            <div className="space-y-6 sm:space-y-8">
-              {testimonials.map((testimonial, key) => (
-                <div
-                  key={key}
-                  className="bg-slate-900/50 p-4 sm:p-6 backdrop-blur-sm border border-slate-800 rounded-xl sm:rounded-2xl"
-                >
-                  <div className="flex items-start space-x-3 sm:space-x-4">
-                    <div className="flex-shrink-0">
-                      <div
-                        className="text-2xl sm:text-3xl lg:text-4xl font-bold 
-                        bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text 
-                        text-transparent"
-                      >
-                        "
-                      </div>
-                    </div>
+      <div className="mx-auto max-w-4xl">
+        <div className="text-center">
+          <h2 className="text-sm font-semibold tracking-[0.2em] uppercase text-blue-400">
+            Mockmate interview success stories
+          </h2>
+          <p className="mt-3 text-3xl sm:text-4xl font-semibold tracking-tight text-white">
+            Trusted by candidates worldwide
+          </p>
+          <p className="mt-4 text-sm sm:text-base text-slate-400">
+            Discover how people are landing jobs and boosting interview skills
+            with MockMateAI’s coaching and AI feedback.
+          </p>
+        </div>
 
-                    <div className="flex-grow">
-                      <p className="text-white text-base sm:text-lg leading-relaxed mb-3 sm:mb-4">
-                        {testimonial.content}
-                      </p>
-                      <div className="flex items-center space-x-2 sm:space-x-3">
-                        <img
-                          src={testimonial.image}
-                          alt={testimonial.name}
-                          className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover"
-                        />
-                        <div>
-                          <h4 className="font-semibold text-white text-sm sm:text-base">
-                            {testimonial.name}
-                          </h4>
-                          <p className="text-xs sm:text-sm text-gray-400">
-                            {testimonial.role}
-                          </p>
-                        </div>
-                      </div>
+        <figure className="mt-10">
+          <blockquote className="text-center text-lg sm:text-2xl font-semibold text-white/95">
+            <p>“{main.content}”</p>
+          </blockquote>
+          <figcaption className="mt-8">
+            <img
+              src={main.image}
+              alt={main.name}
+              className="mx-auto h-12 w-12 rounded-full object-cover"
+            />
+            <div className="mt-4 flex items-center justify-center space-x-3 text-sm">
+              <div className="font-semibold text-white">{main.name}</div>
+              <span className="h-1 w-1 rounded-full bg-white" />
+              <div className="text-slate-400">{main.role}</div>
+            </div>
+          </figcaption>
+        </figure>
+
+        {/* Small row of the other testimonials under the main quote */}
+        <div className="mt-10 grid gap-4 sm:grid-cols-2">
+          {testimonials
+            .filter((t) => t !== main)
+            .map((t) => (
+              <div
+                key={t.name}
+                className="rounded-2xl border border-slate-800 bg-slate-900/60 px-4 py-4 text-left"
+              >
+                <p className="text-sm text-slate-200 mb-3">“{t.content}”</p>
+                <div className="flex items-center gap-3">
+                  <img
+                    src={t.image}
+                    alt={t.name}
+                    className="h-9 w-9 rounded-full object-cover"
+                  />
+                  <div>
+                    <div className="text-sm font-semibold text-white">
+                      {t.name}
                     </div>
+                    <div className="text-xs text-slate-400">{t.role}</div>
                   </div>
                 </div>
-              ))}
-            </div>
-          </div>
+              </div>
+            ))}
         </div>
       </div>
     </section>

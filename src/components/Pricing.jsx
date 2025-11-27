@@ -50,106 +50,116 @@ const plans = [
   },
 ];
 
+function classNames(...classes) {
+  return classes.filter(Boolean).join(" ");
+}
+
 export default function Pricing() {
   return (
     <section
       id="pricing"
-      className="py-16 sm:py-20 px-10 sm:px-6 lg:px-8 relative"
+      className="relative isolate bg-gray-900 px-6 py-24 sm:py-32 lg:px-8"
     >
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-12 sm:mb-16 lg:mb-20">
-          <h2 className="text-5xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6">
-            <span className="bg-gradient-to-b from-white to-gray-300 bg-clip-text text-transparent">
-              Mockmate Simple, Transparent
-            </span>
-            <br />
-            <span className="bg-gradient-to-b from-blue-400 to-cyan-400 bg-clip-text text-transparent">
-              Pricing Plans
-            </span>
-          </h2>
-          <p className="text-gray-400 text-base text-xl sm:text-lg max-w-2xl mx-auto">
-            Choose a plan and get started with a 14-day free trial. <br />
-            All plans include full access to Mockmate’s interview prep toolkit and AI-powered coaching.
-          </p>
-        </div>
+      {/* Top blurred blob */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-x-0 -top-3 -z-10 transform-gpu overflow-hidden px-36 blur-3xl"
+      >
+        <div
+          className="mx-auto aspect-[1155/678] w-[72rem] bg-gradient-to-tr from-[#2563eb] to-[#22c1c3] opacity-20"
+          style={{
+            clipPath:
+              "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
+          }}
+        />
+      </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-6">
-          {plans.map((plan, key) => (
-            <div
-              key={key}
-              className={`relative bg-slate-900/50 backdrop-blur-sm border rounded-xl sm:rounded-2xl p-6 sm:p-8 transition-all duration-300 overflow-visible group flex flex-col h-full ${
-                plan.mostPopular
-                  ? "border-blue-500 shadow-2xl shadow-blue-500/20 lg:scale-105"
-                  : "border-slate-800 hover:border-slate-700"
-              }`}
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform -translate-x-full -translate-y-full group-hover:translate-x-0 group-hover:translate-y-0 pointer-events-none rounded-lg" />
-              {plan.mostPopular && (
-                <div className="absolute -top-2 sm:-top-3 left-1/2 transform -translate-x-1/2 z-10">
-                  <div className="flex items-center space-x-1 px-3 sm:px-4 py-1 sm:py-1.5 bg-gradient-to-b from-blue-500 to-cyan-500 rounded-full text-xs sm:text-sm font-semibold shadow-lg">
-                    <Star className="w-3 h-3 sm:w-3 sm:h-3 fill-white" />
-                    <span>Most Popular</span>
-                  </div>
-                </div>
-              )}
+      <div className="mx-auto max-w-4xl text-center">
+        <h2 className="text-sm font-semibold text-indigo-400">Pricing</h2>
+        <p className="mt-2 text-4xl sm:text-5xl font-semibold tracking-tight text-balance text-white">
+          Mockmate simple, transparent plans
+        </p>
+      </div>
+      <p className="mx-auto mt-6 max-w-2xl text-center text-lg font-medium text-gray-400 sm:text-xl leading-8">
+        Choose a plan and get started with a 14-day free trial. All plans
+        include full access to Mockmate’s interview prep toolkit and
+        AI-powered coaching.
+      </p>
 
-              <div className="text-center mb-6 sm:mb-8">
-                <h3 className="text-xl sm:text-2xl font-bold mb-2">
-                  {plan.name}
-                </h3>
-                <p className="text-gray-400 text-xs sm:text-sm mb-3 sm:mb-4">
-                  {plan.description}
-                </p>
-                <div className="flex items-baseline justify-center">
-                  <span
-                    className="text-3xl sm:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text 
-                    text-transparent"
-                  >
-                    ${plan.price}
-                  </span>
-                  <span className="text-gray-400 ml-1 sm:ml-2 text-sm sm:text-base">
-                    /month
-                  </span>
+      {/* Cards */}
+      <div className="mx-auto mt-16 grid max-w-lg grid-cols-1 items-stretch gap-y-6 sm:mt-20 sm:gap-y-0 lg:max-w-5xl lg:grid-cols-3 lg:gap-x-6">
+        {plans.map((plan, idx) => (
+          <div
+            key={plan.name}
+            className={classNames(
+              plan.mostPopular ? "relative bg-slate-900" : "bg-white/5",
+              idx === 0
+                ? "lg:rounded-l-3xl"
+                : idx === plans.length - 1
+                ? "lg:rounded-r-3xl"
+                : "",
+              "rounded-3xl p-8 ring-1 ring-white/10 sm:p-10 flex flex-col"
+            )}
+          >
+            {plan.mostPopular && (
+              <div className="absolute -top-3 inset-x-0 flex justify-center">
+                <div className="inline-flex items-center gap-1 rounded-full bg-gradient-to-r from-blue-500 to-cyan-400 px-3 py-1 text-xs font-semibold text-white shadow-lg">
+                  <Star className="w-3 h-3 fill-white" />
+                  Most popular
                 </div>
               </div>
+            )}
 
-              <ul className="space-y-3 sm:space-y-4 mb-6 sm:mb-8 flex-row">
-                {plan.features.map((feature, featureKey) => (
-                  <li
-                    key={featureKey}
-                    className="flex items-start space-x-2 sm:space-x-3"
-                  >
-                    <div className="flex-shrink-0 w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-blue-500/20 flex items-center justify-center mt-0.5">
-                      <Check className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-blue-400" />
-                    </div>
-                    <span className="text-gray-300 text-sm sm:text-base">
-                      {feature}
-                    </span>
-                  </li>
-                ))}
-              </ul>
+            <h3
+              className={classNames(
+                "text-base font-semibold",
+                plan.mostPopular ? "text-indigo-400" : "text-indigo-300"
+              )}
+            >
+              {plan.name}
+            </h3>
 
-              <button
-                className={`w-full py-2.5 sm:py-3 px-4 sm:px-6 rounded-lg font-semibold transition-all duration-300 mt-auto hover:scale-102 cursor-pointer text-sm sm:text-base ${
-                  plan.mostPopular
-                    ? "bg-gradient-to-b from-blue-500 to-cyan-500"
-                    : "bg-white/5 border border-white/10 hover:bg-white/10"
-                }`}
-              >
-                Get Started
-              </button>
-            </div>
-          ))}
-        </div>
+            <p className="mt-3 text-sm text-gray-300">{plan.description}</p>
 
-        <div className="mt-8 sm:mt-12 text-center">
-          <p className="text-gray-400 text-base text-xl">
-            Need a custom plan?{" "}
-            <a href="#" className="text-blue-400 hover:text-blue-300">
-              Contact our team
-            </a>
-          </p>
-        </div>
+            <p className="mt-6 flex items-baseline gap-x-2">
+              <span className="text-4xl sm:text-5xl font-semibold tracking-tight text-white">
+                ${plan.price}
+              </span>
+              <span className="text-base text-gray-400">/month</span>
+            </p>
+
+            <ul className="mt-8 space-y-3 text-sm text-gray-300 sm:mt-10 flex-1">
+              {plan.features.map((feature) => (
+                <li key={feature} className="flex gap-x-3">
+                  <div className="mt-0.5 flex h-5 w-5 flex-none items-center justify-center rounded-full bg-blue-500/20">
+                    <Check className="h-3 w-3 text-blue-400" />
+                  </div>
+                  <span>{feature}</span>
+                </li>
+              ))}
+            </ul>
+
+            <button
+              className={classNames(
+                plan.mostPopular
+                  ? "bg-indigo-500 text-white hover:bg-indigo-400 focus-visible:outline-indigo-500"
+                  : "bg-white/10 text-white hover:bg-white/20 focus-visible:outline-white/70",
+                "mt-8 block rounded-md px-3.5 py-2.5 text-center text-sm font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 sm:mt-10"
+              )}
+            >
+              Get started
+            </button>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-10 text-center">
+        <p className="text-gray-400 text-sm sm:text-base">
+          Need a custom plan?{" "}
+          <a href="#" className="text-blue-400 hover:text-blue-300">
+            Contact our team
+          </a>
+        </p>
       </div>
     </section>
   );
