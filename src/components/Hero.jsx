@@ -1,16 +1,76 @@
 import { useState, useEffect } from "react";
 import { ArrowRight, ChevronDown, Play, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { nightOwl } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import PrimaryButton from "./common/PrimaryButton";
 import { codeExamples, floatingCards } from "../data/CodeExamples";
 
+// Typing effect hook for code window
+function useTypingEffect(text, speed = 12) {
+  const [displayed, setDisplayed] = useState("");
+
+  useEffect(() => {
+    if (!text) {
+      setDisplayed("");
+      return;
+    }
+
+    setDisplayed("");
+    let i = 0;
+
+    const interval = setInterval(() => {
+      i += 1;
+      setDisplayed(text.slice(0, i));
+      if (i >= text.length) clearInterval(interval);
+    }, speed);
+
+    return () => clearInterval(interval);
+  }, [text, speed]);
+
+  return displayed;
+}
+
+// Variants for staggered title reveal
+const titleContainerVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.1,
+      ease: "easeOut",
+      duration: 0.4,
+    },
+  },
+};
+
+const titleLineVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { ease: "easeOut", duration: 0.45 },
+  },
+};
+
 export default function Hero() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [activeTab, setActiveTab] = useState("App.jsx");
   const [isVideoOpen, setIsVideoOpen] = useState(false);
+
+  const navigate = useNavigate();
+  const isAuthenticated = !!localStorage.getItem("accessToken"); // adjust key to your auth
+
+  const handleStartPracticing = () => {
+    if (!isAuthenticated) {
+      navigate("/login");
+    } else {
+      navigate("/app"); // or "/dashboard"
+    }
+  };
 
   useEffect(() => {
     function handleMouseMove(e) {
@@ -21,6 +81,8 @@ export default function Hero() {
   }, []);
 
   const currentFloatingCard = floatingCards[activeTab];
+  const fullCode = codeExamples[activeTab];
+  const typedCode = useTypingEffect(fullCode, 12); // smaller = faster typing
 
   return (
     <>
@@ -68,29 +130,57 @@ export default function Hero() {
                 </span>
               </div>
 
-              <h1 className="mb-4 text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl text-balance">
-                <span className="block mb-1 text-transparent bg-gradient-to-r from-white via-blue-100 to-cyan-100 bg-clip-text">
-                  Practice Smarter
-                </span>
-                <span className="block mb-1 text-transparent bg-gradient-to-b from-blue-400 via-cyan-400 to-blue-400 bg-clip-text">
-                  Ace Every Interview
-                </span>
-                <span className="block text-transparent bg-gradient-to-r from-white via-blue-100 to-cyan-100 bg-clip-text">
-                  With Mockmate AI
-                </span>
-              </h1>
+              {/* Sequential title reveal */}
+              <motion.div
+                variants={titleContainerVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.6 }}
+                className="mb-4 space-y-1 text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl text-balance"
+              >
+                <motion.h1 variants={titleLineVariants}>
+                  <span className="block text-transparent bg-gradient-to-r from-white via-blue-100 to-cyan-100 bg-clip-text">
+                    Practice Smarter
+                  </span>
+                </motion.h1>
+
+                <motion.h1 variants={titleLineVariants}>
+                  <span className="block text-transparent bg-gradient-to-b from-blue-400 via-cyan-400 to-blue-400 bg-clip-text">
+                    Ace Every Interview
+                  </span>
+                </motion.h1>
+
+                <motion.h1 variants={titleLineVariants}>
+                  <span className="block text-transparent bg-gradient-to-r from-white via-blue-100 to-cyan-100 bg-clip-text">
+                    With Mockmate AI
+                  </span>
+                </motion.h1>
+              </motion.div>
 
               <p className="max-w-xl mt-4 text-base text-gray-400 sm:text-lg">
                 Accelerate your prep with adaptive mock questions, instant AI
-                feedback, and data-driven insights—so you’re always ready for
+                feedback, and data-driven insights—so you're always ready for
                 the real thing.
               </p>
 
               <div className="flex flex-col items-center gap-3 mt-8 sm:flex-row sm:gap-4">
-                <PrimaryButton className="w-full gap-2 sm:w-auto">
-                  <span>Start Practicing Free</span>
-                  <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
-                </PrimaryButton>
+                <motion.div
+                  className="overflow-hidden rounded-full"
+                  whileHover={{
+                    y: -6,
+                    scale: 1.03,
+                    boxShadow: "0 0 40px rgba(37,99,235,0.8)",
+                  }}
+                  transition={{ type: "spring", stiffness: 400, damping: 18 }}
+                >
+                  <PrimaryButton
+                    className="w-full gap-2 rounded-full sm:w-auto"
+                    onClick={handleStartPracticing}
+                  >
+                    <span>Start Practicing Free</span>
+                    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                  </PrimaryButton>
+                </motion.div>
 
                 <button
                   type="button"
@@ -105,7 +195,7 @@ export default function Hero() {
               </div>
             </motion.div>
 
-            {/* Right column */}
+            {/* Right column with typing effect */}
             <motion.div
               className="relative mt-12 lg:mt-0"
               initial={{ opacity: 0, x: 24 }}
@@ -115,7 +205,6 @@ export default function Hero() {
             >
               <div className="relative p-4 border shadow-2xl bg-white/5 backdrop-blur-xl rounded-2xl border-white/10">
                 <div className="bg-gradient-to-br from-slate-900/40 to-slate-800/40 rounded-xl overflow-hidden h-[320px] sm:h-[380px] lg:h-[430px] border border-white/5">
-                  {/* IDE header */}
                   <div className="flex items-center justify-between px-4 py-3 border-b bg-white/5 border-white/10">
                     <div className="flex items-center space-x-2">
                       <div className="flex items-center space-x-1">
@@ -131,7 +220,6 @@ export default function Hero() {
                   </div>
 
                   <div className="flex flex-col h-full p-4">
-                    {/* Tabs */}
                     <div className="flex mb-3 space-x-2 overflow-x-auto">
                       {["App.jsx", "Hero.jsx", "Navbar.jsx"].map((tab) => (
                         <button
@@ -148,7 +236,6 @@ export default function Hero() {
                       ))}
                     </div>
 
-                    {/* Code */}
                     <div className="relative flex-1 overflow-hidden">
                       <SyntaxHighlighter
                         language="javascript"
@@ -165,13 +252,12 @@ export default function Hero() {
                           textAlign: "left",
                         }}
                       >
-                        {codeExamples[activeTab]}
+                        {typedCode}
                       </SyntaxHighlighter>
                     </div>
                   </div>
                 </div>
 
-                {/* Floating info card */}
                 <div
                   className={`hidden lg:block absolute -bottom-6 -right-6 w-72 ${currentFloatingCard.bgColor} backdrop-blur-xl rounded-xl p-4 border border-white/20 shadow-2xl`}
                 >

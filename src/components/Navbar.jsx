@@ -46,31 +46,55 @@ export default function Navbar({ scrolled }) {
             </span>
           </Link>
 
-          {/* Desktop Nav Links */}
+          {/* Desktop Nav Links with underline animation */}
           <div className="items-center hidden space-x-4 md:flex lg:space-x-6">
-            <Link
-              to="/#features"
-              className="text-sm text-gray-300 hover:text-white lg:text-base"
-            >
-              Features
+            <Link to="/dashboard" className="relative inline-block group">
+              <span className="text-sm text-gray-300 transition-colors lg:text-base group-hover:text-white">
+                Dashboard
+              </span>
+              <span className="block h-[2px] max-w-0 group-hover:max-w-full bg-gradient-to-r from-blue-400 to-indigo-400 transition-all duration-300" />
             </Link>
-            <Link
-              to="/#pricing"
-              className="text-sm text-gray-300 hover:text-white lg:text-base"
-            >
-              Pricing
+
+            <Link to="/problems" className="relative inline-block group">
+              <span className="text-sm text-gray-300 transition-colors lg:text-base group-hover:text-white">
+                Problems
+              </span>
+              <span className="block h-[2px] max-w-0 group-hover:max-w-full bg-gradient-to-r from-blue-400 to-indigo-400 transition-all duration-300" />
             </Link>
-            <Link
-              to="/#testimonials"
-              className="text-sm text-gray-300 hover:text-white lg:text-base"
-            >
-              Testimonials
+
+            <Link to="/community" className="relative inline-block group">
+              <span className="text-sm text-gray-300 transition-colors lg:text-base group-hover:text-white">
+                Community
+              </span>
+              <span className="block h-[2px] max-w-0 group-hover:max-w-full bg-gradient-to-r from-blue-400 to-indigo-400 transition-all duration-300" />
             </Link>
-            <Link
-              to="/settings"
-              className="text-sm text-gray-300 hover:text-white lg:text-base"
-            >
-              Settings
+
+            <Link to="/#features" className="relative inline-block group">
+              <span className="text-sm text-gray-300 transition-colors lg:text-base group-hover:text-white">
+                Features
+              </span>
+              <span className="block h-[2px] max-w-0 group-hover:max-w-full bg-gradient-to-r from-blue-400 to-indigo-400 transition-all duration-300" />
+            </Link>
+
+            <Link to="/#pricing" className="relative inline-block group">
+              <span className="text-sm text-gray-300 transition-colors lg:text-base group-hover:text-white">
+                Pricing
+              </span>
+              <span className="block h-[2px] max-w-0 group-hover:max-w-full bg-gradient-to-r from-blue-400 to-indigo-400 transition-all duration-300" />
+            </Link>
+
+            <Link to="/#testimonials" className="relative inline-block group">
+              <span className="text-sm text-gray-300 transition-colors lg:text-base group-hover:text-white">
+                Testimonials
+              </span>
+              <span className="block h-[2px] max-w-0 group-hover:max-w-full bg-gradient-to-r from-blue-400 to-indigo-400 transition-all duration-300" />
+            </Link>
+
+            <Link to="/settings" className="relative inline-block group">
+              <span className="text-sm text-gray-300 transition-colors lg:text-base group-hover:text-white">
+                Settings
+              </span>
+              <span className="block h-[2px] max-w-0 group-hover:max-w-full bg-gradient-to-r from-blue-400 to-indigo-400 transition-all duration-300" />
             </Link>
 
             {/* Login button */}
@@ -102,6 +126,27 @@ export default function Navbar({ scrolled }) {
       {mobileMenuIsOpen && (
         <div className="duration-300 border-t md:hidden bg-slate-900/95 backdrop-blur-lg border-slate-800 animate-in slide-in-from-top">
           <div className="px-4 py-4 space-y-3 sm:py-6 sm:space-y-4">
+            <Link
+              to="/dashboard"
+              onClick={() => setMobileMenuIsOpen(false)}
+              className="block text-sm text-gray-300 hover:text-white"
+            >
+              Dashboard
+            </Link>
+            <Link
+              to="/problems"
+              onClick={() => setMobileMenuIsOpen(false)}
+              className="block text-sm text-gray-300 hover:text-white"
+            >
+              Problems
+            </Link>
+            <Link
+              to="/community"
+              onClick={() => setMobileMenuIsOpen(false)}
+              className="block text-sm text-gray-300 hover:text-white"
+            >
+              Community
+            </Link>
             <Link
               to="/#features"
               onClick={() => setMobileMenuIsOpen(false)}
@@ -136,7 +181,7 @@ export default function Navbar({ scrolled }) {
               onClick={() => setMobileMenuIsOpen(false)}
               className="inline-flex items-center justify-center w-full px-4 py-2 mt-2 text-sm font-semibold text-white transition bg-blue-500 rounded-full shadow-sm hover:bg-blue-600 shadow-blue-500/40"
             >
-              Login
+              Sign Up/ Login
             </Link>
           </div>
         </div>

@@ -60,17 +60,50 @@ const features = [
   },
 ];
 
+const cardVariants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: (i) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      delay: 0.08 * i,
+      ease: "easeOut",
+    },
+  }),
+};
+
 export default function Features() {
   return (
     <motion.section
       id="features"
-      className="py-24 bg-gray-900 sm:py-32"
+      className="relative py-24 bg-gray-900 sm:py-32"
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
     >
-      <div className="max-w-2xl px-6 mx-auto lg:max-w-7xl lg:px-8">
+      {/* background glow */}
+      <motion.div
+        aria-hidden="true"
+        className="absolute inset-x-0 flex justify-center pointer-events-none top-24"
+      >
+        <motion.div
+          initial={{ opacity: 0.25, scale: 0.9 }}
+          animate={{
+            opacity: [0.25, 0.4, 0.25],
+            scale: [0.9, 1.05, 0.9],
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="h-64 w-[60rem] rounded-full bg-gradient-to-r from-indigo-600/40 via-blue-500/35 to-cyan-400/30 blur-3xl"
+        />
+      </motion.div>
+
+      <div className="relative max-w-2xl px-6 mx-auto lg:max-w-7xl lg:px-8">
         <h2 className="text-sm font-semibold text-center text-indigo-400">
           Mockmate Interview Practice Suite
         </h2>
@@ -82,10 +115,13 @@ export default function Features() {
           {/* Card 1 – AI Interview Simulation */}
           <motion.div
             className="relative lg:row-span-2"
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            custom={0}
+            variants={cardVariants}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.5, delay: 0.05, ease: "easeOut" }}
+            whileHover={{ y: -8, scale: 1.01 }}
+            transition={{ type: "spring", stiffness: 260, damping: 22 }}
           >
             <div className="absolute bg-gray-800 rounded-lg inset-px lg:rounded-l-4xl" />
             <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)] lg:rounded-l-[calc(2rem+1px)]">
@@ -125,10 +161,13 @@ export default function Features() {
           {/* Card 2 – Instant AI Feedback */}
           <motion.div
             className="relative max-lg:row-start-1"
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            custom={1}
+            variants={cardVariants}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
+            whileHover={{ y: -8, scale: 1.01 }}
+            transition={{ type: "spring", stiffness: 260, damping: 22 }}
           >
             <div className="absolute bg-gray-800 rounded-lg inset-px max-lg:rounded-t-4xl" />
             <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)] max-lg:rounded-t-[calc(2rem+1px)]">
@@ -166,10 +205,13 @@ export default function Features() {
           {/* Card 3 – Progress Analytics & Insights */}
           <motion.div
             className="relative max-lg:row-start-3 lg:col-start-2 lg:row-start-2"
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            custom={2}
+            variants={cardVariants}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.5, delay: 0.15, ease: "easeOut" }}
+            whileHover={{ y: -8, scale: 1.01 }}
+            transition={{ type: "spring", stiffness: 260, damping: 22 }}
           >
             <div className="absolute bg-gray-800 rounded-lg inset-px" />
             <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)]">
@@ -204,13 +246,16 @@ export default function Features() {
             <div className="absolute rounded-lg shadow-sm pointer-events-none inset-px outline outline-white/15" />
           </motion.div>
 
-          {/* Card 4 – Live code practice (links to /code-demo) */}
+          {/* Card 4 – Live code practice */}
           <motion.div
             className="relative lg:row-span-2"
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            custom={3}
+            variants={cardVariants}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
+            whileHover={{ y: -8, scale: 1.01 }}
+            transition={{ type: "spring", stiffness: 260, damping: 22 }}
           >
             <div className="absolute bg-gray-800 rounded-lg inset-px max-lg:rounded-b-4xl lg:rounded-r-4xl" />
             <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)] max-lg:rounded-b-[calc(2rem+1px)] lg:rounded-r-[calc(2rem+1px)]">

@@ -27,6 +27,15 @@ import SessionReport from "./pages/SessionReport";
 import Changelog from "./pages/Changelog";
 import CodeDemo from "./pages/CodeDemo";
 import Settings from "./pages/Settings";
+import SignupOverview from "./pages/SignupOverview";
+import VerifyMethod from "./pages/VerifyMethod";
+import VerifyStart from "./pages/VerifyStart";
+import VerifyCode from "./pages/VerifyCode";
+import VerifySuccess from "./pages/VerifySuccess";
+import Signup from "./pages/Signup";
+import Problems from "./pages/Problems";
+import Community from "./pages/Community";
+import ProblemDiscussion from "./pages/ProblemDiscussion"; 
 
 function App() {
   const [scrolled, setScrolled] = useState(false);
@@ -88,6 +97,15 @@ function App() {
             <Route path="/changelog" element={<Changelog />} />
             <Route path="/code-demo" element={<CodeDemo />} />
             <Route path="/settings" element={<Settings />} />
+            <Route path="/verify/method" element={<VerifyMethod />} />
+            <Route path="/verify/start" element={<VerifyStart />} />
+            <Route path="/verify/code" element={<VerifyCode />} />
+            <Route path="/verify/success" element={<VerifySuccess />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/signup-flow/overview" element={<SignupOverview />} />
+            <Route path="/problems" element={<Problems />} />
+            <Route path="/community" element={<Community />} />
+            <Route path="/problems/:id/discuss" element={<ProblemDiscussion />} />
           </Routes>
         </motion.div>
       </AnimatePresence>

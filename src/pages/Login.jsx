@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [form, setForm] = useState({ email: "", password: "" });
@@ -8,9 +8,11 @@ export default function Login() {
   const [errors, setErrors] = useState({});
   const [success, setSuccess] = useState(false);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (!success) return;
-    const id = setTimeout(() => setSuccess(false), 4000); // auto-hide after 4s
+    const id = setTimeout(() => setSuccess(false), 4000);
     return () => clearTimeout(id);
   }, [success]);
 
@@ -53,15 +55,15 @@ export default function Login() {
 
   return (
     <>
-      <div className="min-h-screen flex">
+      <div className="flex min-h-screen">
         {/* Left side - Login Form */}
         <div className="w-full lg:w-1/2 flex items-center justify-center bg-[#0a0e1a] px-6 pt-28 pb-16">
           <div className="w-full max-w-md">
             {/* Logo */}
             <div className="mb-8">
-              <div className="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center mb-6">
+              <div className="flex items-center justify-center w-12 h-12 mb-6 bg-blue-500/20 rounded-xl">
                 <svg
-                  className="w-7 h-7 text-blue-400"
+                  className="text-blue-400 w-7 h-7"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -75,18 +77,23 @@ export default function Login() {
                   />
                 </svg>
               </div>
-              <h1 className="text-3xl font-bold text-white mb-2">
+              <h1 className="mb-2 text-3xl font-bold text-white">
                 Sign in to your account
               </h1>
-              <p className="text-sm text-slate-400">
-                Not a member?{" "}
-                <Link
-                  to="/signup"
-                  className="text-blue-400 hover:text-blue-300 font-medium"
+
+              {/* Updated copy + button to start signup flow */}
+              <div className="mt-3">
+                <p className="mb-1 text-sm text-slate-300">
+                  Don’t have an account yet?
+                </p>
+                <button
+                  type="button"
+                  onClick={() => navigate("/signup-flow/overview")}
+                  className="inline-flex items-center justify-center px-4 py-2 text-xs font-medium transition rounded-full bg-slate-800 text-slate-100 hover:bg-slate-700"
                 >
-                  Start a 14-day free trial
-                </Link>
-              </p>
+                  Set up a new account →
+                </button>
+              </div>
             </div>
 
             {/* Form */}
@@ -94,7 +101,7 @@ export default function Login() {
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-sm font-medium text-slate-200 mb-2"
+                  className="block mb-2 text-sm font-medium text-slate-200"
                 >
                   Email address
                 </label>
@@ -122,7 +129,7 @@ export default function Login() {
               <div>
                 <label
                   htmlFor="password"
-                  className="block text-sm font-medium text-slate-200 mb-2"
+                  className="block mb-2 text-sm font-medium text-slate-200"
                 >
                   Password
                 </label>
@@ -161,7 +168,7 @@ export default function Login() {
                   />
                   <label
                     htmlFor="remember-me"
-                    className="ml-2 block text-sm text-slate-300"
+                    className="block ml-2 text-sm text-slate-300"
                   >
                     Remember me
                   </label>
@@ -169,7 +176,7 @@ export default function Login() {
 
                 <button
                   type="button"
-                  className="text-sm text-blue-400 hover:text-blue-300 font-medium"
+                  className="text-sm font-medium text-blue-400 hover:text-blue-300"
                 >
                   Forgot password?
                 </button>
@@ -178,11 +185,11 @@ export default function Login() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full rounded-lg bg-blue-500 hover:bg-blue-600 disabled:bg-blue-500/50 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-500/30 transition-all duration-200 flex items-center justify-center gap-2"
+                className="flex items-center justify-center w-full gap-2 px-4 py-3 text-sm font-semibold text-white transition-all duration-200 bg-blue-500 rounded-lg shadow-lg hover:bg-blue-600 disabled:bg-blue-500/50 shadow-blue-500/30"
               >
                 {loading ? (
                   <>
-                    <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white" />
+                    <span className="w-4 h-4 border-2 rounded-full animate-spin border-white/40 border-t-white" />
                     Signing in...
                   </>
                 ) : (
@@ -205,11 +212,16 @@ export default function Login() {
 
             {/* Social Login */}
             <div className="grid grid-cols-2 gap-3">
+              {/* Google */}
               <button
                 type="button"
                 className="flex items-center justify-center gap-2 rounded-lg bg-[#0f1420] border border-slate-700/60 px-4 py-2.5 text-sm font-medium text-slate-200 hover:bg-slate-800/50 transition"
               >
-                <svg className="w-5 h-5" viewBox="0 0 24 24" aria-hidden="true">
+                <svg
+                  className="w-5 h-5"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
                   <path
                     fill="currentColor"
                     d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -227,33 +239,34 @@ export default function Login() {
                     d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
                   />
                 </svg>
-                Google
+                <span>Google</span>
               </button>
 
+              {/* GitHub */}
               <button
                 type="button"
                 className="flex items-center justify-center gap-2 rounded-lg bg-[#0f1420] border border-slate-700/60 px-4 py-2.5 text-sm font-medium text-slate-200 hover:bg-slate-800/50 transition"
               >
                 <svg
                   className="w-5 h-5"
-                  fill="currentColor"
                   viewBox="0 0 24 24"
+                  fill="currentColor"
                   aria-hidden="true"
                 >
                   <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
                 </svg>
-                GitHub
+                <span>GitHub</span>
               </button>
             </div>
           </div>
         </div>
 
         {/* Right side - Image */}
-        <div className="hidden lg:block lg:w-1/2 relative">
+        <div className="relative hidden lg:block lg:w-1/2">
           <img
             src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?w=1200&auto=format&fit=crop"
             alt="Workspace"
-            className="absolute inset-0 h-full w-full object-cover"
+            className="absolute inset-0 object-cover w-full h-full"
           />
           <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-indigo-900/40"></div>
         </div>
@@ -261,7 +274,7 @@ export default function Login() {
 
       {/* Simple success toast */}
       {success && (
-        <div className="fixed bottom-6 right-6 z-40 rounded-lg bg-emerald-600 px-4 py-3 text-sm text-white shadow-lg">
+        <div className="fixed z-40 px-4 py-3 text-sm text-white rounded-lg shadow-lg bottom-6 right-6 bg-emerald-600">
           Signed in successfully.
         </div>
       )}
