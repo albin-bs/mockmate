@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion"; // ✅ Changed from m to motion
 
 export default function SplashScreen() {
   const [isVisible, setIsVisible] = useState(true);
@@ -12,7 +12,7 @@ export default function SplashScreen() {
   return (
     <AnimatePresence>
       {isVisible && (
-        <motion.div
+        <motion.div // ✅ Changed from m.div to motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -22,7 +22,7 @@ export default function SplashScreen() {
         >
           {/* Animated background gradient */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            <motion.div
+            <motion.div // ✅ Changed
               animate={{
                 scale: [1, 1.2, 1],
                 opacity: [0.3, 0.5, 0.3],
@@ -34,7 +34,7 @@ export default function SplashScreen() {
               }}
               className="absolute rounded-full top-1/4 left-1/4 w-96 h-96 bg-blue-500/20 blur-3xl"
             />
-            <motion.div
+            <motion.div // ✅ Changed
               animate={{
                 scale: [1.2, 1, 1.2],
                 opacity: [0.2, 0.4, 0.2],
@@ -50,14 +50,14 @@ export default function SplashScreen() {
           </div>
 
           {/* Main card */}
-          <motion.div
+          <motion.div // ✅ Changed
             initial={{ scale: 0.9, y: 20 }}
             animate={{ scale: 1, y: 0 }}
             transition={{ duration: 0.4, ease: "easeOut" }}
             className="relative flex flex-col items-center justify-center w-[360px] bg-black/15 backdrop-blur-md rounded-3xl px-6 pt-6 pb-5 border border-white/15 shadow-[0_20px_60px_rgba(0,0,0,0.5)]"
           >
             {/* Video container with glow effect */}
-            <motion.div
+            <motion.div // ✅ Changed
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2, duration: 0.4 }}
@@ -77,17 +77,16 @@ export default function SplashScreen() {
             </motion.div>
 
             {/* Text with typing animation */}
-            <motion.div
+            <motion.div // ✅ Changed
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5, duration: 0.4 }}
               className="flex flex-col items-center gap-3"
             >
-
               {/* Loading dots animation */}
               <div className="flex items-center gap-1.5">
                 {[0, 1, 2].map((i) => (
-                  <motion.div
+                  <motion.div // ✅ Changed
                     key={i}
                     animate={{
                       scale: [1, 1.3, 1],
@@ -106,7 +105,7 @@ export default function SplashScreen() {
             </motion.div>
 
             {/* Optional: Brand name */}
-            <motion.div
+            <motion.div // ✅ Changed
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.8, duration: 0.4 }}
@@ -119,7 +118,7 @@ export default function SplashScreen() {
           </motion.div>
 
           {/* Optional: Subtle pulse ring effect */}
-          <motion.div
+          <motion.div // ✅ Changed
             animate={{
               scale: [1, 1.5, 1],
               opacity: [0.4, 0, 0.4],

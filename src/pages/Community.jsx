@@ -1,5 +1,5 @@
 import { useState, useEffect, memo, useCallback, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import {
   Trophy,
   Medal,
@@ -173,7 +173,7 @@ const COMMUNITY_RULES = [
   { emoji: "✅", text: "Be respectful and helpful" },
   { emoji: "✅", text: "Share knowledge and solutions" },
   { emoji: "✅", text: "Ask questions freely" },
-  { emoji: "❌", text: "No spam or self-promotion" },
+  { emoji: "❌", text: "No spam or self-prom" },
   { emoji: "❌", text: "No plagiarism" },
 ];
 
@@ -226,7 +226,7 @@ const RankBadge = memo(function RankBadge({ rank }) {
 // ✅ Memoized Stat Card
 const StatCard = memo(function StatCard({ stat, index }) {
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ delay: 0.3 + index * 0.1 }}
@@ -243,14 +243,14 @@ const StatCard = memo(function StatCard({ stat, index }) {
         <p className="mb-1 text-3xl font-bold text-white">{stat.value}</p>
         <p className="text-sm text-white/80">{stat.label}</p>
       </div>
-    </motion.div>
+    </m.div>
   );
 });
 
 // ✅ Memoized Tab Button
 const TabButton = memo(function TabButton({ tab, isActive, onClick }) {
   return (
-    <motion.button
+    <m.button
       onClick={onClick}
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
@@ -263,20 +263,20 @@ const TabButton = memo(function TabButton({ tab, isActive, onClick }) {
       {tab.icon}
       {tab.label}
       {isActive && (
-        <motion.div
+        <m.div
           layoutId="activeTab"
           className="absolute inset-0 bg-purple-600 rounded-lg -z-10"
           transition={{ type: "spring", stiffness: 380, damping: 30 }}
         />
       )}
-    </motion.button>
+    </m.button>
   );
 });
 
 // ✅ Memoized Podium User
 const PodiumUser = memo(function PodiumUser({ user, actualRank, index }) {
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.1 }}
@@ -306,14 +306,14 @@ const PodiumUser = memo(function PodiumUser({ user, actualRank, index }) {
           <span className="text-sm font-semibold text-slate-300">{user.streak}d</span>
         </div>
       </div>
-    </motion.div>
+    </m.div>
   );
 });
 
 // ✅ Memoized Leaderboard Row
 const LeaderboardRow = memo(function LeaderboardRow({ user, index }) {
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: index * 0.05 }}
@@ -359,14 +359,14 @@ const LeaderboardRow = memo(function LeaderboardRow({ user, index }) {
           </div>
         </div>
       </div>
-    </motion.div>
+    </m.div>
   );
 });
 
 // ✅ Memoized Discussion Card
 const DiscussionCard = memo(function DiscussionCard({ discussion, index }) {
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.1 }}
@@ -419,7 +419,7 @@ const DiscussionCard = memo(function DiscussionCard({ discussion, index }) {
           </div>
         </div>
       </div>
-    </motion.div>
+    </m.div>
   );
 });
 
@@ -470,7 +470,7 @@ const Community = memo(function Community() {
     <main className="min-h-screen px-4 pt-20 pb-12 bg-slate-950 text-slate-100 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
         {/* Header */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
@@ -486,10 +486,10 @@ const Community = memo(function Community() {
           <p className="text-lg text-slate-400">
             Connect with thousands of developers improving their coding skills together
           </p>
-        </motion.div>
+        </m.div>
 
         {/* Stats Cards */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.6 }}
@@ -498,10 +498,10 @@ const Community = memo(function Community() {
           {STATS_DATA.map((stat, index) => (
             <StatCard key={index} stat={stat} index={index} />
           ))}
-        </motion.div>
+        </m.div>
 
         {/* Tabs */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4 }}
@@ -515,13 +515,13 @@ const Community = memo(function Community() {
               onClick={() => handleTabChange(tab.id)}
             />
           ))}
-        </motion.div>
+        </m.div>
 
         {/* Tab Content */}
         <AnimatePresence mode="wait">
           {/* Leaderboard Tab */}
           {activeTab === "leaderboard" && (
-            <motion.div
+            <m.div
               key="leaderboard"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -578,20 +578,20 @@ const Community = memo(function Community() {
               </div>
 
               <div className="mt-6 text-center">
-                <motion.button
+                <m.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   className="px-8 py-3 font-semibold transition-colors rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-100"
                 >
                   Load More
-                </motion.button>
+                </m.button>
               </div>
-            </motion.div>
+            </m.div>
           )}
 
           {/* Discord Tab */}
           {activeTab === "discord" && (
-            <motion.div
+            <m.div
               key="discord"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -659,23 +659,23 @@ const Community = memo(function Community() {
 
                 <div className="grid grid-cols-3 gap-4">
                   {DISCORD_STATS.map((stat, i) => (
-                    <motion.div
+                    <m.div
                       key={i}
                       whileHover={{ scale: 1.05 }}
                       className="p-4 text-center border rounded-xl border-slate-800 bg-slate-900/50"
                     >
                       <p className={`text-2xl font-bold ${stat.color} mb-1`}>{stat.value}</p>
                       <p className="text-xs text-slate-400">{stat.label}</p>
-                    </motion.div>
+                    </m.div>
                   ))}
                 </div>
               </div>
-            </motion.div>
+            </m.div>
           )}
 
           {/* Discussions Tab */}
           {activeTab === "discussions" && (
-            <motion.div
+            <m.div
               key="discussions"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -686,14 +686,14 @@ const Community = memo(function Community() {
                 <h2 className="text-xl font-bold text-slate-100">
                   Problem Discussions
                 </h2>
-                <motion.button
+                <m.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   className="flex items-center gap-2 px-6 py-3 font-semibold text-white transition-colors bg-purple-600 rounded-lg hover:bg-purple-500"
                 >
                   <Plus className="w-4 h-4" />
                   New Discussion
-                </motion.button>
+                </m.button>
               </div>
 
               <div className="space-y-4">
@@ -705,7 +705,7 @@ const Community = memo(function Community() {
                   />
                 ))}
               </div>
-            </motion.div>
+            </m.div>
           )}
         </AnimatePresence>
       </div>

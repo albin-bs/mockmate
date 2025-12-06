@@ -1,5 +1,5 @@
 import { useState, memo, useCallback, useMemo } from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Check, Star, Zap, Users, Sparkles, ArrowRight, HelpCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -99,7 +99,7 @@ const cardVariants = {
 const BackgroundBlobs = memo(function BackgroundBlobs() {
   return (
     <div className="absolute inset-0 -z-10">
-      <motion.div
+      <m.div
         animate={{
           scale: [1, 1.2, 1],
           opacity: [0.3, 0.5, 0.3],
@@ -111,7 +111,7 @@ const BackgroundBlobs = memo(function BackgroundBlobs() {
         }}
         className="absolute top-0 rounded-full left-1/4 w-96 h-96 bg-blue-500/20 blur-3xl"
       />
-      <motion.div
+      <m.div
         animate={{
           scale: [1.2, 1, 1.2],
           opacity: [0.2, 0.4, 0.2],
@@ -131,7 +131,7 @@ const BackgroundBlobs = memo(function BackgroundBlobs() {
 // ✅ Memoize BillingToggle
 const BillingToggle = memo(function BillingToggle({ billingPeriod, onToggle }) {
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, y: 10 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -142,17 +142,17 @@ const BillingToggle = memo(function BillingToggle({ billingPeriod, onToggle }) {
         Monthly
       </span>
       
-      <motion.button
+      <m.button
         whileTap={{ scale: 0.95 }}
         onClick={onToggle}
         className="relative inline-flex items-center w-16 h-8 transition-all rounded-full shadow-lg bg-gradient-to-r from-blue-600 to-indigo-600 shadow-blue-500/30 hover:shadow-blue-500/50"
       >
-        <motion.span
+        <m.span
           animate={{ x: billingPeriod === "yearly" ? 34 : 4 }}
           transition={{ type: "spring", stiffness: 500, damping: 30 }}
           className="inline-block w-6 h-6 bg-white rounded-full shadow-lg"
         />
-      </motion.button>
+      </m.button>
       
       <div className="flex items-center gap-2">
         <span className={`text-sm font-medium transition-colors ${billingPeriod === "yearly" ? "text-white" : "text-slate-400"}`}>
@@ -162,14 +162,14 @@ const BillingToggle = memo(function BillingToggle({ billingPeriod, onToggle }) {
           Save 20%
         </span>
       </div>
-    </motion.div>
+    </m.div>
   );
 });
 
 // ✅ Memoize FeatureItem
 const FeatureItem = memo(function FeatureItem({ feature, index }) {
   return (
-    <motion.li
+    <m.li
       initial={{ opacity: 0, x: -10 }}
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true }}
@@ -180,7 +180,7 @@ const FeatureItem = memo(function FeatureItem({ feature, index }) {
         <Check className="w-3 h-3 text-blue-400" />
       </div>
       <span>{feature}</span>
-    </motion.li>
+    </m.li>
   );
 });
 
@@ -192,7 +192,7 @@ const PricingCard = memo(function PricingCard({ plan, index, billingPeriod }) {
   const savings = billingPeriod === "yearly" ? (monthlyPrice * 12 * 0.2).toFixed(2) : null;
 
   return (
-    <motion.div
+    <m.div
       custom={index}
       variants={cardVariants}
       initial="hidden"
@@ -207,7 +207,7 @@ const PricingCard = memo(function PricingCard({ plan, index, billingPeriod }) {
       } backdrop-blur-sm`}
     >
       {plan.mostPopular && (
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           className="absolute -translate-x-1/2 -top-4 left-1/2"
@@ -216,7 +216,7 @@ const PricingCard = memo(function PricingCard({ plan, index, billingPeriod }) {
             <Star className="w-4 h-4 fill-white" />
             Most Popular
           </div>
-        </motion.div>
+        </m.div>
       )}
 
       <div className="flex items-center gap-3 mb-4">
@@ -245,7 +245,7 @@ const PricingCard = memo(function PricingCard({ plan, index, billingPeriod }) {
       </div>
 
       <Link to="/signup">
-        <motion.button
+        <m.button
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           className={`w-full py-4 rounded-xl font-semibold text-white transition-all flex items-center justify-center gap-2 ${
@@ -256,7 +256,7 @@ const PricingCard = memo(function PricingCard({ plan, index, billingPeriod }) {
         >
           <span>Start 14-Day Free Trial</span>
           <ArrowRight className="w-4 h-4" />
-        </motion.button>
+        </m.button>
       </Link>
 
       <ul className="mt-8 space-y-4">
@@ -264,14 +264,14 @@ const PricingCard = memo(function PricingCard({ plan, index, billingPeriod }) {
           <FeatureItem key={i} feature={feature} index={i} />
         ))}
       </ul>
-    </motion.div>
+    </m.div>
   );
 });
 
 // ✅ Memoize FAQItem
 const FAQItem = memo(function FAQItem({ faq, index }) {
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, y: 10 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -280,7 +280,7 @@ const FAQItem = memo(function FAQItem({ faq, index }) {
     >
       <h4 className="mb-2 text-lg font-semibold text-white">{faq.question}</h4>
       <p className="text-gray-400">{faq.answer}</p>
-    </motion.div>
+    </m.div>
   );
 });
 
@@ -312,7 +312,7 @@ const Pricing = memo(function Pricing() {
 
       {/* Header */}
       <div className="relative max-w-4xl mx-auto text-center">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -333,7 +333,7 @@ const Pricing = memo(function Pricing() {
           <p className="max-w-2xl mx-auto text-lg leading-relaxed text-gray-400">
             Start with a 14-day free trial. No credit card required. All plans include full access to MockMate's AI-powered interview coaching.
           </p>
-        </motion.div>
+        </m.div>
       </div>
 
       <BillingToggle billingPeriod={billingPeriod} onToggle={handleToggleBilling} />
@@ -351,7 +351,7 @@ const Pricing = memo(function Pricing() {
       </div>
 
       {/* Enterprise CTA */}
-      <motion.div
+      <m.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
@@ -366,20 +366,20 @@ const Pricing = memo(function Pricing() {
             Get in touch with our team to discuss volume pricing, custom features, and dedicated support.
           </p>
           <Link to="/contact">
-            <motion.button
+            <m.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="inline-flex items-center gap-2 px-6 py-3 font-semibold text-white transition-all border rounded-lg bg-white/10 hover:bg-white/20 border-white/20"
             >
               Contact Sales Team
               <ArrowRight className="w-4 h-4" />
-            </motion.button>
+            </m.button>
           </Link>
         </div>
-      </motion.div>
+      </m.div>
 
       {/* FAQ Section */}
-      <motion.div
+      <m.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
@@ -412,10 +412,10 @@ const Pricing = memo(function Pricing() {
             </Link>
           </p>
         </div>
-      </motion.div>
+      </m.div>
 
       {/* Trust indicators */}
-      <motion.div
+      <m.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
@@ -425,7 +425,7 @@ const Pricing = memo(function Pricing() {
         {TRUST_INDICATORS.map((indicator, i) => (
           <TrustIndicator key={i} text={indicator.text} />
         ))}
-      </motion.div>
+      </m.div>
     </section>
   );
 });

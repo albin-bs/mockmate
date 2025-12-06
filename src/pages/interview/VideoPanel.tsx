@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Camera, User } from "lucide-react";
 
 export default function VideoPanel({ isCameraOn, config }: any) {
@@ -41,7 +41,7 @@ export default function VideoPanel({ isCameraOn, config }: any) {
   return (
     <div className="space-y-4">
       {/* AI Avatar */}
-      <motion.div
+      <m.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden"
@@ -57,10 +57,10 @@ export default function VideoPanel({ isCameraOn, config }: any) {
             <p className="text-slate-500 text-sm">AI Avatar will appear here</p>
           </div>
         </div>
-      </motion.div>
+      </m.div>
 
       {/* User Webcam */}
-      <motion.div
+      <m.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.1 }}
@@ -86,7 +86,7 @@ export default function VideoPanel({ isCameraOn, config }: any) {
             </div>
           )}
         </div>
-      </motion.div>
+      </m.div>
     </div>
   );
 }

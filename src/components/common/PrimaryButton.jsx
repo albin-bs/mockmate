@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 
 export default function PrimaryButton({
   children,
@@ -97,14 +97,14 @@ export default function PrimaryButton({
   // Wrapper for animation
   const AnimationWrapper = ({ children }) =>
     animated ? (
-      <motion.div
+      <m.div
         whileHover={{ scale: disabled ? 1 : 1.02 }}
         whileTap={{ scale: disabled ? 1 : 0.98 }}
         transition={{ type: "spring", stiffness: 400, damping: 17 }}
         className="inline-flex"
       >
         {children}
-      </motion.div>
+      </m.div>
     ) : (
       children
     );

@@ -1,6 +1,6 @@
 import { X, Rocket, Sparkles } from "lucide-react";
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 
 export default function FloatingAnnouncement() {
   const [visible, setVisible] = useState(false);
@@ -43,20 +43,20 @@ export default function FloatingAnnouncement() {
   return (
     <AnimatePresence>
       {visible && (
-        <motion.div
+        <m.div
           initial={{ y: 100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 100, opacity: 0 }}
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
           className="fixed inset-x-0 z-40 flex justify-center px-4 pointer-events-none bottom-6"
         >
-          <motion.div
+          <m.div
             whileHover={{ scale: 1.02, y: -2 }}
             transition={{ type: "spring", stiffness: 400, damping: 20 }}
             className="relative flex items-center max-w-2xl gap-3 px-5 py-3 text-sm rounded-full shadow-2xl pointer-events-auto bg-gradient-to-r from-slate-900/95 via-slate-900/95 to-slate-800/95 backdrop-blur-md text-slate-100 shadow-slate-900/60 ring-1 ring-slate-700/80"
           >
             {/* Animated gradient border */}
-            <motion.div
+            <m.div
               animate={{
                 opacity: [0.5, 1, 0.5],
               }}
@@ -71,7 +71,7 @@ export default function FloatingAnnouncement() {
             {/* Content */}
             <div className="relative flex items-center gap-3">
               {/* Icon with pulse animation */}
-              <motion.div
+              <m.div
                 animate={{
                   scale: [1, 1.1, 1],
                   rotate: [0, 5, -5, 0],
@@ -84,7 +84,7 @@ export default function FloatingAnnouncement() {
                 className="flex items-center justify-center w-8 h-8 rounded-full shadow-lg bg-gradient-to-br from-blue-500 to-indigo-600 shadow-blue-500/30"
               >
                 <Rocket className="w-4 h-4 text-white" />
-              </motion.div>
+              </m.div>
 
               {/* Text content */}
               <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-3">
@@ -102,7 +102,7 @@ export default function FloatingAnnouncement() {
               </div>
 
               {/* Close button */}
-              <motion.button
+              <m.button
                 whileHover={{ scale: 1.1, rotate: 90 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={handleDismiss}
@@ -110,11 +110,11 @@ export default function FloatingAnnouncement() {
                 aria-label="Dismiss announcement"
               >
                 <X className="w-4 h-4" />
-              </motion.button>
+              </m.button>
             </div>
 
             {/* Sparkle decorations */}
-            <motion.div
+            <m.div
               animate={{
                 opacity: [0.3, 1, 0.3],
                 scale: [0.8, 1, 0.8],
@@ -128,8 +128,8 @@ export default function FloatingAnnouncement() {
               className="absolute -top-1 -left-1"
             >
               <Sparkles className="w-3 h-3 text-blue-400" />
-            </motion.div>
-            <motion.div
+            </m.div>
+            <m.div
               animate={{
                 opacity: [0.3, 1, 0.3],
                 scale: [0.8, 1, 0.8],
@@ -143,9 +143,9 @@ export default function FloatingAnnouncement() {
               className="absolute -bottom-1 -right-1"
             >
               <Sparkles className="w-3 h-3 text-indigo-400" />
-            </motion.div>
-          </motion.div>
-        </motion.div>
+            </m.div>
+          </m.div>
+        </m.div>
       )}
     </AnimatePresence>
   );

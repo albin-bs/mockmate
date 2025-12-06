@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Link } from "react-router-dom";
 import { 
   Trophy, 
@@ -68,25 +68,25 @@ export default function InterviewSummary({ sessionId, onRestart }: InterviewSumm
   return (
     <div className="max-w-6xl px-4 py-12 mx-auto space-y-8">
       {/* Header */}
-      <motion.div
+      <m.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         className="text-center"
       >
-        <motion.div
+        <m.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ type: "spring", delay: 0.2 }}
           className="flex items-center justify-center w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-br from-emerald-500 to-blue-500"
         >
           <Trophy className="w-12 h-12 text-white" />
-        </motion.div>
+        </m.div>
         <h1 className="mb-2 text-4xl font-bold">Interview Complete! 🎉</h1>
         <p className="text-lg text-slate-400">Here's how you performed</p>
-      </motion.div>
+      </m.div>
 
       {/* Overall Score Card */}
-      <motion.div
+      <m.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.3 }}
@@ -94,14 +94,14 @@ export default function InterviewSummary({ sessionId, onRestart }: InterviewSumm
       >
         <p className="mb-2 text-slate-400">Overall Performance</p>
         <div className="flex items-center justify-center gap-4 mb-2">
-          <motion.span
+          <m.span
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ type: "spring", delay: 0.5 }}
             className={`text-6xl font-bold ${getScoreColor(summary.overallScore)}`}
           >
             {summary.overallScore}
-          </motion.span>
+          </m.span>
           <span className="text-3xl text-slate-500">/100</span>
         </div>
         <p className={`text-xl font-semibold ${getScoreColor(summary.overallScore)}`}>
@@ -122,10 +122,10 @@ export default function InterviewSummary({ sessionId, onRestart }: InterviewSumm
             <p className="text-sm text-slate-400">Questions</p>
           </div>
         </div>
-      </motion.div>
+      </m.div>
 
       {/* Score Breakdown */}
-      <motion.div
+      <m.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
@@ -138,7 +138,7 @@ export default function InterviewSummary({ sessionId, onRestart }: InterviewSumm
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           {Object.entries(summary.scores).map(([key, score], index) => (
-            <motion.div
+            <m.div
               key={key}
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -149,7 +149,7 @@ export default function InterviewSummary({ sessionId, onRestart }: InterviewSumm
                 <span className={`font-semibold ${getScoreColor(score)}`}>{score}%</span>
               </div>
               <div className="w-full h-3 overflow-hidden rounded-full bg-slate-950">
-                <motion.div
+                <m.div
                   initial={{ width: 0 }}
                   animate={{ width: `${score}%` }}
                   transition={{ duration: 1, delay: 0.7 + index * 0.1 }}
@@ -158,15 +158,15 @@ export default function InterviewSummary({ sessionId, onRestart }: InterviewSumm
                   }`}
                 />
               </div>
-            </motion.div>
+            </m.div>
           ))}
         </div>
-      </motion.div>
+      </m.div>
 
       {/* Strengths & Improvements */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         {/* Strengths */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.6 }}
@@ -178,7 +178,7 @@ export default function InterviewSummary({ sessionId, onRestart }: InterviewSumm
           </h3>
           <ul className="space-y-3">
             {summary.strengths.map((strength, index) => (
-              <motion.li
+              <m.li
                 key={index}
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -187,13 +187,13 @@ export default function InterviewSummary({ sessionId, onRestart }: InterviewSumm
               >
                 <CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
                 <span className="text-sm text-slate-300">{strength}</span>
-              </motion.li>
+              </m.li>
             ))}
           </ul>
-        </motion.div>
+        </m.div>
 
         {/* Areas for Improvement */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.6 }}
@@ -205,7 +205,7 @@ export default function InterviewSummary({ sessionId, onRestart }: InterviewSumm
           </h3>
           <ul className="space-y-3">
             {summary.improvements.map((improvement, index) => (
-              <motion.li
+              <m.li
                 key={index}
                 initial={{ opacity: 0, x: 10 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -214,14 +214,14 @@ export default function InterviewSummary({ sessionId, onRestart }: InterviewSumm
               >
                 <AlertCircle className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
                 <span className="text-sm text-slate-300">{improvement}</span>
-              </motion.li>
+              </m.li>
             ))}
           </ul>
-        </motion.div>
+        </m.div>
       </div>
 
       {/* Question Performance */}
-      <motion.div
+      <m.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.8 }}
@@ -262,10 +262,10 @@ export default function InterviewSummary({ sessionId, onRestart }: InterviewSumm
             </div>
           </div>
         </div>
-      </motion.div>
+      </m.div>
 
       {/* Action Buttons */}
-      <motion.div
+      <m.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.9 }}
@@ -296,7 +296,7 @@ export default function InterviewSummary({ sessionId, onRestart }: InterviewSumm
           <Home className="w-4 h-4" />
           Dashboard
         </Link>
-      </motion.div>
+      </m.div>
     </div>
   );
 }

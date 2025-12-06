@@ -1,7 +1,8 @@
 import { useEffect, useState, lazy, Suspense } from "react";
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { Analytics } from "@vercel/analytics/react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion"; // ✅ Changed m to m
+import LazyMotionWrapper from "./components/LazyMotionWrapper";
 
 // ✅ Keep critical components loaded immediately
 import SplashScreen from "./components/SplashScreen";
@@ -55,7 +56,7 @@ const LoadingFallback = () => (
     <div className="flex flex-col items-center gap-4">
       <div className="relative">
         <div className="w-12 h-12 border-4 rounded-full border-slate-800" />
-        <motion.div
+        <m.div // ✅ Changed from m.div to m.div
           className="absolute inset-0 w-12 h-12 border-4 border-transparent rounded-full border-t-blue-500"
           animate={{ rotate: 360 }}
           transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
@@ -151,182 +152,184 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen overflow-hidden font-sans text-white bg-slate-950">
-      <Navbar scrolled={scrolled} />
-      <ScrollToTop />
+    <LazyMotionWrapper> {/* ✅ Wrap everything */}
+      <div className="min-h-screen overflow-hidden font-sans text-white bg-slate-950">
+        <Navbar scrolled={scrolled} />
+        <ScrollToTop />
 
-      {/* ✅ Route transition loading overlay */}
-      <AnimatePresence>
-        {isRouteChanging && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-40 flex items-center justify-center pointer-events-none bg-slate-950/60 backdrop-blur-sm"
+        {/* ✅ Route transition loading overlay */}
+        <AnimatePresence>
+          {isRouteChanging && (
+            <m.div // ✅ Changed from m.div to m.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 z-40 flex items-center justify-center pointer-events-none bg-slate-950/60 backdrop-blur-sm"
+            >
+              <div className="relative">
+                <div className="w-12 h-12 border-4 rounded-full border-slate-800" />
+                <m.div // ✅ Changed from m.div to m.div
+                  className="absolute inset-0 w-12 h-12 border-4 border-transparent rounded-full border-t-blue-500"
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
+                />
+              </div>
+            </m.div>
+          )}
+        </AnimatePresence>
+
+        <AnimatePresence mode="wait">
+          <m.div // ✅ Changed from m.div to m.div
+            key={location.pathname}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
           >
-            <div className="relative">
-              <div className="w-12 h-12 border-4 rounded-full border-slate-800" />
-              <motion.div
-                className="absolute inset-0 w-12 h-12 border-4 border-transparent rounded-full border-t-blue-500"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
-              />
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            <Suspense fallback={<LoadingFallback />}>
+              <Routes location={location}>
+                {/* ========== Public Routes ========== */}
+                <Route path="/" element={<Home />} />
+                <Route path="/privacy" element={<PrivacyPolicy />} />
+                <Route path="/terms" element={<TermsOfService />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/faq" element={<Faq />} />
+                <Route path="/changelog" element={<Changelog />} />
+                <Route path="/demo" element={<DemoApp />} />
+                <Route path="/code-demo" element={<CodeDemo />} />
+                
+                {/* ========== Auth Routes ========== */}
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Signup />} />
 
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={location.pathname}
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -8 }}
-          transition={{ duration: 0.25, ease: "easeOut" }}
-        >
-          <Suspense fallback={<LoadingFallback />}>
-            <Routes location={location}>
-              {/* ========== Public Routes ========== */}
-              <Route path="/" element={<Home />} />
-              <Route path="/privacy" element={<PrivacyPolicy />} />
-              <Route path="/terms" element={<TermsOfService />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/faq" element={<Faq />} />
-              <Route path="/changelog" element={<Changelog />} />
-              <Route path="/demo" element={<DemoApp />} />
-              <Route path="/code-demo" element={<CodeDemo />} />
-              
-              {/* ========== Auth Routes ========== */}
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} />
+                {/* ========== Onboarding Route ========== */}
+                <Route 
+                  path="/onboarding" 
+                  element={
+                    <OnboardingRoute>
+                      <UserOnboarding />
+                    </OnboardingRoute>
+                  } 
+                />
 
-              {/* ========== Onboarding Route ========== */}
-              <Route 
-                path="/onboarding" 
-                element={
-                  <OnboardingRoute>
-                    <UserOnboarding />
-                  </OnboardingRoute>
-                } 
-              />
+                {/* ========== Verification Routes ========== */}
+                <Route 
+                  path="/verify/method" 
+                  element={
+                    <ProtectedRoute>
+                      <VerifyMethod />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route 
+                  path="/verify/start" 
+                  element={
+                    <ProtectedRoute>
+                      <VerifyStart />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route 
+                  path="/verify/code" 
+                  element={
+                    <ProtectedRoute>
+                      <VerifyCode />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route 
+                  path="/verify/success" 
+                  element={
+                    <ProtectedRoute>
+                      <VerifySuccess />
+                    </ProtectedRoute>
+                  } 
+                />
 
-              {/* ========== Verification Routes ========== */}
-              <Route 
-                path="/verify/method" 
-                element={
-                  <ProtectedRoute>
-                    <VerifyMethod />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/verify/start" 
-                element={
-                  <ProtectedRoute>
-                    <VerifyStart />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/verify/code" 
-                element={
-                  <ProtectedRoute>
-                    <VerifyCode />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/verify/success" 
-                element={
-                  <ProtectedRoute>
-                    <VerifySuccess />
-                  </ProtectedRoute>
-                } 
-              />
+                {/* ========== Protected App Routes ========== */}
+                <Route 
+                  path="/dashboard" 
+                  element={
+                    <ProtectedRoute>
+                      <Dashboard />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route 
+                  path="/sessions" 
+                  element={
+                    <ProtectedRoute>
+                      <Sessions />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route 
+                  path="/sessions/:id" 
+                  element={
+                    <ProtectedRoute>
+                      <SessionReport />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route 
+                  path="/settings" 
+                  element={
+                    <ProtectedRoute>
+                      <Settings />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route 
+                  path="/interview" 
+                  element={
+                    <ProtectedRoute>
+                      <Interview />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route 
+                  path="/problems" 
+                  element={
+                    <ProtectedRoute>
+                      <Problems />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route 
+                  path="/problems/:id/discuss" 
+                  element={
+                    <ProtectedRoute>
+                      <ProblemDiscussion />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route 
+                  path="/community" 
+                  element={
+                    <ProtectedRoute>
+                      <Community />
+                    </ProtectedRoute>
+                  } 
+                />
 
-              {/* ========== Protected App Routes ========== */}
-              <Route 
-                path="/dashboard" 
-                element={
-                  <ProtectedRoute>
-                    <Dashboard />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/sessions" 
-                element={
-                  <ProtectedRoute>
-                    <Sessions />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/sessions/:id" 
-                element={
-                  <ProtectedRoute>
-                    <SessionReport />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/settings" 
-                element={
-                  <ProtectedRoute>
-                    <Settings />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/interview" 
-                element={
-                  <ProtectedRoute>
-                    <Interview />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/problems" 
-                element={
-                  <ProtectedRoute>
-                    <Problems />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/problems/:id/discuss" 
-                element={
-                  <ProtectedRoute>
-                    <ProblemDiscussion />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/community" 
-                element={
-                  <ProtectedRoute>
-                    <Community />
-                  </ProtectedRoute>
-                } 
-              />
+                {/* ========== Catch All (404) ========== */}
+                <Route path="*" element={<Navigate to="/" replace />} />
+              </Routes>
+            </Suspense>
+          </m.div>
+        </AnimatePresence>
 
-              {/* ========== Catch All (404) ========== */}
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
-          </Suspense>
-        </motion.div>
-      </AnimatePresence>
-
-      <Suspense fallback={null}>
-        <FloatingAnnouncement />
-        <BackToTop />
-      </Suspense>
-      
-      <Footer />
-      <Analytics />
-    </div>
+        <Suspense fallback={null}>
+          <FloatingAnnouncement />
+          <BackToTop />
+        </Suspense>
+        
+        <Footer />
+        <Analytics />
+      </div>
+    </LazyMotionWrapper>
   );
 }
 

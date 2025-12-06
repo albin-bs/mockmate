@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 
 export default function FeatureCard({
@@ -20,7 +20,7 @@ export default function FeatureCard({
   };
 
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.3 }}
@@ -36,13 +36,13 @@ export default function FeatureCard({
         {/* Icon + Title Row */}
         <div className="flex items-center gap-3 mb-2">
           {icon && (
-            <motion.div
+            <m.div
               whileHover={{ rotate: 360, scale: 1.1 }}
               transition={{ duration: 0.6 }}
               className="flex items-center justify-center w-10 h-10 text-blue-400 transition-colors border rounded-xl bg-blue-500/10 border-blue-500/20 group-hover:bg-blue-500/20"
             >
               {icon}
-            </motion.div>
+            </m.div>
           )}
           
           {title && (
@@ -93,13 +93,13 @@ export default function FeatureCard({
       <div className="absolute inset-x-0 bottom-0 h-px transition-opacity duration-300 opacity-0 bg-gradient-to-r from-transparent via-blue-400/30 to-transparent group-hover:opacity-100" />
 
       {/* Corner accent */}
-      <motion.div
+      <m.div
         initial={{ scale: 0, opacity: 0 }}
         whileInView={{ scale: 1, opacity: 1 }}
         transition={{ delay: delay + 0.3, duration: 0.4 }}
         className="absolute w-2 h-2 transition-colors rounded-full top-4 right-4 bg-blue-400/50 group-hover:bg-blue-400"
       />
-    </motion.div>
+    </m.div>
   );
 }
 

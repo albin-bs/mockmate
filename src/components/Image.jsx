@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 
 export default function Image({
   src,
@@ -21,7 +21,7 @@ export default function Image({
       
       <picture>
         <source srcSet={webpSrc} type="image/webp" />
-        <motion.img
+        <m.img
           src={src}
           alt={alt}
           loading={eager ? 'eager' : 'lazy'}

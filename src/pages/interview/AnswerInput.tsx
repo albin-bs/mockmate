@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Mic, MicOff, Send } from "lucide-react";
 
 export default function AnswerInput({ isMicOn, transcript, onTranscriptChange, onToggleMic }: any) {
@@ -89,17 +89,17 @@ export default function AnswerInput({ isMicOn, transcript, onTranscriptChange, o
       />
 
       {isListening && (
-        <motion.div
+        <m.div
           animate={{ opacity: [0.5, 1, 0.5] }}
           transition={{ repeat: Infinity, duration: 1.5 }}
           className="flex items-center gap-2 mt-2 text-emerald-400 text-sm"
         >
           <div className="w-2 h-2 bg-emerald-400 rounded-full" />
           Listening...
-        </motion.div>
+        </m.div>
       )}
 
-      <motion.button
+      <m.button
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
         onClick={handleSubmit}
@@ -107,7 +107,7 @@ export default function AnswerInput({ isMicOn, transcript, onTranscriptChange, o
       >
         <Send className="w-4 h-4" />
         Submit Answer
-      </motion.button>
+      </m.button>
     </div>
   );
 }

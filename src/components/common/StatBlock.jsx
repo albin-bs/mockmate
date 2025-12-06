@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { TrendingUp, TrendingDown } from "lucide-react";
 
 export default function StatBlock({
@@ -59,7 +59,7 @@ export default function StatBlock({
     return end;
   };
 
-  const Wrapper = animated ? motion.div : "div";
+  const Wrapper = animated ? m.div : "div";
   const wrapperProps = animated
     ? {
         variants: containerVariants,
@@ -84,14 +84,14 @@ export default function StatBlock({
       <div className="relative px-6 py-6 text-center sm:py-7">
         {/* Icon */}
         {icon && (
-          <motion.div
+          <m.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: delay + 0.1, type: "spring", stiffness: 200 }}
             className="inline-flex items-center justify-center w-12 h-12 mb-3 border rounded-full bg-white/5 border-white/10"
           >
             <div className="text-blue-400">{icon}</div>
-          </motion.div>
+          </m.div>
         )}
 
         {/* Label */}
@@ -100,16 +100,16 @@ export default function StatBlock({
         </dt>
 
         {/* Value */}
-        <motion.dd
+        <m.dd
           variants={valueVariants}
           className="mb-1 text-3xl font-bold text-white sm:text-4xl"
         >
           {value}
-        </motion.dd>
+        </m.dd>
 
         {/* Trend indicator */}
         {trend && trendValue && (
-          <motion.div
+          <m.div
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: delay + 0.4 }}
@@ -124,25 +124,25 @@ export default function StatBlock({
             {trend === "up" && <TrendingUp className="w-3 h-3" />}
             {trend === "down" && <TrendingDown className="w-3 h-3" />}
             <span>{trendValue}</span>
-          </motion.div>
+          </m.div>
         )}
 
         {/* Description */}
         {description && (
-          <motion.p
+          <m.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: delay + 0.5 }}
             className="mt-2 text-xs text-slate-500"
           >
             {description}
-          </motion.p>
+          </m.p>
         )}
       </div>
 
       {/* Animated border pulse effect */}
       {variant === "gradient" && (
-        <motion.div
+        <m.div
           animate={{
             opacity: [0.5, 1, 0.5],
           }}

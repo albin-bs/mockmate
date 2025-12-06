@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import {
   ChevronDown,
   HelpCircle,
@@ -146,7 +146,7 @@ export default function Faq() {
     <main className="min-h-screen px-4 pt-20 pb-20 bg-slate-950 text-slate-100 sm:px-6 lg:px-8">
       <div className="max-w-5xl mx-auto">
         {/* Header */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
@@ -166,10 +166,10 @@ export default function Faq() {
               Contact us
             </a>
           </p>
-        </motion.div>
+        </m.div>
 
         {/* Search Bar */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.6 }}
@@ -185,10 +185,10 @@ export default function Faq() {
               className="w-full py-4 pl-12 pr-4 transition-all border bg-slate-900 border-slate-800 rounded-xl text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
             />
           </div>
-        </motion.div>
+        </m.div>
 
         {/* Category Tabs */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.6 }}
@@ -196,7 +196,7 @@ export default function Faq() {
         >
           <div className="flex items-center gap-2 p-1 mx-auto border bg-slate-900 rounded-xl border-slate-800 w-fit">
             {faqCategories.map((category) => (
-              <motion.button
+              <m.button
                 key={category.id}
                 onClick={() => {
                   setActiveCategory(category.id);
@@ -213,26 +213,26 @@ export default function Faq() {
                 {category.icon}
                 {category.name}
                 {activeCategory === category.id && (
-                  <motion.div
+                  <m.div
                     layoutId="activeCategory"
                     className="absolute inset-0 bg-purple-600 rounded-lg -z-10"
                     transition={{ type: "spring", stiffness: 380, damping: 30 }}
                   />
                 )}
-              </motion.button>
+              </m.button>
             ))}
           </div>
-        </motion.div>
+        </m.div>
 
         {/* FAQ List */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4, duration: 0.6 }}
           className="max-w-3xl mx-auto"
         >
           <AnimatePresence mode="wait">
-            <motion.div
+            <m.div
               key={activeCategory}
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -244,7 +244,7 @@ export default function Faq() {
                 filteredQuestions.map((item, i) => {
                   const isOpen = i === openIndex;
                   return (
-                    <motion.div
+                    <m.div
                       key={`${activeCategory}-${i}`}
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -261,18 +261,18 @@ export default function Faq() {
                         <span className="pr-4 text-base font-semibold text-white">
                           {item.question}
                         </span>
-                        <motion.div
+                        <m.div
                           animate={{ rotate: isOpen ? 180 : 0 }}
                           transition={{ duration: 0.3 }}
                           className="flex-shrink-0"
                         >
                           <ChevronDown className="w-5 h-5 text-slate-400" />
-                        </motion.div>
+                        </m.div>
                       </button>
 
                       <AnimatePresence>
                         {isOpen && (
-                          <motion.div
+                          <m.div
                             initial={{ height: 0, opacity: 0 }}
                             animate={{ height: "auto", opacity: 1 }}
                             exit={{ height: 0, opacity: 0 }}
@@ -284,10 +284,10 @@ export default function Faq() {
                                 {item.answer}
                               </p>
                             </div>
-                          </motion.div>
+                          </m.div>
                         )}
                       </AnimatePresence>
-                    </motion.div>
+                    </m.div>
                   );
                 })
               ) : (
@@ -304,12 +304,12 @@ export default function Faq() {
                   </button>
                 </div>
               )}
-            </motion.div>
+            </m.div>
           </AnimatePresence>
-        </motion.div>
+        </m.div>
 
         {/* Still Have Questions? */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6, duration: 0.6 }}
@@ -326,7 +326,7 @@ export default function Faq() {
               Can't find the answer you're looking for? Our support team is here to help you 24/7.
             </p>
             <div className="flex flex-col justify-center gap-4 sm:flex-row">
-              <motion.a
+              <m.a
                 href="/contact"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -334,8 +334,8 @@ export default function Faq() {
               >
                 <Mail className="w-4 h-4" />
                 Contact Support
-              </motion.a>
-              <motion.a
+              </m.a>
+              <m.a
                 href="https://discord.gg/MVx8bw67"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -345,13 +345,13 @@ export default function Faq() {
               >
                 <Users className="w-4 h-4" />
                 Join Discord
-              </motion.a>
+              </m.a>
             </div>
           </div>
-        </motion.div>
+        </m.div>
 
         {/* Quick Stats */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.7, duration: 0.6 }}
@@ -370,7 +370,7 @@ export default function Faq() {
               <p className="text-xs text-slate-400">{stat.label}</p>
             </div>
           ))}
-        </motion.div>
+        </m.div>
       </div>
     </main>
   );

@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Calendar, Package, Sparkles, CheckCircle, Zap, TrendingUp, Code } from "lucide-react";
 
 const entries = [
@@ -43,7 +43,7 @@ const entries = [
     label: "Initial Project Setup",
     category: "setup",
     items: [
-      "Bootstrapped React + Vite app with Tailwind CSS and Framer Motion",
+      "Bootstrapped React + Vite app with Tailwind CSS and Framer m",
       "Configured routing skeleton and base layout shell for MockMateAI",
     ],
   },
@@ -78,7 +78,7 @@ export default function Changelog() {
     <main className="min-h-screen px-4 pb-16 text-white bg-slate-950 pt-28 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
-        <motion.header
+        <m.header
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
@@ -96,7 +96,7 @@ export default function Changelog() {
           <p className="max-w-2xl mx-auto text-lg text-slate-400">
             A running log of changes to MockMateAI's site and demo experience. Follow our journey as we build the best interview practice platform.
           </p>
-        </motion.header>
+        </m.header>
 
         {/* Timeline */}
         <div className="relative">
@@ -108,7 +108,7 @@ export default function Changelog() {
               const config = categoryConfig[entry.category];
               
               return (
-                <motion.li
+                <m.li
                   key={entry.version}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -153,7 +153,7 @@ export default function Changelog() {
                     <div className="p-6">
                       <ul className="space-y-3">
                         {entry.items.map((item, i) => (
-                          <motion.li
+                          <m.li
                             key={i}
                             initial={{ opacity: 0, x: -10 }}
                             animate={{ opacity: 1, x: 0 }}
@@ -168,19 +168,19 @@ export default function Changelog() {
                             <span className="transition-colors group-hover/item:text-white">
                               {item}
                             </span>
-                          </motion.li>
+                          </m.li>
                         ))}
                       </ul>
                     </div>
                   </div>
-                </motion.li>
+                </m.li>
               );
             })}
           </ol>
         </div>
 
         {/* Footer CTA */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
@@ -203,10 +203,10 @@ export default function Changelog() {
               Subscribe
             </button>
           </div>
-        </motion.div>
+        </m.div>
 
         {/* Stats */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.5 }}
@@ -226,7 +226,7 @@ export default function Changelog() {
             <TrendingUp className="w-4 h-4" />
             <span>Always improving</span>
           </div>
-        </motion.div>
+        </m.div>
       </div>
     </main>
   );

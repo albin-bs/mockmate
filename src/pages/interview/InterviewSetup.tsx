@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import { 
   Briefcase, 
   Code, 
@@ -117,7 +117,7 @@ export default function InterviewSetup({ onStart }: { onStart: (config: any) => 
     <div className="min-h-screen px-4 py-12 bg-slate-950">
       <div className="mx-auto max-w-7xl">
         {/* Header */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           className="mb-12 text-center"
@@ -133,10 +133,10 @@ export default function InterviewSetup({ onStart }: { onStart: (config: any) => 
           <p className="max-w-2xl mx-auto text-lg text-slate-400">
             Customize your practice session to match your target role and experience level
           </p>
-        </motion.div>
+        </m.div>
 
         {/* Role Selection - Hoverable Cards */}
-        <motion.section
+        <m.section
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
@@ -154,14 +154,14 @@ export default function InterviewSetup({ onStart }: { onStart: (config: any) => 
               const isHovered = hoveredRole === role.id;
 
               return (
-                <motion.div
+                <m.div
                   key={role.id}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2 + index * 0.1 }}
                   className="relative"
                 >
-                  <motion.button
+                  <m.button
                     onClick={() => setSelectedRole(role.id)}
                     onMouseEnter={() => setHoveredRole(role.id)}
                     onMouseLeave={() => setHoveredRole(null)}
@@ -195,20 +195,20 @@ export default function InterviewSetup({ onStart }: { onStart: (config: any) => 
 
                     {/* Selected indicator */}
                     {isSelected && (
-                      <motion.div
+                      <m.div
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
                         className="absolute flex items-center justify-center w-6 h-6 bg-white rounded-full top-4 right-4"
                       >
                         <div className={`w-3 h-3 rounded-full bg-gradient-to-br ${role.gradient}`} />
-                      </motion.div>
+                      </m.div>
                     )}
-                  </motion.button>
+                  </m.button>
 
                   {/* Hover Card - Detailed Info */}
                   <AnimatePresence>
                     {isHovered && (
-                      <motion.div
+                      <m.div
                         initial={{ opacity: 0, y: 10, scale: 0.95 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 10, scale: 0.95 }}
@@ -250,17 +250,17 @@ export default function InterviewSetup({ onStart }: { onStart: (config: any) => 
                             ))}
                           </div>
                         </div>
-                      </motion.div>
+                      </m.div>
                     )}
                   </AnimatePresence>
-                </motion.div>
+                </m.div>
               );
             })}
           </div>
-        </motion.section>
+        </m.section>
 
         {/* Interview Type */}
-        <motion.section
+        <m.section
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
@@ -273,7 +273,7 @@ export default function InterviewSetup({ onStart }: { onStart: (config: any) => 
               const isSelected = interviewType === type.id;
 
               return (
-                <motion.button
+                <m.button
                   key={type.id}
                   onClick={() => setInterviewType(type.id)}
                   whileHover={{ scale: 1.02 }}
@@ -297,19 +297,19 @@ export default function InterviewSetup({ onStart }: { onStart: (config: any) => 
                   <p className="text-sm text-slate-400">{type.description}</p>
 
                   {isSelected && (
-                    <motion.div
+                    <m.div
                       layoutId="interview-type-indicator"
                       className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-b-xl"
                     />
                   )}
-                </motion.button>
+                </m.button>
               );
             })}
           </div>
-        </motion.section>
+        </m.section>
 
         {/* Difficulty Level */}
-        <motion.section
+        <m.section
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
@@ -321,7 +321,7 @@ export default function InterviewSetup({ onStart }: { onStart: (config: any) => 
               const isSelected = difficulty === level;
 
               return (
-                <motion.button
+                <m.button
                   key={level}
                   onClick={() => setDifficulty(level as any)}
                   whileHover={{ scale: 1.02 }}
@@ -336,14 +336,14 @@ export default function InterviewSetup({ onStart }: { onStart: (config: any) => 
                     {label}
                   </h3>
                   <p className="text-sm text-slate-400">{description}</p>
-                </motion.button>
+                </m.button>
               );
             })}
           </div>
-        </motion.section>
+        </m.section>
 
         {/* Media Settings */}
-        <motion.section
+        <m.section
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
@@ -387,16 +387,16 @@ export default function InterviewSetup({ onStart }: { onStart: (config: any) => 
               </div>
             </label>
           </div>
-        </motion.section>
+        </m.section>
 
         {/* Start Button */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6 }}
           className="flex justify-center"
         >
-          <motion.button
+          <m.button
             onClick={handleStart}
             whileHover={{ scale: 1.02, y: -2 }}
             whileTap={{ scale: 0.98 }}
@@ -404,8 +404,8 @@ export default function InterviewSetup({ onStart }: { onStart: (config: any) => 
           >
             <span>Start Interview</span>
             <ChevronRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-          </motion.button>
-        </motion.div>
+          </m.button>
+        </m.div>
       </div>
     </div>
   );

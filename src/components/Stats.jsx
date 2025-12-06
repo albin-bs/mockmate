@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, memo } from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { TrendingUp, Award, Users, Zap, CheckCircle, Star } from "lucide-react";
 import SectionHeader from "./common/SectionHeader";
 
@@ -56,7 +56,7 @@ const StatCard = memo(function StatCard({ item, index }) {
       : value.toLocaleString();
 
   return (
-    <motion.div
+    <m.div
       ref={ref}
       initial={{ opacity: 0, y: 20, scale: 0.95 }}
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
@@ -70,7 +70,7 @@ const StatCard = memo(function StatCard({ item, index }) {
       className="relative px-6 py-8 text-center group"
     >
       {/* Icon */}
-      <motion.div
+      <m.div
         initial={{ scale: 0 }}
         whileInView={{ scale: 1 }}
         viewport={{ once: true }}
@@ -78,7 +78,7 @@ const StatCard = memo(function StatCard({ item, index }) {
         className="inline-flex items-center justify-center w-12 h-12 mx-auto mb-4 text-blue-400 border rounded-xl bg-gradient-to-br from-blue-500/20 to-indigo-500/20 border-blue-500/30"
       >
         {item.icon}
-      </motion.div>
+      </m.div>
 
       {/* Value */}
       <dd className="mb-2 text-4xl font-bold text-transparent bg-gradient-to-r from-white via-blue-50 to-white bg-clip-text sm:text-5xl">
@@ -93,7 +93,7 @@ const StatCard = memo(function StatCard({ item, index }) {
 
       {/* Hover effect line */}
       <div className="absolute bottom-0 w-0 h-1 transition-all duration-300 -translate-x-1/2 rounded-full left-1/2 bg-gradient-to-r from-blue-500 to-indigo-500 group-hover:w-20" />
-    </motion.div>
+    </m.div>
   );
 });
 
@@ -156,7 +156,7 @@ const Stats = memo(function Stats() {
       </div>
 
       <div className="mx-auto max-w-7xl">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -184,7 +184,7 @@ const Stats = memo(function Stats() {
             </div>
 
             {/* Additional trust indicators */}
-            <motion.div
+            <m.div
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -198,9 +198,9 @@ const Stats = memo(function Stats() {
                   text={indicator.text} 
                 />
               ))}
-            </motion.div>
+            </m.div>
           </div>
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );

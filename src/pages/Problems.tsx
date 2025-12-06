@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Search, CheckCircle, Circle, Lock, Filter } from "lucide-react";
 import { problems, allTags, type Difficulty } from "../data/problems";
-import { motion, AnimatePresence, type Variants } from "framer-motion";
+import { m, AnimatePresence, type Variants } from "framer-motion";
 
 type StatusFilter = "All" | "Solved" | "Attempted" | "Todo";
 
@@ -93,7 +93,6 @@ export default function Problems() {
   // Load user progress from localStorage
   useEffect(() => {
     loadProgress();
-    setIsLoaded(true);
   }, []);
 
   function loadProgress() {
@@ -160,22 +159,22 @@ export default function Problems() {
   function getStatusIcon(problemId: string, locked: boolean) {
     if (locked)
       return (
-        <motion.div
+        <m.div
           animate={{ rotate: [0, -10, 10, -10, 0] }}
           transition={{ duration: 0.5, repeat: Infinity, repeatDelay: 3 }}
         >
           <Lock className="w-4 h-4 text-amber-500" />
-        </motion.div>
+        </m.div>
       );
     if (solvedProblems.has(problemId))
       return (
-        <motion.div
+        <m.div
           initial={{ scale: 0, rotate: -180 }}
           animate={{ scale: 1, rotate: 0 }}
           transition={{ type: "spring", stiffness: 200 }}
         >
           <CheckCircle className="w-4 h-4 text-emerald-400" />
-        </motion.div>
+        </m.div>
       );
     if (attemptedProblems.has(problemId))
       return <Circle className="w-4 h-4 text-amber-400" />;
@@ -198,34 +197,34 @@ export default function Problems() {
 
   return (
     <main className="min-h-screen bg-[#0b1120] text-slate-100 pt-20 pb-12 px-4 sm:px-6 lg:px-8">
-      <motion.div
+      <m.div
         className="mx-auto max-w-7xl"
         variants={containerVariants}
         initial={{ opacity: 1 }}
         animate={{ opacity: 1 }}
       >
         {/* Header */}
-        <motion.div variants={itemVariants} className="mb-8">
-          <motion.h1
+        <m.div variants={itemVariants} className="mb-8">
+          <m.h1
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
             className="mb-2 text-3xl font-bold sm:text-4xl text-slate-100"
           >
             Problem Set
-          </motion.h1>
-          <motion.p
+          </m.h1>
+          <m.p
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
             className="text-slate-400"
           >
             Solve problems and track your progress
-          </motion.p>
-        </motion.div>
+          </m.p>
+        </m.div>
 
         {/* Stats Cards */}
-        <motion.div
+        <m.div
           variants={itemVariants}
           className="grid grid-cols-2 gap-4 mb-8 md:grid-cols-5"
         >
@@ -262,7 +261,7 @@ export default function Problems() {
               bgClass: "bg-gradient-to-br from-blue-600 to-indigo-600",
             },
           ].map((stat, index) => (
-            <motion.div
+            <m.div
               key={stat.label}
               variants={statsVariants}
               custom={index}
@@ -270,7 +269,7 @@ export default function Problems() {
               whileTap={{ scale: 0.98 }}
               className={`p-4 border border-slate-800 rounded-xl cursor-default shadow-lg ${stat.bgClass}`}
             >
-              <motion.p
+              <m.p
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.3 + index * 0.1 }}
@@ -279,8 +278,8 @@ export default function Problems() {
                 }`}
               >
                 {stat.label}
-              </motion.p>
-              <motion.p
+              </m.p>
+              <m.p
                 initial={{ scale: 0.5, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ delay: 0.4 + index * 0.1, type: "spring" }}
@@ -292,19 +291,19 @@ export default function Problems() {
                     {stat.subValue}
                   </span>
                 )}
-              </motion.p>
-            </motion.div>
+              </m.p>
+            </m.div>
           ))}
-        </motion.div>
+        </m.div>
 
         {/* Filters */}
-        <motion.div
+        <m.div
           variants={itemVariants}
           className="p-4 mb-6 border shadow-lg bg-slate-900 border-slate-800 rounded-xl"
         >
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
             {/* Search */}
-            <motion.div
+            <m.div
               className="relative"
               whileHover={{ scale: 1.02 }}
               transition={{ type: "spring", stiffness: 400 }}
@@ -317,10 +316,10 @@ export default function Problems() {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full py-2 pl-10 pr-4 text-sm transition-all border rounded-lg bg-slate-800 border-slate-700 text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500"
               />
-            </motion.div>
+            </m.div>
 
             {/* Difficulty filter */}
-            <motion.select
+            <m.select
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               value={selectedDifficulty}
@@ -331,10 +330,10 @@ export default function Problems() {
               <option value="Easy">Easy</option>
               <option value="Medium">Medium</option>
               <option value="Hard">Hard</option>
-            </motion.select>
+            </m.select>
 
             {/* Tag filter */}
-            <motion.select
+            <m.select
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               value={selectedTag}
@@ -347,10 +346,10 @@ export default function Problems() {
                   {tag}
                 </option>
               ))}
-            </motion.select>
+            </m.select>
 
             {/* Status filter */}
-            <motion.select
+            <m.select
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               value={selectedStatus}
@@ -361,13 +360,13 @@ export default function Problems() {
               <option value="Solved">Solved</option>
               <option value="Attempted">Attempted</option>
               <option value="Todo">Todo</option>
-            </motion.select>
+            </m.select>
           </div>
 
           {/* Active filters display */}
           <AnimatePresence>
             {hasActiveFilters && (
-              <motion.div
+              <m.div
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
@@ -378,7 +377,7 @@ export default function Problems() {
                   <span className="text-xs text-slate-400">Active filters:</span>
                   <AnimatePresence mode="popLayout">
                     {searchQuery && (
-                      <motion.span
+                      <m.span
                         variants={filterChipVariants}
                         initial="hidden"
                         animate="visible"
@@ -387,10 +386,10 @@ export default function Problems() {
                         className="px-2 py-1 text-xs rounded-md bg-slate-800 text-slate-300"
                       >
                         Search: "{searchQuery}"
-                      </motion.span>
+                      </m.span>
                     )}
                     {selectedDifficulty !== "All" && (
-                      <motion.span
+                      <m.span
                         variants={filterChipVariants}
                         initial="hidden"
                         animate="visible"
@@ -399,10 +398,10 @@ export default function Problems() {
                         className="px-2 py-1 text-xs rounded-md bg-slate-800 text-slate-300"
                       >
                         {selectedDifficulty}
-                      </motion.span>
+                      </m.span>
                     )}
                     {selectedTag !== "All" && (
-                      <motion.span
+                      <m.span
                         variants={filterChipVariants}
                         initial="hidden"
                         animate="visible"
@@ -411,10 +410,10 @@ export default function Problems() {
                         className="px-2 py-1 text-xs rounded-md bg-slate-800 text-slate-300"
                       >
                         {selectedTag}
-                      </motion.span>
+                      </m.span>
                     )}
                     {selectedStatus !== "All" && (
-                      <motion.span
+                      <m.span
                         variants={filterChipVariants}
                         initial="hidden"
                         animate="visible"
@@ -423,10 +422,10 @@ export default function Problems() {
                         className="px-2 py-1 text-xs rounded-md bg-slate-800 text-slate-300"
                       >
                         {selectedStatus}
-                      </motion.span>
+                      </m.span>
                     )}
                   </AnimatePresence>
-                  <motion.button
+                  <m.button
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => {
@@ -438,15 +437,15 @@ export default function Problems() {
                     className="px-2 py-1 text-xs transition-colors text-emerald-400 hover:text-emerald-300"
                   >
                     Clear all
-                  </motion.button>
+                  </m.button>
                 </div>
-              </motion.div>
+              </m.div>
             )}
           </AnimatePresence>
-        </motion.div>
+        </m.div>
 
         {/* Problems Table */}
-        <motion.div
+        <m.div
           variants={itemVariants}
           className="overflow-hidden border shadow-lg bg-slate-900 border-slate-800 rounded-xl"
         >
@@ -463,17 +462,17 @@ export default function Problems() {
           <div className="divide-y divide-slate-800">
             <AnimatePresence mode="popLayout">
               {filteredProblems.length === 0 ? (
-                <motion.div
+                <m.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   className="px-6 py-12 text-center text-slate-500"
                 >
                   No problems found matching your filters.
-                </motion.div>
+                </m.div>
               ) : (
                 filteredProblems.map((problem, index) => (
-                  <motion.div
+                  <m.div
                     key={problem.id}
                     custom={index}
                     variants={rowVariants}
@@ -502,22 +501,22 @@ export default function Problems() {
                               #{problem.number}
                             </span>
                             {problem.locked && (
-                              <motion.span
+                              <m.span
                                 initial={{ scale: 0 }}
                                 animate={{ scale: 1 }}
                                 transition={{ delay: 0.2 }}
                                 className="px-2 py-0.5 bg-amber-500/10 text-amber-400 text-[10px] rounded-full"
                               >
                                 Premium
-                              </motion.span>
+                              </m.span>
                             )}
                           </div>
-                          <motion.h3
+                          <m.h3
                             whileHover={{ color: "#10b981" }}
                             className="text-sm font-medium transition-colors text-slate-100"
                           >
                             {problem.title}
-                          </motion.h3>
+                          </m.h3>
                           <p className="mt-1 text-xs text-slate-500 line-clamp-1 md:hidden">
                             {problem.description}
                           </p>
@@ -538,7 +537,7 @@ export default function Problems() {
                       {/* Tags */}
                       <div className="flex flex-wrap gap-1 md:col-span-3">
                         {problem.tags.slice(0, 2).map((tag, i) => (
-                          <motion.span
+                          <m.span
                             key={tag}
                             initial={{ opacity: 0, scale: 0.8 }}
                             animate={{ opacity: 1, scale: 1 }}
@@ -547,7 +546,7 @@ export default function Problems() {
                             className="px-2 py-0.5 bg-slate-800 text-slate-400 text-[10px] md:text-xs rounded-md"
                           >
                             {tag}
-                          </motion.span>
+                          </m.span>
                         ))}
                         {problem.tags.length > 2 && (
                           <span className="px-2 py-0.5 text-slate-500 text-[10px] md:text-xs">
@@ -563,23 +562,23 @@ export default function Problems() {
                         </span>
                       </div>
                     </Link>
-                  </motion.div>
+                  </m.div>
                 ))
               )}
             </AnimatePresence>
           </div>
-        </motion.div>
+        </m.div>
 
         {/* Results count */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
           className="mt-4 text-sm text-center text-slate-500"
         >
           Showing {filteredProblems.length} of {problems.length} problems
-        </motion.div>
-      </motion.div>
+        </m.div>
+      </m.div>
     </main>
   );
 }

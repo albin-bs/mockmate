@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { TrendingUp, Smile, Clock, AlertCircle, CheckCircle, Award } from "lucide-react";
 
 interface FeedbackPanelProps {
@@ -6,7 +6,7 @@ interface FeedbackPanelProps {
     confidence: number;
     clarity: number;
     pace: number;
-    emotion: string;
+    em: string;
     suggestions: string[];
     strengths: string[];
   } | null;
@@ -18,7 +18,7 @@ export default function FeedbackPanel({ feedback }: FeedbackPanelProps) {
     confidence: 75,
     clarity: 82,
     pace: 68,
-    emotion: "Neutral",
+    em: "Neutral",
     suggestions: [
       "Try to maintain eye contact",
       "Speak slightly slower for better clarity",
@@ -45,7 +45,7 @@ export default function FeedbackPanel({ feedback }: FeedbackPanelProps) {
   };
 
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
       className="bg-slate-900 border border-slate-800 rounded-xl p-6 space-y-6"
@@ -66,7 +66,7 @@ export default function FeedbackPanel({ feedback }: FeedbackPanelProps) {
             </span>
           </div>
           <div className="w-full h-2 bg-slate-950 rounded-full overflow-hidden">
-            <motion.div
+            <m.div
               initial={{ width: 0 }}
               animate={{ width: `${currentFeedback.confidence}%` }}
               transition={{ duration: 0.5 }}
@@ -84,7 +84,7 @@ export default function FeedbackPanel({ feedback }: FeedbackPanelProps) {
             </span>
           </div>
           <div className="w-full h-2 bg-slate-950 rounded-full overflow-hidden">
-            <motion.div
+            <m.div
               initial={{ width: 0 }}
               animate={{ width: `${currentFeedback.clarity}%` }}
               transition={{ duration: 0.5, delay: 0.1 }}
@@ -102,7 +102,7 @@ export default function FeedbackPanel({ feedback }: FeedbackPanelProps) {
             </span>
           </div>
           <div className="w-full h-2 bg-slate-950 rounded-full overflow-hidden">
-            <motion.div
+            <m.div
               initial={{ width: 0 }}
               animate={{ width: `${currentFeedback.pace}%` }}
               transition={{ duration: 0.5, delay: 0.2 }}
@@ -112,14 +112,14 @@ export default function FeedbackPanel({ feedback }: FeedbackPanelProps) {
         </div>
       </div>
 
-      {/* Emotion Detection */}
+      {/* Em Detection */}
       <div className="p-4 bg-slate-950 rounded-lg border border-slate-800">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Smile className="w-5 h-5 text-emerald-400" />
-            <span className="text-sm text-slate-400">Detected Emotion</span>
+            <span className="text-sm text-slate-400">Detected Em</span>
           </div>
-          <span className="font-medium text-emerald-400">{currentFeedback.emotion}</span>
+          <span className="font-medium text-emerald-400">{currentFeedback.em}</span>
         </div>
       </div>
 
@@ -132,7 +132,7 @@ export default function FeedbackPanel({ feedback }: FeedbackPanelProps) {
           </h4>
           <div className="space-y-2">
             {currentFeedback.strengths.map((strength, index) => (
-              <motion.div
+              <m.div
                 key={index}
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -141,7 +141,7 @@ export default function FeedbackPanel({ feedback }: FeedbackPanelProps) {
               >
                 <Award className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
                 <span className="text-slate-300">{strength}</span>
-              </motion.div>
+              </m.div>
             ))}
           </div>
         </div>
@@ -156,7 +156,7 @@ export default function FeedbackPanel({ feedback }: FeedbackPanelProps) {
           </h4>
           <div className="space-y-2">
             {currentFeedback.suggestions.map((suggestion, index) => (
-              <motion.div
+              <m.div
                 key={index}
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -165,11 +165,11 @@ export default function FeedbackPanel({ feedback }: FeedbackPanelProps) {
               >
                 <div className="w-1.5 h-1.5 bg-amber-400 rounded-full flex-shrink-0 mt-2" />
                 <span className="text-slate-400">{suggestion}</span>
-              </motion.div>
+              </m.div>
             ))}
           </div>
         </div>
       )}
-    </motion.div>
+    </m.div>
   );
 }

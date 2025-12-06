@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { 
   User, 
@@ -133,7 +133,7 @@ export default function UserOnboarding() {
     <div className="min-h-screen bg-[#0a0e1a] flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-2xl">
         {/* Header */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           className="mb-8 text-center"
@@ -144,7 +144,7 @@ export default function UserOnboarding() {
           </div>
           <h1 className="mb-2 text-3xl font-bold text-white">Complete Your Profile</h1>
           <p className="text-slate-400">Help us personalize your interview experience</p>
-        </motion.div>
+        </m.div>
 
         {/* Progress Steps */}
         <div className="flex items-center justify-between max-w-md px-4 mx-auto mb-8">
@@ -186,7 +186,7 @@ export default function UserOnboarding() {
         </div>
 
         {/* Form Card */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="bg-[#0f1424] rounded-3xl border border-slate-800/80 shadow-2xl p-8"
@@ -194,7 +194,7 @@ export default function UserOnboarding() {
           <form onSubmit={handleSubmit}>
             {/* Step 1: Professional Information */}
             {step === 1 && (
-              <motion.div
+              <m.div
                 key="step1"
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -323,12 +323,12 @@ export default function UserOnboarding() {
                     ))}
                   </div>
                 </div>
-              </motion.div>
+              </m.div>
             )}
 
             {/* Step 2: Additional Information */}
             {step === 2 && (
-              <motion.div
+              <m.div
                 key="step2"
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -393,7 +393,7 @@ export default function UserOnboarding() {
                     💡 These details are optional but help us personalize your interview experience better.
                   </p>
                 </div>
-              </motion.div>
+              </m.div>
             )}
 
             {/* Navigation Buttons */}
@@ -428,7 +428,7 @@ export default function UserOnboarding() {
               )}
             </div>
           </form>
-        </motion.div>
+        </m.div>
 
         {/* Footer */}
         <p className="mt-6 text-sm text-center text-slate-500">

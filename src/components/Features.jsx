@@ -1,5 +1,5 @@
 import { memo, useMemo } from "react";
-import { motion, useMotionValue, useTransform } from "framer-motion";
+import { m, useMotionValue, useTransform } from "framer-motion";
 import { Link } from "react-router-dom";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { nightOwl } from "react-syntax-highlighter/dist/esm/styles/hljs";
@@ -142,7 +142,7 @@ const FeatureCTA = memo(function FeatureCTA({ to, label, color }) {
   };
 
   return (
-    <motion.div className="mt-6" whileHover={{ x: 4 }} transition={{ type: "spring", stiffness: 400 }}>
+    <m.div className="mt-6" whileHover={{ x: 4 }} transition={{ type: "spring", stiffness: 400 }}>
       <Link
         to={to}
         className={`inline-flex items-center gap-2 text-sm font-semibold group/link ${colorClasses[color]}`}
@@ -150,7 +150,7 @@ const FeatureCTA = memo(function FeatureCTA({ to, label, color }) {
         {label}
         <ArrowRight className="w-4 h-4 transition-transform group-hover/link:translate-x-1" />
       </Link>
-    </motion.div>
+    </m.div>
   );
 });
 
@@ -176,7 +176,7 @@ const FeatureCard = memo(function FeatureCard({ feature, index }) {
   }
 
   return (
-    <motion.div
+    <m.div
       custom={index}
       variants={cardVariants}
       initial="hidden"
@@ -191,13 +191,13 @@ const FeatureCard = memo(function FeatureCard({ feature, index }) {
       }}
       className="relative group"
     >
-      <motion.div
+      <m.div
         whileHover={{ scale: 1.02 }}
         transition={{ type: "spring", stiffness: 300, damping: 25 }}
       >
         {feature.content}
-      </motion.div>
-    </motion.div>
+      </m.div>
+    </m.div>
   );
 });
 
@@ -221,7 +221,7 @@ const IconBadge = memo(function IconBadge({ icon, color }) {
 const BackgroundOrbs = memo(function BackgroundOrbs() {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      <motion.div
+      <m.div
         aria-hidden="true"
         className="absolute inset-x-0 flex justify-center top-24"
         animate={{
@@ -235,9 +235,9 @@ const BackgroundOrbs = memo(function BackgroundOrbs() {
         }}
       >
         <div className="h-64 w-[60rem] rounded-full bg-gradient-to-r from-indigo-600/40 via-blue-500/35 to-cyan-400/30 blur-3xl" />
-      </motion.div>
+      </m.div>
 
-      <motion.div
+      <m.div
         animate={{
           y: [0, -30, 0],
           x: [0, 20, 0],
@@ -250,7 +250,7 @@ const BackgroundOrbs = memo(function BackgroundOrbs() {
         }}
         className="absolute rounded-full top-40 left-20 w-72 h-72 bg-blue-500/20 blur-3xl"
       />
-      <motion.div
+      <m.div
         animate={{
           y: [0, 40, 0],
           x: [0, -30, 0],
@@ -302,7 +302,7 @@ const Features = memo(function Features() {
                 
                 {index === 0 ? (
                   <div className="@container relative min-h-60 w-full grow mt-6">
-                    <motion.div
+                    <m.div
                       whileHover={{ y: -4 }}
                       transition={{ type: "spring", stiffness: 300 }}
                       className="absolute inset-x-10 top-10 bottom-0 overflow-hidden rounded-t-[12cqw] border-x-[3cqw] border-t-[3cqw] border-gray-700 bg-gray-900 shadow-2xl"
@@ -313,11 +313,11 @@ const Features = memo(function Features() {
                         className="object-cover object-top size-full"
                         loading="lazy"
                       />
-                    </motion.div>
+                    </m.div>
                   </div>
                 ) : (
                   <div className="relative w-full mt-6 min-h-60 grow">
-                    <motion.div
+                    <m.div
                       whileHover={{ y: -4 }}
                       className="absolute bottom-0 right-0 overflow-hidden border shadow-2xl top-10 left-10 rounded-tl-xl bg-gray-950/90 border-white/10"
                     >
@@ -351,7 +351,7 @@ const Features = memo(function Features() {
 console.log(res.data.stdout); // "hello from mockmate"`}
                         </SyntaxHighlighter>
                       </div>
-                    </motion.div>
+                    </m.div>
                   </div>
                 )}
               </div>
@@ -383,7 +383,7 @@ console.log(res.data.stdout); // "hello from mockmate"`}
                 </div>
                 
                 <div className="flex items-center justify-center flex-1 px-8 max-lg:pt-10 max-lg:pb-12 sm:px-10 lg:pb-6">
-                  <motion.img
+                  <m.img
                     whileHover={{ scale: 1.05 }}
                     transition={{ type: "spring", stiffness: 300 }}
                     src={feature.imageSrc}
@@ -403,7 +403,7 @@ console.log(res.data.stdout); // "hello from mockmate"`}
   }, []);
 
   return (
-    <motion.section
+    <m.section
       id="features"
       className="relative py-24 overflow-hidden bg-gray-900 sm:py-32"
       initial={{ opacity: 0 }}
@@ -415,14 +415,14 @@ console.log(res.data.stdout); // "hello from mockmate"`}
 
       <div className="relative max-w-2xl px-6 mx-auto lg:max-w-7xl lg:px-8">
         {/* Header */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
           className="mb-16 text-center"
         >
-          <motion.div
+          <m.div
             initial={{ scale: 0.9 }}
             whileInView={{ scale: 1 }}
             viewport={{ once: true }}
@@ -432,7 +432,7 @@ console.log(res.data.stdout); // "hello from mockmate"`}
             <span className="text-sm font-semibold text-indigo-400">
               Mockmate Interview Practice Suite
             </span>
-          </motion.div>
+          </m.div>
           
           <h2 className="max-w-3xl mx-auto mt-4 text-3xl font-bold tracking-tight text-white sm:text-5xl text-balance">
             Everything you need to{" "}
@@ -445,7 +445,7 @@ console.log(res.data.stdout); // "hello from mockmate"`}
           <p className="max-w-2xl mx-auto mt-4 text-lg text-gray-400">
             AI-powered practice, instant feedback, and analytics to help you land your dream job
           </p>
-        </motion.div>
+        </m.div>
 
         {/* Features Grid */}
         <div className="grid gap-6 mt-10 sm:mt-16 lg:grid-cols-3 lg:grid-rows-2">
@@ -458,7 +458,7 @@ console.log(res.data.stdout); // "hello from mockmate"`}
           ))}
         </div>
       </div>
-    </motion.section>
+    </m.section>
   );
 });
 

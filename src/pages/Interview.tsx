@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import InterviewSetup from "./interview/InterviewSetup";
 import InterviewRoom from "./interview/InterviewRoom";
 import InterviewSummary from "./interview/InterviewSummary";
@@ -34,7 +34,7 @@ export default function Interview() {
     <main className="min-h-screen bg-[#0b1120] text-slate-100 pt-20">
       <AnimatePresence mode="wait">
         {stage === "setup" && (
-          <motion.div
+          <m.div
             key="setup"
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
@@ -42,11 +42,11 @@ export default function Interview() {
             transition={{ duration: 0.3 }}
           >
             <InterviewSetup onStart={handleStartInterview} />
-          </motion.div>
+          </m.div>
         )}
 
         {stage === "active" && config && sessionId && (
-          <motion.div
+          <m.div
             key="active"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -58,11 +58,11 @@ export default function Interview() {
               sessionId={sessionId}
               onEnd={handleEndInterview}
             />
-          </motion.div>
+          </m.div>
         )}
 
         {stage === "summary" && sessionId && (
-          <motion.div
+          <m.div
             key="summary"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
@@ -72,7 +72,7 @@ export default function Interview() {
               sessionId={sessionId}
               onRestart={() => setStage("setup")}
             />
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </main>

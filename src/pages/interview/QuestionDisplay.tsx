@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import { MessageSquare, Lightbulb, ChevronRight, HelpCircle } from "lucide-react";
 
 interface QuestionDisplayProps {
@@ -29,7 +29,7 @@ export default function QuestionDisplay({
   };
 
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden"
@@ -47,14 +47,14 @@ export default function QuestionDisplay({
 
       {/* Question Text */}
       <div className="p-6">
-        <motion.p
+        <m.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2 }}
           className="text-lg leading-relaxed text-slate-100"
         >
           {question}
-        </motion.p>
+        </m.p>
       </div>
 
       {/* Hints Section */}
@@ -65,17 +65,17 @@ export default function QuestionDisplay({
         >
           <Lightbulb className="w-4 h-4" />
           {showHints ? "Hide Hints" : "Show Hints"}
-          <motion.div
+          <m.div
             animate={{ rotate: showHints ? 90 : 0 }}
             transition={{ duration: 0.2 }}
           >
             <ChevronRight className="w-4 h-4" />
-          </motion.div>
+          </m.div>
         </button>
 
         <AnimatePresence>
           {showHints && (
-            <motion.div
+            <m.div
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
@@ -83,7 +83,7 @@ export default function QuestionDisplay({
               className="mt-4 space-y-3 overflow-hidden"
             >
               {hints.slice(0, unlockedHints).map((hint, index) => (
-                <motion.div
+                <m.div
                   key={index}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -92,18 +92,18 @@ export default function QuestionDisplay({
                 >
                   <HelpCircle className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
                   <p className="text-sm text-slate-300">{hint}</p>
-                </motion.div>
+                </m.div>
               ))}
 
               {unlockedHints < hints.length && (
-                <motion.button
+                <m.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={unlockNextHint}
                   className="w-full py-2 px-4 bg-slate-800 hover:bg-slate-700 rounded-lg text-sm text-slate-300 transition-all"
                 >
                   Unlock Next Hint ({unlockedHints}/{hints.length})
-                </motion.button>
+                </m.button>
               )}
 
               {unlockedHints === hints.length && (
@@ -111,10 +111,10 @@ export default function QuestionDisplay({
                   All hints unlocked
                 </p>
               )}
-            </motion.div>
+            </m.div>
           )}
         </AnimatePresence>
       </div>
-    </motion.div>
+    </m.div>
   );
 }

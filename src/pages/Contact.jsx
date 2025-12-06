@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Link } from "react-router-dom";
 import {
   Mail,
@@ -130,7 +130,7 @@ export default function Contact() {
     <main className="min-h-screen px-4 pt-24 pb-20 bg-slate-950 text-slate-100 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
@@ -147,17 +147,17 @@ export default function Contact() {
           <p className="max-w-2xl mx-auto text-lg text-slate-400">
             Questions, feedback, or collaboration ideas? We're here to help you succeed.
           </p>
-        </motion.div>
+        </m.div>
 
         {/* Quick Actions */}
-        <motion.section
+        <m.section
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.6 }}
           className="grid gap-4 mb-12 sm:grid-cols-3"
         >
           {quickActions.map((action, index) => (
-            <motion.div
+            <m.div
               key={index}
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -192,14 +192,14 @@ export default function Contact() {
                   <p className="text-sm text-white/80">{action.description}</p>
                 </Link>
               )}
-            </motion.div>
+            </m.div>
           ))}
-        </motion.section>
+        </m.section>
 
         {/* Main Grid */}
         <div className="grid gap-8 mb-12 lg:grid-cols-3">
           {/* Contact Form - Spans 2 columns */}
-          <motion.section
+          <m.section
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.4, duration: 0.6 }}
@@ -263,7 +263,7 @@ export default function Contact() {
                   />
                 </div>
 
-                <motion.button
+                <m.button
                   type="submit"
                   disabled={isSubmitting || isSubmitted}
                   whileHover={{ scale: 1.02 }}
@@ -290,20 +290,20 @@ export default function Contact() {
                       Send Message
                     </>
                   )}
-                </motion.button>
+                </m.button>
               </form>
             </div>
-          </motion.section>
+          </m.section>
 
           {/* Contact Methods - Right sidebar */}
-          <motion.aside
+          <m.aside
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.5, duration: 0.6 }}
             className="space-y-4"
           >
             {contactMethods.map((method, index) => (
-              <motion.div
+              <m.div
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -330,13 +330,13 @@ export default function Contact() {
                     )}
                   </div>
                 </div>
-              </motion.div>
+              </m.div>
             ))}
-          </motion.aside>
+          </m.aside>
         </div>
 
         {/* Social Links */}
-        <motion.section
+        <m.section
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.7, duration: 0.6 }}
@@ -349,7 +349,7 @@ export default function Contact() {
 
           <div className="grid gap-4 sm:grid-cols-3">
             {socialLinks.map((social, index) => (
-              <motion.a
+              <m.a
                 key={index}
                 href={social.link}
                 target="_blank"
@@ -368,13 +368,13 @@ export default function Contact() {
                   <p className="text-xs text-slate-500">{social.handle}</p>
                 </div>
                 <ExternalLink className="w-4 h-4 transition-colors text-slate-600 group-hover:text-slate-400" />
-              </motion.a>
+              </m.a>
             ))}
           </div>
-        </motion.section>
+        </m.section>
 
         {/* Location/Office Hours (Optional) */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.9, duration: 0.6 }}
@@ -399,7 +399,7 @@ export default function Contact() {
               Monday - Friday: 9:00 AM - 6:00 PM IST
             </p>
           </div>
-        </motion.div>
+        </m.div>
       </div>
     </main>
   );

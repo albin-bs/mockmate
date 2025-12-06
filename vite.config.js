@@ -37,7 +37,6 @@ export default defineConfig({
   ],
   
   build: {
-    target: 'esnext',
     minify: 'terser',
     terserOptions: {
       compress: {
@@ -62,9 +61,9 @@ export default defineConfig({
             }
             // Monaco Editor (if you add it later)
             if (id.includes('monaco-editor') || id.includes('@monaco-editor')) {
-              return 'monaco-editor';
+            return 'monaco-editor';
             }
-            // Framer Motion
+            // Framer m
             if (id.includes('framer-motion')) {
               return 'framer';
             }
@@ -139,3 +138,4 @@ export default defineConfig({
     host: true,
   },
 });
+import { useState, useEffect } from "react";

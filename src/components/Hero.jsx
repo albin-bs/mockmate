@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo, useRef } from "react";
 import { ArrowRight, ChevronDown, Play, Sparkles, X, Code2, Zap, CheckCircle } from "lucide-react";
-import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { m, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { nightOwl } from "react-syntax-highlighter/dist/esm/styles/hljs";
@@ -10,7 +10,7 @@ import { codeExamples, floatingCards } from "../data/CodeExamples";
 function useTypingEffect(text, speed = 12) {
   const [displayed, setDisplayed] = useState("");
   const hasTypedRef = useRef(false);
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedm = useReducedMotion();
 
   useEffect(() => {
     if (!text || hasTypedRef.current) {
@@ -20,7 +20,7 @@ function useTypingEffect(text, speed = 12) {
       return;
     }
 
-    if (prefersReducedMotion) {
+    if (prefersReducedm) {
       setDisplayed(text);
       hasTypedRef.current = true;
       return;
@@ -39,7 +39,7 @@ function useTypingEffect(text, speed = 12) {
     }, speed);
 
     return () => clearInterval(interval);
-  }, [text, speed, prefersReducedMotion]);
+  }, [text, speed, prefersReducedm]);
 
   return displayed;
 }
@@ -106,7 +106,7 @@ export default function Hero() {
         {/* Animated background layers */}
         <div className="absolute inset-0 -z-10">
           {/* Top gradient blob */}
-          <motion.div
+          <m.div
             animate={{
               scale: [1, 1.2, 1],
               opacity: [0.3, 0.5, 0.3],
@@ -121,7 +121,7 @@ export default function Hero() {
           />
 
           {/* Bottom gradient blob */}
-          <motion.div
+          <m.div
             animate={{
               scale: [1.2, 1, 1.2],
               opacity: [0.2, 0.4, 0.2],
@@ -143,7 +143,7 @@ export default function Hero() {
           />
 
           {/* Radial mouse highlight */}
-          <motion.div
+          <m.div
             className="absolute inset-0 pointer-events-none"
             style={{
               background: `radial-gradient(600px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(59,130,246,0.15), transparent 40%)`,
@@ -209,7 +209,7 @@ export default function Hero() {
               {/* CTA Buttons */}
               <div className="flex flex-col items-stretch gap-4 mt-10 duration-700 delay-700 sm:flex-row sm:items-center animate-in fade-in-up">
                 {/* Primary CTA */}
-                <motion.button
+                <m.button
                   onClick={handleStartPracticing}
                   onHoverStart={() => setIsHovering(true)}
                   onHoverEnd={() => setIsHovering(false)}
@@ -220,7 +220,7 @@ export default function Hero() {
                 >
                   <div className="absolute inset-0 transition-all duration-300 bg-gradient-to-r from-blue-600 via-blue-500 to-indigo-600 group-hover:from-blue-500 group-hover:via-blue-600 group-hover:to-indigo-500" />
                   
-                  <motion.div
+                  <m.div
                     className="absolute inset-0 opacity-50 blur-2xl bg-gradient-to-r from-blue-400 via-cyan-400 to-indigo-400"
                     animate={{
                       scale: isHovering ? [1, 1.2, 1] : 1,
@@ -234,30 +234,30 @@ export default function Hero() {
                   
                   <span className="relative flex items-center gap-2">
                     Start Practicing Free
-                    <motion.div
+                    <m.div
                       animate={{ x: isHovering ? [0, 4, 0] : 0 }}
                       transition={{ duration: 0.8, repeat: Infinity }}
                     >
                       <ArrowRight className="w-5 h-5" />
-                    </motion.div>
+                    </m.div>
                   </span>
-                </motion.button>
+                </m.button>
 
                 {/* Secondary CTA */}
-                <motion.button
+                <m.button
                   onClick={() => setIsVideoOpen(true)}
                   whileHover={{ scale: 1.05, y: -2 }}
                   whileTap={{ scale: 0.95 }}
                   className="flex items-center justify-center w-full gap-3 px-6 py-4 text-base font-semibold transition-all border rounded-full group sm:w-auto border-white/10 bg-white/5 text-white/90 backdrop-blur-md hover:bg-white/10 hover:border-white/20"
                 >
-                  <motion.div
+                  <m.div
                     whileHover={{ scale: 1.1 }}
                     className="flex items-center justify-center w-10 h-10 transition rounded-full bg-white/10 group-hover:bg-white/20"
                   >
                     <Play className="w-5 h-5 fill-white" />
-                  </motion.div>
+                  </m.div>
                   <span>See How It Works</span>
-                </motion.button>
+                </m.button>
               </div>
 
               {/* Trust indicators */}
@@ -280,13 +280,13 @@ export default function Hero() {
             {/* Right column - Code window */}
             <div className="relative mt-16 duration-700 delay-200 lg:mt-0 animate-in slide-in-from-right">
               {/* Main code editor */}
-              <motion.div
+              <m.div
                 whileHover={{ y: -4 }}
                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
                 className="relative p-1 overflow-hidden border shadow-2xl bg-gradient-to-br from-blue-500/10 to-indigo-500/10 backdrop-blur-xl rounded-2xl border-white/10"
               >
                 {/* Animated border glow */}
-                <motion.div
+                <m.div
                   animate={{
                     opacity: [0.5, 1, 0.5],
                   }}
@@ -317,7 +317,7 @@ export default function Hero() {
                   {/* Tab bar */}
                   <div className="flex gap-1 p-2 overflow-x-auto border-b bg-slate-900/50 border-white/5">
                     {["App.jsx", "Hero.jsx", "Navbar.jsx"].map((tab) => (
-                      <motion.button
+                      <m.button
                         key={tab}
                         onClick={() => setActiveTab(tab)}
                         whileHover={{ y: -1 }}
@@ -329,14 +329,14 @@ export default function Hero() {
                         }`}
                       >
                         {activeTab === tab && (
-                          <motion.div
+                          <m.div
                             layoutId="activeTab"
                             className="absolute inset-0 border rounded-lg bg-blue-500/20 border-blue-500/30"
                             transition={{ type: "spring", stiffness: 380, damping: 30 }}
                           />
                         )}
                         <span className="relative">{tab}</span>
-                      </motion.button>
+                      </m.button>
                     ))}
                   </div>
 
@@ -359,11 +359,11 @@ export default function Hero() {
                     </SyntaxHighlighter>
                   </div>
                 </div>
-              </motion.div>
+              </m.div>
 
               {/* Floating info card */}
               <AnimatePresence mode="wait">
-                <motion.div
+                <m.div
                   key={activeTab}
                   initial={{ opacity: 0, scale: 0.8, y: 30 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -388,7 +388,7 @@ export default function Hero() {
                       </p>
                     </div>
                   </div>
-                </motion.div>
+                </m.div>
               </AnimatePresence>
             </div>
           </div>
@@ -398,14 +398,14 @@ export default function Hero() {
       {/* Video Modal */}
       <AnimatePresence>
         {isVideoOpen && (
-          <motion.div
+          <m.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setIsVideoOpen(false)}
             className="fixed inset-0 z-50 flex items-center justify-center px-4 bg-black/90 backdrop-blur-md"
           >
-            <motion.div
+            <m.div
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -428,14 +428,14 @@ export default function Hero() {
                     </p>
                   </div>
                 </div>
-                <motion.button
+                <m.button
                   whileHover={{ scale: 1.1, rotate: 90 }}
                   whileTap={{ scale: 0.9 }}
                   onClick={() => setIsVideoOpen(false)}
                   className="flex items-center justify-center w-10 h-10 transition-colors rounded-full text-slate-400 hover:text-white hover:bg-slate-800"
                 >
                   <X className="w-5 h-5" />
-                </motion.button>
+                </m.button>
               </div>
 
               {/* Video */}
@@ -454,7 +454,7 @@ export default function Hero() {
                   Ready to start practicing?
                 </p>
                 <div className="flex flex-wrap gap-3">
-                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                  <m.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                     <Link
                       to="/signup"
                       className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-500 rounded-lg transition-colors shadow-lg shadow-blue-500/30"
@@ -462,8 +462,8 @@ export default function Hero() {
                       <Sparkles className="w-4 h-4" />
                       Get Started Free
                     </Link>
-                  </motion.div>
-                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                  </m.div>
+                  <m.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                     <Link
                       to="/code-demo"
                       className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium text-white bg-slate-800 hover:bg-slate-700 rounded-lg transition-colors"
@@ -471,11 +471,11 @@ export default function Hero() {
                       <Code2 className="w-4 h-4" />
                       Try Coding Demo
                     </Link>
-                  </motion.div>
+                  </m.div>
                 </div>
               </div>
-            </motion.div>
-          </motion.div>
+            </m.div>
+          </m.div>
         )}
       </AnimatePresence>
     </>

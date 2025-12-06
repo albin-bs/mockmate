@@ -1,11 +1,11 @@
 import { useReducedMotion } from "framer-motion";
 
-export const useMotionConfig = () => {
-  const prefersReducedMotion = useReducedMotion();
+export const usemConfig = () => {
+  const prefersReducedm = useReducedMotion();
 
   return {
-    initial: prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 20 },
+    initial: prefersReducedm ? { opacity: 1 } : { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
-    transition: prefersReducedMotion ? { duration: 0 } : { duration: 0.6 },
+    transition: prefersReducedm ? { duration: 0 } : { duration: 0.6 },
   };
 };

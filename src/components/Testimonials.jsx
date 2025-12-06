@@ -1,5 +1,5 @@
 import { memo, useMemo } from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Quote, Star, Verified } from "lucide-react";
 import SectionHeader from "./common/SectionHeader";
 
@@ -64,7 +64,7 @@ const StarRating = memo(function StarRating({ rating, size = "w-5 h-5", delay = 
   return (
     <div className="flex gap-1">
       {[...Array(rating)].map((_, i) => (
-        <motion.div
+        <m.div
           key={i}
           initial={{ opacity: 0, scale: 0 }}
           whileInView={{ opacity: 1, scale: 1 }}
@@ -72,7 +72,7 @@ const StarRating = memo(function StarRating({ rating, size = "w-5 h-5", delay = 
           transition={{ delay: delay + i * 0.1, type: "spring", stiffness: 300 }}
         >
           <Star className={`${size} text-yellow-400 fill-yellow-400`} />
-        </motion.div>
+        </m.div>
       ))}
     </div>
   );
@@ -121,7 +121,7 @@ const TestimonialAuthor = memo(function TestimonialAuthor({
 // ✅ Memoize FeaturedTestimonial component
 const FeaturedTestimonial = memo(function FeaturedTestimonial({ testimonial }) {
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -130,7 +130,7 @@ const FeaturedTestimonial = memo(function FeaturedTestimonial({ testimonial }) {
     >
       <div className="relative p-8 border shadow-2xl rounded-3xl border-slate-800 bg-gradient-to-br from-slate-900/90 via-slate-900/80 to-slate-800/90 backdrop-blur-sm sm:p-12">
         {/* Quote icon */}
-        <motion.div
+        <m.div
           initial={{ scale: 0, rotate: -180 }}
           whileInView={{ scale: 1, rotate: 0 }}
           viewport={{ once: true }}
@@ -140,7 +140,7 @@ const FeaturedTestimonial = memo(function FeaturedTestimonial({ testimonial }) {
           <div className="flex items-center justify-center w-12 h-12 rounded-full shadow-lg bg-gradient-to-r from-blue-500 to-indigo-500">
             <Quote className="w-6 h-6 text-white" />
           </div>
-        </motion.div>
+        </m.div>
 
         {/* Stars */}
         <div className="flex justify-center mb-6">
@@ -164,7 +164,7 @@ const FeaturedTestimonial = memo(function FeaturedTestimonial({ testimonial }) {
           />
         </figcaption>
       </div>
-    </motion.div>
+    </m.div>
   );
 });
 
@@ -174,7 +174,7 @@ const SecondaryTestimonialCard = memo(function SecondaryTestimonialCard({
   index 
 }) {
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.3 }}
@@ -207,7 +207,7 @@ const SecondaryTestimonialCard = memo(function SecondaryTestimonialCard({
           size="small"
         />
       </div>
-    </motion.div>
+    </m.div>
   );
 });
 
@@ -239,7 +239,7 @@ const Testimonials = memo(function Testimonials() {
 
       <div className="max-w-5xl mx-auto">
         {/* Header */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -251,7 +251,7 @@ const Testimonials = memo(function Testimonials() {
             description="Discover how people are landing jobs and boosting interview skills with MockMateAI's AI-powered coaching."
             align="center"
           />
-        </motion.div>
+        </m.div>
 
         {/* Featured Testimonial */}
         <FeaturedTestimonial testimonial={featured} />
@@ -268,7 +268,7 @@ const Testimonials = memo(function Testimonials() {
         </div>
 
         {/* Trust badges */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -283,7 +283,7 @@ const Testimonials = memo(function Testimonials() {
               )}
             </div>
           ))}
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );

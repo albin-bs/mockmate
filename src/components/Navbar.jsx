@@ -1,7 +1,7 @@
 import { Menu, X, User, LogOut, Settings, LayoutDashboard, Sparkles } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 
 export default function Navbar({ scrolled }) {
   const [mobileMenuIsOpen, setMobileMenuIsOpen] = useState(false);
@@ -96,7 +96,7 @@ export default function Navbar({ scrolled }) {
             to="/"
             className="flex items-center gap-2 cursor-pointer group"
           >
-            <motion.div
+            <m.div
               whileHover={{ rotate: 360, scale: 1.1 }}
               transition={{ duration: 0.6, ease: "easeInOut" }}
               className="relative"
@@ -107,7 +107,7 @@ export default function Navbar({ scrolled }) {
                 className="w-8 h-8 rounded-lg md:w-10 md:h-10"
               />
               <div className="absolute inset-0 transition-opacity rounded-lg opacity-0 bg-blue-500/20 blur-sm group-hover:opacity-100" />
-            </motion.div>
+            </m.div>
             <span className="text-xl font-bold md:text-2xl">
               <span className="text-white">Mock</span>
               <span className="text-transparent bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text">
@@ -142,7 +142,7 @@ export default function Navbar({ scrolled }) {
               {isAuthenticated ? (
                 // User Menu
                 <div className="relative user-menu-container">
-                  <motion.button
+                  <m.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => setUserMenuOpen(!userMenuOpen)}
@@ -154,12 +154,12 @@ export default function Navbar({ scrolled }) {
                     <span className="hidden text-sm font-medium text-white lg:block">
                       {userName}
                     </span>
-                  </motion.button>
+                  </m.button>
 
                   {/* User Dropdown */}
                   <AnimatePresence>
                     {userMenuOpen && (
-                      <motion.div
+                      <m.div
                         initial={{ opacity: 0, y: 10, scale: 0.95 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 10, scale: 0.95 }}
@@ -199,7 +199,7 @@ export default function Navbar({ scrolled }) {
                             Logout
                           </button>
                         </div>
-                      </motion.div>
+                      </m.div>
                     )}
                   </AnimatePresence>
                 </div>
@@ -212,7 +212,7 @@ export default function Navbar({ scrolled }) {
                   >
                     Login
                   </Link>
-                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                  <m.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                     <Link
                       to="/signup"
                       className="inline-flex items-center gap-2 px-5 py-2 text-sm font-semibold text-white transition-all rounded-full shadow-lg bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 shadow-blue-500/30"
@@ -220,14 +220,14 @@ export default function Navbar({ scrolled }) {
                       <Sparkles className="w-4 h-4" />
                       Get Started
                     </Link>
-                  </motion.div>
+                  </m.div>
                 </>
               )}
             </div>
           </div>
 
           {/* Mobile Menu Toggle */}
-          <motion.button
+          <m.button
             whileTap={{ scale: 0.9 }}
             className="flex items-center p-2 text-gray-300 rounded-lg md:hidden hover:text-white hover:bg-white/5"
             onClick={() => setMobileMenuIsOpen(!mobileMenuIsOpen)}
@@ -235,7 +235,7 @@ export default function Navbar({ scrolled }) {
           >
             <AnimatePresence mode="wait">
               {mobileMenuIsOpen ? (
-                <motion.div
+                <m.div
                   key="close"
                   initial={{ rotate: -90, opacity: 0 }}
                   animate={{ rotate: 0, opacity: 1 }}
@@ -243,9 +243,9 @@ export default function Navbar({ scrolled }) {
                   transition={{ duration: 0.2 }}
                 >
                   <X className="w-6 h-6" />
-                </motion.div>
+                </m.div>
               ) : (
-                <motion.div
+                <m.div
                   key="menu"
                   initial={{ rotate: 90, opacity: 0 }}
                   animate={{ rotate: 0, opacity: 1 }}
@@ -253,24 +253,24 @@ export default function Navbar({ scrolled }) {
                   transition={{ duration: 0.2 }}
                 >
                   <Menu className="w-6 h-6" />
-                </motion.div>
+                </m.div>
               )}
             </AnimatePresence>
-          </motion.button>
+          </m.button>
         </div>
       </div>
 
       {/* Mobile Menu */}
       <AnimatePresence>
         {mobileMenuIsOpen && (
-          <motion.div
+          <m.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
             className="overflow-hidden border-t md:hidden bg-slate-900/98 backdrop-blur-xl border-slate-800"
           >
-            <motion.div
+            <m.div
               initial={{ y: -20 }}
               animate={{ y: 0 }}
               exit={{ y: -20 }}
@@ -278,7 +278,7 @@ export default function Navbar({ scrolled }) {
             >
               {/* User Info (if authenticated) */}
               {isAuthenticated && (
-                <motion.div
+                <m.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   className="flex items-center gap-3 p-4 mb-4 border rounded-lg bg-gradient-to-r from-blue-600/20 to-indigo-600/20 border-blue-500/30"
@@ -292,12 +292,12 @@ export default function Navbar({ scrolled }) {
                       {localStorage.getItem("userEmail") || "user@example.com"}
                     </p>
                   </div>
-                </motion.div>
+                </m.div>
               )}
 
               {/* Navigation Links */}
               {navLinks.map((link, index) => (
-                <motion.div
+                <m.div
                   key={link.to}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -315,11 +315,11 @@ export default function Navbar({ scrolled }) {
                     {link.icon && <span className="text-blue-400">{link.icon}</span>}
                     <span className="text-sm font-medium">{link.label}</span>
                   </Link>
-                </motion.div>
+                </m.div>
               ))}
 
               {/* Auth Actions */}
-              <motion.div
+              <m.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: navLinks.length * 0.05 }}
@@ -365,9 +365,9 @@ export default function Navbar({ scrolled }) {
                     </Link>
                   </>
                 )}
-              </motion.div>
-            </motion.div>
-          </motion.div>
+              </m.div>
+            </m.div>
+          </m.div>
         )}
       </AnimatePresence>
     </nav>

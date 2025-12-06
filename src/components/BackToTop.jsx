@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import { ChevronUp } from "lucide-react";
 
 export default function BackToTop() {
@@ -27,7 +27,7 @@ export default function BackToTop() {
   return (
     <AnimatePresence>
       {visible && (
-        <motion.button
+        <m.button
           initial={{ opacity: 0, scale: 0.8, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.8, y: 20 }}
@@ -54,7 +54,7 @@ export default function BackToTop() {
               className="text-slate-800/50"
             />
             {/* Progress circle */}
-            <motion.circle
+            <m.circle
               cx="50"
               cy="50"
               r="45"
@@ -80,14 +80,14 @@ export default function BackToTop() {
           </div>
 
           {/* Tooltip */}
-          <motion.span
+          <m.span
             initial={{ opacity: 0, x: 10 }}
             whileHover={{ opacity: 1, x: 0 }}
             className="absolute px-2 py-1 mr-3 text-xs font-medium text-white transition-opacity -translate-y-1/2 rounded-md shadow-lg opacity-0 pointer-events-none right-full top-1/2 bg-slate-800 whitespace-nowrap group-hover:opacity-100"
           >
             Back to top
-          </motion.span>
-        </motion.button>
+          </m.span>
+        </m.button>
       )}
     </AnimatePresence>
   );

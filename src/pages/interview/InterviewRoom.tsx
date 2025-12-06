@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import { 
   Mic, 
   MicOff, 
@@ -155,13 +155,13 @@ export default function InterviewRoom({ config, sessionId, onEnd }: any) {
       {/* Permission Prompt Modal */}
       <AnimatePresence>
         {showPermissionPrompt && (
-          <motion.div
+          <m.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-sm"
           >
-            <motion.div
+            <m.div
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
@@ -231,8 +231,8 @@ export default function InterviewRoom({ config, sessionId, onEnd }: any) {
                   </button>
                 </div>
               </div>
-            </motion.div>
-          </motion.div>
+            </m.div>
+          </m.div>
         )}
       </AnimatePresence>
 
@@ -240,7 +240,7 @@ export default function InterviewRoom({ config, sessionId, onEnd }: any) {
       {permissionsGranted && (
         <>
           {/* Top Header */}
-          <motion.header
+          <m.header
             initial={{ y: -20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             className="flex items-center justify-between px-6 py-3 bg-[#1a1f29] border-b border-slate-800"
@@ -270,13 +270,13 @@ export default function InterviewRoom({ config, sessionId, onEnd }: any) {
                 <Settings className="w-5 h-5 text-slate-400" />
               </button>
             </div>
-          </motion.header>
+          </m.header>
 
           {/* Main Content Area */}
           <div className="flex flex-1 overflow-hidden">
             <div className={`flex-1 p-4 ${layoutMode === "grid" ? "grid grid-cols-2 gap-4" : "flex flex-col gap-4"}`}>
               {/* AI Interviewer Video */}
-              <motion.div
+              <m.div
                 layout
                 className={`relative bg-slate-950 rounded-2xl overflow-hidden border border-slate-800 shadow-2xl ${
                   layoutMode === "grid" ? "" : "flex-1"
@@ -304,10 +304,10 @@ export default function InterviewRoom({ config, sessionId, onEnd }: any) {
                     <span className="text-xs font-medium text-blue-300">Speaking...</span>
                   </div>
                 </div>
-              </motion.div>
+              </m.div>
 
               {/* Your Camera */}
-              <motion.div
+              <m.div
                 layout
                 className={`relative bg-slate-900 rounded-2xl overflow-hidden border border-slate-800 shadow-xl ${
                   layoutMode === "grid" ? "" : "h-48"
@@ -342,13 +342,13 @@ export default function InterviewRoom({ config, sessionId, onEnd }: any) {
                     <Mic className="w-4 h-4 text-emerald-400" />
                   </div>
                 )}
-              </motion.div>
+              </m.div>
             </div>
 
             {/* Right Sidebar */}
             <AnimatePresence>
               {(showChat || showFeedback) && (
-                <motion.aside
+                <m.aside
                   initial={{ x: 400, opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
                   exit={{ x: 400, opacity: 0 }}
@@ -471,13 +471,13 @@ export default function InterviewRoom({ config, sessionId, onEnd }: any) {
                       </div>
                     </div>
                   )}
-                </motion.aside>
+                </m.aside>
               )}
             </AnimatePresence>
           </div>
 
           {/* Bottom Controls */}
-          <motion.footer
+          <m.footer
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             className="bg-[#1a1f29] border-t border-slate-800 px-6 py-4"
@@ -491,7 +491,7 @@ export default function InterviewRoom({ config, sessionId, onEnd }: any) {
               </div>
 
               <div className="flex items-center gap-2">
-                <motion.button
+                <m.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => setIsMicOn(!isMicOn)}
@@ -500,9 +500,9 @@ export default function InterviewRoom({ config, sessionId, onEnd }: any) {
                   }`}
                 >
                   {isMicOn ? <Mic className="w-6 h-6 text-white" /> : <MicOff className="w-6 h-6 text-white" />}
-                </motion.button>
+                </m.button>
 
-                <motion.button
+                <m.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => setIsCameraOn(!isCameraOn)}
@@ -511,20 +511,20 @@ export default function InterviewRoom({ config, sessionId, onEnd }: any) {
                   }`}
                 >
                   {isCameraOn ? <Video className="w-6 h-6 text-white" /> : <VideoOff className="w-6 h-6 text-white" />}
-                </motion.button>
+                </m.button>
 
-                <motion.button
+                <m.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => setIsSpeakerOn(!isSpeakerOn)}
                   className="p-4 transition-all rounded-full bg-slate-800 hover:bg-slate-700"
                 >
                   {isSpeakerOn ? <Volume2 className="w-6 h-6 text-white" /> : <VolumeX className="w-6 h-6 text-white" />}
-                </motion.button>
+                </m.button>
 
                 <div className="w-px h-8 mx-2 bg-slate-800" />
 
-                <motion.button
+                <m.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={onEnd}
@@ -532,7 +532,7 @@ export default function InterviewRoom({ config, sessionId, onEnd }: any) {
                 >
                   <Phone className="w-5 h-5 text-white rotate-[135deg]" />
                   <span className="font-semibold text-white">End Interview</span>
-                </motion.button>
+                </m.button>
               </div>
 
               <div className="flex items-center gap-2">
@@ -559,7 +559,7 @@ export default function InterviewRoom({ config, sessionId, onEnd }: any) {
                 </button>
               </div>
             </div>
-          </motion.footer>
+          </m.footer>
         </>
       )}
     </div>

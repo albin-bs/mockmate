@@ -35,13 +35,13 @@ function App() {
 
 export default App;`,
 
-  "Hero.jsx": `import { motion } from "framer-motion";
+  "Hero.jsx": `import { m } from "framer-motion";
 import { Sparkles, ArrowRight } from "lucide-react";
 
 export default function Hero() {
   return (
     <section className="hero-section">
-      <motion.div
+      <m.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
@@ -65,7 +65,7 @@ export default function Hero() {
             Watch Demo
           </button>
         </div>
-      </motion.div>
+      </m.div>
     </section>
   );
 }`,
@@ -146,7 +146,7 @@ export const floatingCards = {
     contentColor: "text-purple-100",
     icon: "✨",
     title: "Smooth Animations",
-    content: "Framer Motion creates engaging, professional micro-interactions that enhance user experience.",
+    content: "Framer m creates engaging, professional micro-interactions that enhance user experience.",
   },
   "Navbar.jsx": {
     bgColor: "bg-gradient-to-br from-emerald-500/20 to-teal-500/20",

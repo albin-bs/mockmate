@@ -79,3 +79,6 @@ debug.log
 .next/
 .nuxt/
 .turbo/
+
+# Add to .gitignore
+echo "stats.html" >> .gitignore

@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { MapPin, Linkedin, Github, Mail, Sparkles, Zap, Shield, TrendingUp } from "lucide-react";
 
 const people = [
@@ -55,7 +55,7 @@ function About() {
     <main className="min-h-screen px-4 py-20 bg-slate-950 text-slate-100 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
         {/* Hero Section */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
@@ -77,10 +77,10 @@ function About() {
           <p className="text-lg leading-relaxed text-gray-300">
             Our mission is simple: give candidates a safe, realistic space to practice, receive structured feedback, and track progress over time—so you can walk into your next interview prepared and confident.
           </p>
-        </motion.div>
+        </m.div>
 
         {/* Stats Grid */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -88,7 +88,7 @@ function About() {
           className="grid grid-cols-2 gap-4 mb-16 md:grid-cols-4"
         >
           {stats.map((stat, i) => (
-            <motion.div
+            <m.div
               key={stat.label}
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
@@ -102,12 +102,12 @@ function About() {
               </div>
               <div className="mb-1 text-3xl font-bold text-white">{stat.value}</div>
               <div className="text-sm text-gray-400">{stat.label}</div>
-            </motion.div>
+            </m.div>
           ))}
-        </motion.div>
+        </m.div>
 
         {/* Team Section */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -116,7 +116,7 @@ function About() {
         >
           <div className="max-w-6xl mx-auto">
             <div className="mb-12 text-center">
-              <motion.div
+              <m.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
@@ -124,7 +124,7 @@ function About() {
                 className="inline-flex items-center gap-2 px-4 py-2 mb-4 border rounded-full bg-purple-500/10 border-purple-500/20"
               >
                 <span className="text-sm font-medium text-purple-300">Our Team</span>
-              </motion.div>
+              </m.div>
               
               <h2 className="mb-4 text-3xl font-bold text-white sm:text-4xl">
                 Meet the builders behind MockMate
@@ -137,7 +137,7 @@ function About() {
 
             <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
               {people.map((person, i) => (
-                <motion.div
+                <m.div
                   key={person.name}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -190,14 +190,14 @@ function About() {
                       </a>
                     </div>
                   </div>
-                </motion.div>
+                </m.div>
               ))}
             </div>
           </div>
-        </motion.div>
+        </m.div>
 
         {/* Tech Stack Section */}
-        <motion.section
+        <m.section
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -221,7 +221,7 @@ function About() {
 
           <div className="grid gap-4 sm:grid-cols-2">
             {techStack.map((item, i) => (
-              <motion.div
+              <m.div
                 key={item.category}
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -240,12 +240,12 @@ function About() {
                     {item.tech}
                   </p>
                 </div>
-              </motion.div>
+              </m.div>
             ))}
           </div>
 
           {/* Contact CTA */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -265,8 +265,8 @@ function About() {
               <Mail className="w-5 h-5" />
               Get in Touch
             </a>
-          </motion.div>
-        </motion.section>
+          </m.div>
+        </m.section>
       </div>
     </main>
   );

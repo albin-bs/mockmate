@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 
 export default function SectionHeader({
   eyebrow,
@@ -45,8 +45,8 @@ export default function SectionHeader({
     },
   };
 
-  const Container = animated ? motion.div : "div";
-  const Item = animated ? motion.div : "div";
+  const Container = animated ? m.div : "div";
+  const Item = animated ? m.div : "div";
 
   return (
     <Container
@@ -108,7 +108,7 @@ export default function SectionHeader({
 
       {/* Optional: Decorative line */}
       {animated && align === "center" && (
-        <motion.div
+        <m.div
           initial={{ width: 0, opacity: 0 }}
           whileInView={{ width: 60, opacity: 1 }}
           viewport={{ once: true }}

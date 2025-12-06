@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import { 
   Github, 
   Linkedin, 
@@ -148,7 +148,7 @@ export default function Footer() {
         <div className="relative max-w-6xl px-4 py-16 mx-auto lg:max-w-7xl sm:px-6 lg:px-8 sm:py-20">
           <div className="flex flex-col items-stretch gap-10 lg:flex-row lg:gap-12">
             {/* Left: CTA Block */}
-            <motion.div
+            <m.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
@@ -160,7 +160,7 @@ export default function Footer() {
 
               <div className="relative">
                 {/* Logo */}
-                <motion.div
+                <m.div
                   whileHover={{ scale: 1.05 }}
                   className="flex items-center gap-2 mb-6"
                 >
@@ -178,7 +178,7 @@ export default function Footer() {
                       MateAI
                     </span>
                   </span>
-                </motion.div>
+                </m.div>
 
                 {/* Heading */}
                 <h2 className="mb-4 text-3xl font-bold leading-tight text-white sm:text-4xl">
@@ -197,7 +197,7 @@ export default function Footer() {
                 {/* Stats */}
                 <div className="grid grid-cols-3 gap-4 mb-8">
                   {stats.map((stat, i) => (
-                    <motion.div
+                    <m.div
                       key={i}
                       whileHover={{ y: -2 }}
                       className="flex flex-col items-center p-3 border rounded-xl bg-white/5 border-white/10"
@@ -205,14 +205,14 @@ export default function Footer() {
                       <div className="mb-1 text-blue-400">{stat.icon}</div>
                       <p className="text-lg font-bold text-white">{stat.value}</p>
                       <p className="text-[10px] text-slate-400">{stat.label}</p>
-                    </motion.div>
+                    </m.div>
                   ))}
                 </div>
               </div>
 
               {/* CTA Button */}
               <div className="relative">
-                <motion.button
+                <m.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={handleStartTrial}
@@ -221,15 +221,15 @@ export default function Footer() {
                   <Sparkles className="w-4 h-4" />
                   Start 14‑day free trial
                   <ChevronRight className="w-4 h-4" />
-                </motion.button>
+                </m.button>
                 <p className="mt-3 text-xs text-slate-400">
                   No credit card required • Cancel anytime
                 </p>
               </div>
-            </motion.div>
+            </m.div>
 
             {/* Right: Links & Team */}
-            <motion.div
+            <m.div
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
@@ -258,7 +258,7 @@ export default function Footer() {
                 </div>
 
                 {/* GitHub Link */}
-                <motion.a
+                <m.a
                   whileHover={{ scale: 1.02, y: -2 }}
                   href="https://github.com/albin-bs/MockMate-AI"
                   target="_blank"
@@ -270,7 +270,7 @@ export default function Footer() {
                     View project on GitHub
                   </span>
                   <ExternalLink className="w-4 h-4 ml-auto text-slate-400" />
-                </motion.a>
+                </m.a>
 
                 {/* Team Section */}
                 <div className="pt-8 border-t border-slate-800">
@@ -282,7 +282,7 @@ export default function Footer() {
                   </div>
                   <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                     {teamMembers.map((member, i) => (
-                      <motion.a
+                      <m.a
                         key={i}
                         whileHover={{ scale: 1.02, y: -2 }}
                         href={member.linkedin}
@@ -300,7 +300,7 @@ export default function Footer() {
                           <p className="text-xs text-slate-400">{member.role}</p>
                         </div>
                         <Linkedin className="flex-shrink-0 w-4 h-4 transition-colors text-slate-400 group-hover:text-blue-400" />
-                      </motion.a>
+                      </m.a>
                     ))}
                   </div>
                 </div>
@@ -313,21 +313,21 @@ export default function Footer() {
                   
                   {/* Social Links */}
                   <div className="flex items-center gap-3">
-                    <motion.a
+                    <m.a
                       whileHover={{ scale: 1.1, y: -2 }}
                       href="#"
                       className="flex items-center justify-center w-8 h-8 transition-colors rounded-full bg-slate-800 hover:bg-blue-600"
                     >
                       <Twitter className="w-4 h-4 text-slate-300" />
-                    </motion.a>
-                    <motion.a
+                    </m.a>
+                    <m.a
                       whileHover={{ scale: 1.1, y: -2 }}
                       href="#"
                       className="flex items-center justify-center w-8 h-8 transition-colors rounded-full bg-slate-800 hover:bg-blue-600"
                     >
                       <Mail className="w-4 h-4 text-slate-300" />
-                    </motion.a>
-                    <motion.a
+                    </m.a>
+                    <m.a
                       whileHover={{ scale: 1.1, y: -2 }}
                       href="https://github.com/albin-bs/MockMate-AI"
                       target="_blank"
@@ -335,11 +335,11 @@ export default function Footer() {
                       className="flex items-center justify-center w-8 h-8 transition-colors rounded-full bg-slate-800 hover:bg-blue-600"
                     >
                       <Github className="w-4 h-4 text-slate-300" />
-                    </motion.a>
+                    </m.a>
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </m.div>
           </div>
         </div>
       </footer>
@@ -347,64 +347,64 @@ export default function Footer() {
       {/* Video Modal */}
       <AnimatePresence>
         {isVideoOpen && (
-          <motion.div
+          <m.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
             onClick={() => setIsVideoOpen(false)}
           >
-            <motion.div
+            <m.div
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
               className="relative w-full max-w-4xl overflow-hidden border shadow-2xl bg-slate-950 rounded-2xl border-slate-800"
               onClick={(e) => e.stopPropagation()}
             >
-              <motion.button
+              <m.button
                 whileHover={{ scale: 1.1, rotate: 90 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={() => setIsVideoOpen(false)}
                 className="absolute z-10 flex items-center justify-center w-10 h-10 transition-colors rounded-full top-4 right-4 bg-slate-900/90 backdrop-blur-sm text-slate-400 hover:text-white hover:bg-slate-800"
               >
                 <X className="w-5 h-5" />
-              </motion.button>
+              </m.button>
               <video
                 src="/mockmate-demo.mp4"
                 controls
                 autoPlay
                 className="w-full bg-black aspect-video"
               />
-            </motion.div>
-          </motion.div>
+            </m.div>
+          </m.div>
         )}
       </AnimatePresence>
 
       {/* Cookie Settings Modal */}
       <AnimatePresence>
         {isCookieOpen && (
-          <motion.div
+          <m.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
             onClick={() => setIsCookieOpen(false)}
           >
-            <motion.div
+            <m.div
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
               className="relative w-full max-w-2xl p-6 mx-4 border shadow-2xl bg-slate-950 rounded-2xl border-slate-800 sm:p-8 max-h-[90vh] overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
-              <motion.button
+              <m.button
                 whileHover={{ scale: 1.1, rotate: 90 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={() => setIsCookieOpen(false)}
                 className="absolute flex items-center justify-center w-8 h-8 transition-colors rounded-full top-4 right-4 text-slate-400 hover:text-white hover:bg-white/10"
               >
                 <X className="w-5 h-5" />
-              </motion.button>
+              </m.button>
 
               <div className="flex items-center gap-3 mb-4">
                 <Shield className="w-8 h-8 text-blue-400" />
@@ -461,15 +461,15 @@ export default function Footer() {
               </div>
 
               <div className="flex flex-col justify-end gap-3 sm:flex-row">
-                <motion.button
+                <m.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   className="px-6 py-2.5 text-sm font-medium text-gray-100 rounded-lg bg-slate-800 hover:bg-slate-700 transition-colors"
                   onClick={() => setIsCookieOpen(false)}
                 >
                   Confirm choices
-                </motion.button>
-                <motion.button
+                </m.button>
+                <m.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   className="px-6 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg hover:from-blue-500 hover:to-indigo-500 shadow-lg shadow-blue-500/30 transition-all"
@@ -481,10 +481,10 @@ export default function Footer() {
                   }}
                 >
                   Accept all cookies
-                </motion.button>
+                </m.button>
               </div>
-            </motion.div>
-          </motion.div>
+            </m.div>
+          </m.div>
         )}
       </AnimatePresence>
     </>
@@ -500,19 +500,19 @@ function CookieToggle({ title, description, enabled, onChange }) {
           <p className="mb-1 text-base font-semibold text-white">{title}</p>
           <p className="text-xs text-gray-400">{description}</p>
         </div>
-        <motion.button
+        <m.button
           whileTap={{ scale: 0.95 }}
           onClick={onChange}
           className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
             enabled ? "bg-blue-600" : "bg-slate-700"
           }`}
         >
-          <motion.span
+          <m.span
             animate={{ x: enabled ? 20 : 4 }}
             transition={{ type: "spring", stiffness: 500, damping: 30 }}
             className="inline-block w-4 h-4 bg-white rounded-full shadow-lg"
           />
-        </motion.button>
+        </m.button>
       </div>
     </div>
   );

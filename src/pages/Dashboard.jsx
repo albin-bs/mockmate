@@ -13,7 +13,7 @@ import {
   Filler,
 } from "chart.js";
 import { Code, Flame, Trophy, TrendingUp, Calendar, CheckCircle, Award, Target } from "lucide-react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 
 ChartJS.register(
   LineElement,
@@ -102,14 +102,14 @@ const streakVariants = {
 // ✅ Memoize ProfileCard
 const ProfileCard = memo(function ProfileCard({ user }) {
   return (
-    <motion.div
+    <m.div
       variants={cardHoverVariants}
       initial="rest"
       whileHover="hover"
       className="p-6 border shadow-lg lg:col-span-1 bg-gradient-to-br from-slate-900 to-slate-800 border-slate-700 rounded-xl"
     >
       <div className="flex items-center gap-4 mb-4">
-        <motion.img
+        <m.img
           whileHover={{ scale: 1.1, rotate: 5 }}
           transition={{ type: "spring", stiffness: 300 }}
           src={user.avatar}
@@ -127,14 +127,14 @@ const ProfileCard = memo(function ProfileCard({ user }) {
       <div className="flex items-center justify-between pt-4 border-t border-slate-700">
         <div>
           <p className="text-xs text-slate-400">Current Plan</p>
-          <motion.p
+          <m.p
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ delay: 0.3 }}
             className="text-sm font-semibold text-emerald-400"
           >
             {user.plan}
-          </motion.p>
+          </m.p>
         </div>
         <div>
           <p className="text-xs text-slate-400">Member Since</p>
@@ -146,7 +146,7 @@ const ProfileCard = memo(function ProfileCard({ user }) {
           </p>
         </div>
       </div>
-    </motion.div>
+    </m.div>
   );
 });
 
@@ -175,7 +175,7 @@ const QuickActionCard = memo(function QuickActionCard({
 
   if (isButton) {
     return (
-      <motion.div
+      <m.div
         variants={cardHoverVariants}
         initial="rest"
         whileHover="hover"
@@ -184,12 +184,12 @@ const QuickActionCard = memo(function QuickActionCard({
         <button className={`w-full text-left ${className}`}>
           {content}
         </button>
-      </motion.div>
+      </m.div>
     );
   }
 
   return (
-    <motion.div
+    <m.div
       variants={cardHoverVariants}
       initial="rest"
       whileHover="hover"
@@ -198,7 +198,7 @@ const QuickActionCard = memo(function QuickActionCard({
       <Link to={to} className={className}>
         {content}
       </Link>
-    </motion.div>
+    </m.div>
   );
 });
 
@@ -213,7 +213,7 @@ const ProgressBar = memo(function ProgressBar({
   const percentage = Math.round((solved / total) * 100);
 
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay }}
@@ -225,17 +225,17 @@ const ProgressBar = memo(function ProgressBar({
             {solved} / {total}
           </span>
         </div>
-        <motion.span
+        <m.span
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: delay + 0.7 }}
           className="text-sm font-semibold text-slate-200"
         >
           {percentage}%
-        </motion.span>
+        </m.span>
       </div>
       <div className="w-full h-3 overflow-hidden rounded-full bg-slate-800">
-        <motion.div
+        <m.div
           className={`h-3 rounded-full bg-gradient-to-r ${color.replace('text-', 'from-').replace('-400', '-500')} to-${color.split('-')[1]}-400`}
           variants={progressBarVariants}
           initial="hidden"
@@ -243,7 +243,7 @@ const ProgressBar = memo(function ProgressBar({
           custom={percentage}
         />
       </div>
-    </motion.div>
+    </m.div>
   );
 });
 
@@ -256,7 +256,7 @@ const SubmissionCard = memo(function SubmissionCard({ submission, index }) {
   };
 
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: 1 + index * 0.1 }}
@@ -264,7 +264,7 @@ const SubmissionCard = memo(function SubmissionCard({ submission, index }) {
       className="flex items-center justify-between p-4 transition-colors border rounded-lg cursor-pointer bg-slate-800/50 border-slate-700 hover:bg-slate-800"
     >
       <div className="flex items-center gap-4">
-        <motion.div
+        <m.div
           animate={{
             scale: [1, 1.2, 1],
           }}
@@ -298,7 +298,7 @@ const SubmissionCard = memo(function SubmissionCard({ submission, index }) {
           </div>
         </div>
       </div>
-      <motion.span
+      <m.span
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2 + index * 0.1 }}
@@ -309,36 +309,36 @@ const SubmissionCard = memo(function SubmissionCard({ submission, index }) {
         }`}
       >
         {submission.status}
-      </motion.span>
-    </motion.div>
+      </m.span>
+    </m.div>
   );
 });
 
 // ✅ Memoize LineChart component
 const LineChart = memo(function LineChart({ data, options }) {
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ delay: 0.8, duration: 0.5 }}
       className="h-64"
     >
       <Line data={data} options={options} />
-    </motion.div>
+    </m.div>
   );
 });
 
 // ✅ Memoize RadarChart component
 const RadarChart = memo(function RadarChart({ data, options }) {
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, rotate: -10 }}
       animate={{ opacity: 1, rotate: 0 }}
       transition={{ delay: 0.9, duration: 0.5 }}
       className="flex items-center justify-center h-64"
     >
       <Radar data={data} options={options} />
-    </motion.div>
+    </m.div>
   );
 });
 
@@ -545,36 +545,36 @@ const Dashboard = memo(function Dashboard() {
 
   return (
     <main className="min-h-screen bg-[#0b1120] text-slate-100 pt-20 pb-12 px-4 sm:px-6 lg:px-8">
-      <motion.div
+      <m.div
         className="mx-auto max-w-7xl"
         variants={containerVariants}
         initial="hidden"
         animate={isLoaded ? "visible" : "hidden"}
       >
         {/* Header */}
-        <motion.header
+        <m.header
           variants={itemVariants}
           className="flex flex-col gap-4 mb-8 sm:flex-row sm:items-end sm:justify-between"
         >
           <div>
-            <motion.h1
+            <m.h1
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
               className="text-3xl font-bold sm:text-4xl text-slate-100"
             >
               Dashboard
-            </motion.h1>
-            <motion.p
+            </m.h1>
+            <m.p
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
               className="mt-2 text-sm sm:text-base text-slate-400"
             >
               Track your progress and keep improving your skills
-            </motion.p>
+            </m.p>
           </div>
-          <motion.div
+          <m.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
@@ -600,11 +600,11 @@ const Dashboard = memo(function Dashboard() {
                 <option key={r}>{r}</option>
               ))}
             </select>
-          </motion.div>
-        </motion.header>
+          </m.div>
+        </m.header>
 
         {/* Top Row: Profile + Quick Actions */}
-        <motion.div
+        <m.div
           variants={itemVariants}
           className="grid grid-cols-1 gap-6 mb-8 lg:grid-cols-3"
         >
@@ -627,10 +627,10 @@ const Dashboard = memo(function Dashboard() {
               isButton={true}
             />
           </div>
-        </motion.div>
+        </m.div>
 
         {/* Progress Tracker */}
-        <motion.div
+        <m.div
           variants={itemVariants}
           className="p-6 mb-8 border shadow-lg bg-slate-900 border-slate-800 rounded-xl"
         >
@@ -639,16 +639,16 @@ const Dashboard = memo(function Dashboard() {
               <h2 className="text-xl font-semibold text-slate-100">
                 Practice Progress
               </h2>
-              <motion.p
+              <m.p
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.4 }}
                 className="mt-1 text-sm text-slate-400"
               >
                 {totalSolved} / {totalProblems} problems solved
-              </motion.p>
+              </m.p>
             </div>
-            <motion.div
+            <m.div
               variants={streakVariants}
               initial="initial"
               animate="animate"
@@ -657,7 +657,7 @@ const Dashboard = memo(function Dashboard() {
               <Flame className="w-5 h-5 text-orange-400" />
               <span className="text-lg font-bold text-slate-100">{streak}</span>
               <span className="text-sm text-slate-400">day streak</span>
-            </motion.div>
+            </m.div>
           </div>
 
           {/* Progress Bars */}
@@ -684,15 +684,15 @@ const Dashboard = memo(function Dashboard() {
               delay={0.7}
             />
           </div>
-        </motion.div>
+        </m.div>
 
         {/* Charts Section */}
-        <motion.section
+        <m.section
           variants={itemVariants}
           className="grid gap-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,1.4fr)] mb-8"
         >
           {/* Sessions over time */}
-          <motion.div
+          <m.div
             variants={cardHoverVariants}
             initial="rest"
             whileHover="hover"
@@ -702,10 +702,10 @@ const Dashboard = memo(function Dashboard() {
               Sessions over time
             </h2>
             <LineChart data={lineData} options={chartOptions} />
-          </motion.div>
+          </m.div>
 
           {/* Skill radar */}
-          <motion.div
+          <m.div
             variants={cardHoverVariants}
             initial="rest"
             whileHover="hover"
@@ -715,11 +715,11 @@ const Dashboard = memo(function Dashboard() {
               Skill Analysis
             </h2>
             <RadarChart data={radarData} options={radarOptions} />
-          </motion.div>
-        </motion.section>
+          </m.div>
+        </m.section>
 
         {/* Recent Submissions */}
-        <motion.div
+        <m.div
           variants={itemVariants}
           className="p-6 border shadow-lg bg-slate-900 border-slate-800 rounded-xl"
         >
@@ -750,8 +750,8 @@ const Dashboard = memo(function Dashboard() {
               ))}
             </div>
           )}
-        </motion.div>
-      </motion.div>
+        </m.div>
+      </m.div>
     </main>
   );
 });

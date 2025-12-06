@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Mic, MicOff, Volume2, VolumeX, Download, Play, Pause } from "lucide-react";
 
 interface AudioControlsProps {
@@ -116,7 +116,7 @@ export default function AudioControls({ isRecording, onToggleRecording, sessionI
   };
 
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       className="p-6 border bg-slate-900 border-slate-800 rounded-xl"
@@ -130,7 +130,7 @@ export default function AudioControls({ isRecording, onToggleRecording, sessionI
       <div className="flex items-center justify-between p-4 mb-6 rounded-lg bg-slate-950">
         <div className="flex items-center gap-3">
           {isRecording && (
-            <motion.div
+            <m.div
               animate={{ scale: [1, 1.2, 1] }}
               transition={{ repeat: Infinity, duration: 1.5 }}
               className="w-3 h-3 rounded-full bg-rose-500"
@@ -145,7 +145,7 @@ export default function AudioControls({ isRecording, onToggleRecording, sessionI
 
       {/* Main Controls */}
       <div className="grid grid-cols-2 gap-4 mb-4">
-        <motion.button
+        <m.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={onToggleRecording}
@@ -157,7 +157,7 @@ export default function AudioControls({ isRecording, onToggleRecording, sessionI
         >
           {isRecording ? <MicOff className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
           {isRecording ? "Stop" : "Start"}
-        </motion.button>
+        </m.button>
 
         <button
           onClick={() => setIsMuted(!isMuted)}
@@ -189,7 +189,7 @@ export default function AudioControls({ isRecording, onToggleRecording, sessionI
 
       {/* Playback Controls (if recording exists) */}
       {recordedUrl && (
-        <motion.div
+        <m.div
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: "auto" }}
           className="pt-4 mt-4 space-y-3 border-t border-slate-800"
@@ -213,8 +213,8 @@ export default function AudioControls({ isRecording, onToggleRecording, sessionI
               <Download className="w-4 h-4" />
             </button>
           </div>
-        </motion.div>
+        </m.div>
       )}
-    </motion.div>
+    </m.div>
   );
 }
