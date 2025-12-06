@@ -21,11 +21,11 @@ export interface ProblemConfig {
   tags: string[];
   acceptance: string;
   locked: boolean;
-  hints?: string[]; // Add hints for learners
-  timeComplexity?: string; // Expected solution complexity
+  hints?: string[];
+  timeComplexity?: string;
   spaceComplexity?: string;
-  companies?: string[]; // Companies that ask this question
-  relatedProblems?: number[]; // Related problem numbers
+  companies?: string[];
+  relatedProblems?: number[];
 }
 
 export const problems: ProblemConfig[] = [
@@ -320,9 +320,7 @@ export const problems: ProblemConfig[] = [
         explanation: "Three ways: 1+1+1, 1+2, or 2+1",
       },
     ],
-    constraints: [
-      "1 ≤ n ≤ 45",
-    ],
+    constraints: ["1 ≤ n ≤ 45"],
     edgeCases: [
       "n = 1 (only one way)",
       "Large n requiring optimization",
@@ -495,7 +493,7 @@ export const problems: ProblemConfig[] = [
   },
 ];
 
-// Utility functions
+// ✅ KEEP AS ARRAYS (not functions)
 export const allTags = [...new Set(problems.flatMap((p) => p.tags))].sort();
 
 export const allCompanies = [

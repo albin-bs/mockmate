@@ -1,3 +1,4 @@
+import { memo, useMemo } from "react";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import { Link } from "react-router-dom";
 import SyntaxHighlighter from "react-syntax-highlighter";
@@ -11,7 +12,8 @@ import {
   CheckCircle2
 } from "lucide-react";
 
-const features = [
+// ✅ Move features data outside component
+const FEATURES_DATA = [
   {
     id: "demo",
     icon: <Sparkles className="w-5 h-5" />,
@@ -30,6 +32,7 @@ const features = [
     ctaTo: "/demo",
     gradient: "from-blue-600/20 via-cyan-600/20 to-teal-600/20",
     highlights: ["Adaptive AI", "Real-time feedback", "24/7 access"],
+    color: "blue",
   },
   {
     id: "dashboard",
@@ -51,6 +54,7 @@ const features = [
     ctaTo: "/dashboard",
     gradient: "from-indigo-600/20 via-purple-600/20 to-pink-600/20",
     highlights: ["Instant analysis", "Actionable tips", "Score tracking"],
+    color: "indigo",
   },
   {
     id: "sessions",
@@ -74,6 +78,7 @@ const features = [
     ctaTo: "/sessions",
     gradient: "from-emerald-600/20 via-green-600/20 to-lime-600/20",
     highlights: ["Detailed analytics", "Growth tracking", "Smart insights"],
+    color: "emerald",
   },
   {
     id: "code",
@@ -86,6 +91,7 @@ const features = [
     ctaTo: "/code-demo",
     gradient: "from-orange-600/20 via-red-600/20 to-rose-600/20",
     highlights: ["Multi-language support", "Instant execution", "Real-time output"],
+    color: "orange",
   },
 ];
 
@@ -97,13 +103,59 @@ const cardVariants = {
     transition: {
       duration: 0.7,
       delay: 0.1 * i,
-      ease: [0.22, 1, 0.36, 1], // Smooth easing
+      ease: [0.22, 1, 0.36, 1],
     },
   }),
 };
 
-// Interactive card with mouse tracking
-function FeatureCard({ feature, index }) {
+// ✅ Memoize Highlights component
+const Highlights = memo(function Highlights({ highlights, color }) {
+  const colorClasses = {
+    blue: "text-blue-300 bg-blue-500/10 border-blue-500/20",
+    indigo: "text-indigo-300 bg-indigo-500/10 border-indigo-500/20",
+    emerald: "text-emerald-300 bg-emerald-500/10 border-emerald-500/20",
+    orange: "text-orange-300 bg-orange-500/10 border-orange-500/20",
+  };
+
+  return (
+    <div className="flex flex-wrap gap-2 mt-4">
+      {highlights.map((highlight, i) => (
+        <span
+          key={i}
+          className={`inline-flex items-center gap-1 px-3 py-1 text-xs font-medium border rounded-full ${colorClasses[color]}`}
+        >
+          <CheckCircle2 className="w-3 h-3" />
+          {highlight}
+        </span>
+      ))}
+    </div>
+  );
+});
+
+// ✅ Memoize FeatureCTA component
+const FeatureCTA = memo(function FeatureCTA({ to, label, color }) {
+  const colorClasses = {
+    blue: "text-blue-400 hover:text-blue-300",
+    indigo: "text-indigo-400 hover:text-indigo-300",
+    emerald: "text-emerald-400 hover:text-emerald-300",
+    orange: "text-orange-400 hover:text-orange-300",
+  };
+
+  return (
+    <motion.div className="mt-6" whileHover={{ x: 4 }} transition={{ type: "spring", stiffness: 400 }}>
+      <Link
+        to={to}
+        className={`inline-flex items-center gap-2 text-sm font-semibold group/link ${colorClasses[color]}`}
+      >
+        {label}
+        <ArrowRight className="w-4 h-4 transition-transform group-hover/link:translate-x-1" />
+      </Link>
+    </motion.div>
+  );
+});
+
+// ✅ Memoize FeatureCard component
+const FeatureCard = memo(function FeatureCard({ feature, index }) {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
@@ -147,9 +199,209 @@ function FeatureCard({ feature, index }) {
       </motion.div>
     </motion.div>
   );
-}
+});
 
-export default function Features() {
+// ✅ Memoize IconBadge component
+const IconBadge = memo(function IconBadge({ icon, color }) {
+  const colorClasses = {
+    blue: "text-blue-400 bg-blue-500/10 border-blue-500/20",
+    indigo: "text-indigo-400 bg-indigo-500/10 border-indigo-500/20",
+    emerald: "text-emerald-400 bg-emerald-500/10 border-emerald-500/20",
+    orange: "text-orange-400 bg-orange-500/10 border-orange-500/20",
+  };
+
+  return (
+    <div className={`inline-flex items-center justify-center w-12 h-12 mb-4 border rounded-xl ${colorClasses[color]}`}>
+      {icon}
+    </div>
+  );
+});
+
+// ✅ Memoize BackgroundOrbs component
+const BackgroundOrbs = memo(function BackgroundOrbs() {
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      <motion.div
+        aria-hidden="true"
+        className="absolute inset-x-0 flex justify-center top-24"
+        animate={{
+          opacity: [0.2, 0.3, 0.2],
+          scale: [0.95, 1.05, 0.95],
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      >
+        <div className="h-64 w-[60rem] rounded-full bg-gradient-to-r from-indigo-600/40 via-blue-500/35 to-cyan-400/30 blur-3xl" />
+      </motion.div>
+
+      <motion.div
+        animate={{
+          y: [0, -30, 0],
+          x: [0, 20, 0],
+          opacity: [0.1, 0.2, 0.1],
+        }}
+        transition={{
+          duration: 10,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+        className="absolute rounded-full top-40 left-20 w-72 h-72 bg-blue-500/20 blur-3xl"
+      />
+      <motion.div
+        animate={{
+          y: [0, 40, 0],
+          x: [0, -30, 0],
+          opacity: [0.1, 0.25, 0.1],
+        }}
+        transition={{
+          duration: 12,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 2,
+        }}
+        className="absolute rounded-full bottom-40 right-20 w-96 h-96 bg-indigo-500/20 blur-3xl"
+      />
+    </div>
+  );
+});
+
+// ✅ Main Features component
+const Features = memo(function Features() {
+  // ✅ Memoize feature cards to prevent recreating content on every render
+  const featureCards = useMemo(() => {
+    return FEATURES_DATA.map((feature, index) => {
+      // Define card content based on feature type
+      let content;
+
+      if (index === 0 || index === 3) {
+        // Large cards with image
+        content = (
+          <div className={`relative h-full ${index === 0 ? 'lg:row-span-2' : 'lg:row-span-2'}`}>
+            <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} rounded-2xl blur-xl opacity-50 group-hover:opacity-70 transition-opacity`} />
+            <div className="relative h-full overflow-hidden border bg-gray-800/90 backdrop-blur-sm rounded-2xl border-white/10">
+              <div className="flex flex-col h-full">
+                <div className="px-8 pt-8 pb-3 sm:px-10 sm:pt-10 sm:pb-0">
+                  <IconBadge icon={feature.icon} color={feature.color} />
+                  
+                  <p className="mt-1 text-xs font-semibold uppercase tracking-[0.18em] text-indigo-300">
+                    {feature.title}
+                  </p>
+                  <p className="mt-2 text-xl font-bold tracking-tight text-white">
+                    {feature.heading}
+                  </p>
+                  <p className="max-w-lg mt-2 text-sm leading-6 text-gray-400">
+                    {feature.description}
+                  </p>
+
+                  <Highlights highlights={feature.highlights} color={feature.color} />
+                  <FeatureCTA to={feature.ctaTo} label={feature.ctaLabel} color={feature.color} />
+                </div>
+                
+                {index === 0 ? (
+                  <div className="@container relative min-h-60 w-full grow mt-6">
+                    <motion.div
+                      whileHover={{ y: -4 }}
+                      transition={{ type: "spring", stiffness: 300 }}
+                      className="absolute inset-x-10 top-10 bottom-0 overflow-hidden rounded-t-[12cqw] border-x-[3cqw] border-t-[3cqw] border-gray-700 bg-gray-900 shadow-2xl"
+                    >
+                      <img
+                        src={feature.imageSrc}
+                        alt="Mobile-friendly AI interview practice preview"
+                        className="object-cover object-top size-full"
+                        loading="lazy"
+                      />
+                    </motion.div>
+                  </div>
+                ) : (
+                  <div className="relative w-full mt-6 min-h-60 grow">
+                    <motion.div
+                      whileHover={{ y: -4 }}
+                      className="absolute bottom-0 right-0 overflow-hidden border shadow-2xl top-10 left-10 rounded-tl-xl bg-gray-950/90 border-white/10"
+                    >
+                      <div className="flex bg-gray-900 border-b border-white/5">
+                        <div className="flex text-sm font-medium text-gray-400">
+                          <div className="px-4 py-2 text-white border-b-2 border-r border-r-white/10 border-b-orange-500 bg-white/5">
+                            codeDemo.tsx
+                          </div>
+                          <div className="px-4 py-2 transition-colors border-r cursor-pointer border-gray-600/10 hover:bg-white/5">
+                            output.log
+                          </div>
+                        </div>
+                      </div>
+                      <div className="px-6 pt-6 pb-10 overflow-hidden font-mono text-xs text-gray-100 sm:text-sm">
+                        <SyntaxHighlighter
+                          language="javascript"
+                          style={nightOwl}
+                          customStyle={{
+                            margin: 0,
+                            background: "transparent",
+                            fontSize: "0.8rem",
+                            lineHeight: "1.5",
+                          }}
+                          showLineNumbers
+                        >
+{`const res = await axios.post("/api/execute", {
+  sourceCode: "print('hello from mockmate')",
+  languageId: 71,
+});
+
+console.log(res.data.stdout); // "hello from mockmate"`}
+                        </SyntaxHighlighter>
+                      </div>
+                    </motion.div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        );
+      } else {
+        // Smaller cards
+        content = (
+          <div className={`relative h-full ${index === 1 ? 'max-lg:row-start-1' : 'max-lg:row-start-3 lg:col-start-2 lg:row-start-2'}`}>
+            <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} rounded-2xl blur-xl opacity-50 group-hover:opacity-70 transition-opacity`} />
+            <div className="relative h-full overflow-hidden border bg-gray-800/90 backdrop-blur-sm rounded-2xl border-white/10">
+              <div className="flex flex-col h-full">
+                <div className="px-8 pt-8 sm:px-10 sm:pt-10">
+                  <IconBadge icon={feature.icon} color={feature.color} />
+                  
+                  <p className="mt-1 text-xs font-semibold uppercase tracking-[0.18em] text-indigo-300">
+                    {feature.title}
+                  </p>
+                  <p className="mt-2 text-xl font-bold tracking-tight text-white">
+                    {feature.heading}
+                  </p>
+                  <p className="max-w-lg mt-2 text-sm leading-6 text-gray-400">
+                    {feature.description}
+                  </p>
+
+                  <Highlights highlights={feature.highlights} color={feature.color} />
+                  <FeatureCTA to={feature.ctaTo} label={feature.ctaLabel} color={feature.color} />
+                </div>
+                
+                <div className="flex items-center justify-center flex-1 px-8 max-lg:pt-10 max-lg:pb-12 sm:px-10 lg:pb-6">
+                  <motion.img
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                    src={feature.imageSrc}
+                    alt={`${feature.title} preview`}
+                    className="w-full max-lg:max-w-xs drop-shadow-2xl"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      return { feature, index, content };
+    });
+  }, []);
+
   return (
     <motion.section
       id="features"
@@ -159,54 +411,7 @@ export default function Features() {
       viewport={{ once: true, amount: 0.1 }}
       transition={{ duration: 0.8 }}
     >
-      {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Main gradient glow */}
-        <motion.div
-          aria-hidden="true"
-          className="absolute inset-x-0 flex justify-center top-24"
-          animate={{
-            opacity: [0.2, 0.3, 0.2],
-            scale: [0.95, 1.05, 0.95],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        >
-          <div className="h-64 w-[60rem] rounded-full bg-gradient-to-r from-indigo-600/40 via-blue-500/35 to-cyan-400/30 blur-3xl" />
-        </motion.div>
-
-        {/* Floating orbs */}
-        <motion.div
-          animate={{
-            y: [0, -30, 0],
-            x: [0, 20, 0],
-            opacity: [0.1, 0.2, 0.1],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className="absolute rounded-full top-40 left-20 w-72 h-72 bg-blue-500/20 blur-3xl"
-        />
-        <motion.div
-          animate={{
-            y: [0, 40, 0],
-            x: [0, -30, 0],
-            opacity: [0.1, 0.25, 0.1],
-          }}
-          transition={{
-            duration: 12,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 2,
-          }}
-          className="absolute rounded-full bottom-40 right-20 w-96 h-96 bg-indigo-500/20 blur-3xl"
-        />
-      </div>
+      <BackgroundOrbs />
 
       <div className="relative max-w-2xl px-6 mx-auto lg:max-w-7xl lg:px-8">
         {/* Header */}
@@ -244,305 +449,17 @@ export default function Features() {
 
         {/* Features Grid */}
         <div className="grid gap-6 mt-10 sm:mt-16 lg:grid-cols-3 lg:grid-rows-2">
-          {/* Card 1 – AI Interview Simulation */}
-          <FeatureCard
-            index={0}
-            feature={{
-              content: (
-                <div className="relative h-full lg:row-span-2">
-                  <div className={`absolute inset-0 bg-gradient-to-br ${features[0].gradient} rounded-2xl blur-xl opacity-50 group-hover:opacity-70 transition-opacity`} />
-                  <div className="relative h-full overflow-hidden border bg-gray-800/90 backdrop-blur-sm rounded-2xl border-white/10">
-                    <div className="flex flex-col h-full">
-                      <div className="px-8 pt-8 pb-3 sm:px-10 sm:pt-10 sm:pb-0">
-                        {/* Icon badge */}
-                        <div className="inline-flex items-center justify-center w-12 h-12 mb-4 text-blue-400 border rounded-xl bg-blue-500/10 border-blue-500/20">
-                          {features[0].icon}
-                        </div>
-                        
-                        <p className="mt-1 text-xs font-semibold uppercase tracking-[0.18em] text-indigo-300">
-                          {features[0].title}
-                        </p>
-                        <p className="mt-2 text-xl font-bold tracking-tight text-white">
-                          {features[0].heading}
-                        </p>
-                        <p className="max-w-lg mt-2 text-sm leading-6 text-gray-400">
-                          {features[0].description}
-                        </p>
-
-                        {/* Highlights */}
-                        <div className="flex flex-wrap gap-2 mt-4">
-                          {features[0].highlights.map((highlight, i) => (
-                            <span
-                              key={i}
-                              className="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium text-blue-300 border rounded-full bg-blue-500/10 border-blue-500/20"
-                            >
-                              <CheckCircle2 className="w-3 h-3" />
-                              {highlight}
-                            </span>
-                          ))}
-                        </div>
-
-                        <motion.div
-                          className="mt-6"
-                          whileHover={{ x: 4 }}
-                          transition={{ type: "spring", stiffness: 400 }}
-                        >
-                          <Link
-                            to={features[0].ctaTo}
-                            className="inline-flex items-center gap-2 text-sm font-semibold text-blue-400 hover:text-blue-300 group/link"
-                          >
-                            {features[0].ctaLabel}
-                            <ArrowRight className="w-4 h-4 transition-transform group-hover/link:translate-x-1" />
-                          </Link>
-                        </motion.div>
-                      </div>
-                      
-                      <div className="@container relative min-h-60 w-full grow mt-6">
-                        <motion.div
-                          whileHover={{ y: -4 }}
-                          transition={{ type: "spring", stiffness: 300 }}
-                          className="absolute inset-x-10 top-10 bottom-0 overflow-hidden rounded-t-[12cqw] border-x-[3cqw] border-t-[3cqw] border-gray-700 bg-gray-900 shadow-2xl"
-                        >
-                          <img
-                            src={features[0].imageSrc}
-                            alt="Mobile-friendly AI interview practice preview"
-                            className="object-cover object-top size-full"
-                          />
-                        </motion.div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ),
-            }}
-          />
-
-          {/* Card 2 – Instant AI Feedback */}
-          <FeatureCard
-            index={1}
-            feature={{
-              content: (
-                <div className="relative h-full max-lg:row-start-1">
-                  <div className={`absolute inset-0 bg-gradient-to-br ${features[1].gradient} rounded-2xl blur-xl opacity-50 group-hover:opacity-70 transition-opacity`} />
-                  <div className="relative h-full overflow-hidden border bg-gray-800/90 backdrop-blur-sm rounded-2xl border-white/10">
-                    <div className="flex flex-col h-full">
-                      <div className="px-8 pt-8 sm:px-10 sm:pt-10">
-                        <div className="inline-flex items-center justify-center w-12 h-12 mb-4 text-indigo-400 border rounded-xl bg-indigo-500/10 border-indigo-500/20">
-                          {features[1].icon}
-                        </div>
-                        
-                        <p className="mt-1 text-xs font-semibold uppercase tracking-[0.18em] text-indigo-300">
-                          {features[1].title}
-                        </p>
-                        <p className="mt-2 text-xl font-bold tracking-tight text-white">
-                          {features[1].heading}
-                        </p>
-                        <p className="max-w-lg mt-2 text-sm leading-6 text-gray-400">
-                          {features[1].description}
-                        </p>
-
-                        <div className="flex flex-wrap gap-2 mt-4">
-                          {features[1].highlights.map((highlight, i) => (
-                            <span
-                              key={i}
-                              className="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium text-indigo-300 border rounded-full bg-indigo-500/10 border-indigo-500/20"
-                            >
-                              <CheckCircle2 className="w-3 h-3" />
-                              {highlight}
-                            </span>
-                          ))}
-                        </div>
-
-                        <motion.div
-                          className="mt-6"
-                          whileHover={{ x: 4 }}
-                        >
-                          <Link
-                            to={features[1].ctaTo}
-                            className="inline-flex items-center gap-2 text-sm font-semibold text-indigo-400 hover:text-indigo-300 group/link"
-                          >
-                            {features[1].ctaLabel}
-                            <ArrowRight className="w-4 h-4 transition-transform group-hover/link:translate-x-1" />
-                          </Link>
-                        </motion.div>
-                      </div>
-                      
-                      <div className="flex items-center justify-center flex-1 px-8 max-lg:pt-10 max-lg:pb-12 sm:px-10 lg:pb-6">
-                        <motion.img
-                          whileHover={{ scale: 1.05 }}
-                          transition={{ type: "spring", stiffness: 300 }}
-                          src={features[1].imageSrc}
-                          alt="Performance analytics preview"
-                          className="w-full max-lg:max-w-xs drop-shadow-2xl"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ),
-            }}
-          />
-
-          {/* Card 3 – Progress Analytics */}
-          <FeatureCard
-            index={2}
-            feature={{
-              content: (
-                <div className="relative h-full max-lg:row-start-3 lg:col-start-2 lg:row-start-2">
-                  <div className={`absolute inset-0 bg-gradient-to-br ${features[2].gradient} rounded-2xl blur-xl opacity-50 group-hover:opacity-70 transition-opacity`} />
-                  <div className="relative h-full overflow-hidden border bg-gray-800/90 backdrop-blur-sm rounded-2xl border-white/10">
-                    <div className="flex flex-col h-full">
-                      <div className="px-8 pt-8 sm:px-10 sm:pt-10">
-                        <div className="inline-flex items-center justify-center w-12 h-12 mb-4 border rounded-xl bg-emerald-500/10 border-emerald-500/20 text-emerald-400">
-                          {features[2].icon}
-                        </div>
-                        
-                        <p className="mt-1 text-xs font-semibold uppercase tracking-[0.18em] text-indigo-300">
-                          {features[2].title}
-                        </p>
-                        <p className="mt-2 text-xl font-bold tracking-tight text-white">
-                          {features[2].heading}
-                        </p>
-                        <p className="max-w-lg mt-2 text-sm leading-6 text-gray-400">
-                          {features[2].description}
-                        </p>
-
-                        <div className="flex flex-wrap gap-2 mt-4">
-                          {features[2].highlights.map((highlight, i) => (
-                            <span
-                              key={i}
-                              className="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium border rounded-full text-emerald-300 bg-emerald-500/10 border-emerald-500/20"
-                            >
-                              <CheckCircle2 className="w-3 h-3" />
-                              {highlight}
-                            </span>
-                          ))}
-                        </div>
-
-                        <motion.div
-                          className="mt-6"
-                          whileHover={{ x: 4 }}
-                        >
-                          <Link
-                            to={features[2].ctaTo}
-                            className="inline-flex items-center gap-2 text-sm font-semibold text-emerald-400 hover:text-emerald-300 group/link"
-                          >
-                            {features[2].ctaLabel}
-                            <ArrowRight className="w-4 h-4 transition-transform group-hover/link:translate-x-1" />
-                          </Link>
-                        </motion.div>
-                      </div>
-                      
-                      <div className="@container flex flex-1 items-center justify-center max-lg:py-6 lg:pb-6">
-                        <motion.img
-                          whileHover={{ scale: 1.05 }}
-                          src={features[2].imageSrc}
-                          alt="Security and insights preview"
-                          className="h-[min(152px,40cqw)] object-cover drop-shadow-2xl"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ),
-            }}
-          />
-
-          {/* Card 4 – Live Code Practice */}
-          <FeatureCard
-            index={3}
-            feature={{
-              content: (
-                <div className="relative h-full lg:row-span-2">
-                  <div className={`absolute inset-0 bg-gradient-to-br ${features[3].gradient} rounded-2xl blur-xl opacity-50 group-hover:opacity-70 transition-opacity`} />
-                  <div className="relative h-full overflow-hidden border bg-gray-800/90 backdrop-blur-sm rounded-2xl border-white/10">
-                    <div className="flex flex-col h-full">
-                      <div className="px-8 pt-8 pb-3 sm:px-10 sm:pt-10 sm:pb-0">
-                        <div className="inline-flex items-center justify-center w-12 h-12 mb-4 text-orange-400 border rounded-xl bg-orange-500/10 border-orange-500/20">
-                          {features[3].icon}
-                        </div>
-                        
-                        <p className="mt-1 text-xs font-semibold uppercase tracking-[0.18em] text-indigo-300">
-                          {features[3].title}
-                        </p>
-                        <p className="mt-2 text-xl font-bold tracking-tight text-white">
-                          {features[3].heading}
-                        </p>
-                        <p className="max-w-lg mt-2 text-sm leading-6 text-gray-400">
-                          {features[3].description}
-                        </p>
-
-                        <div className="flex flex-wrap gap-2 mt-4">
-                          {features[3].highlights.map((highlight, i) => (
-                            <span
-                              key={i}
-                              className="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium text-orange-300 border rounded-full bg-orange-500/10 border-orange-500/20"
-                            >
-                              <CheckCircle2 className="w-3 h-3" />
-                              {highlight}
-                            </span>
-                          ))}
-                        </div>
-
-                        <motion.div
-                          className="mt-6"
-                          whileHover={{ x: 4 }}
-                        >
-                          <Link
-                            to={features[3].ctaTo}
-                            className="inline-flex items-center gap-2 text-sm font-semibold text-orange-400 hover:text-orange-300 group/link"
-                          >
-                            {features[3].ctaLabel}
-                            <ArrowRight className="w-4 h-4 transition-transform group-hover/link:translate-x-1" />
-                          </Link>
-                        </motion.div>
-                      </div>
-                      
-                      <div className="relative w-full mt-6 min-h-60 grow">
-                        <motion.div
-                          whileHover={{ y: -4 }}
-                          className="absolute bottom-0 right-0 overflow-hidden border shadow-2xl top-10 left-10 rounded-tl-xl bg-gray-950/90 border-white/10"
-                        >
-                          <div className="flex bg-gray-900 border-b border-white/5">
-                            <div className="flex text-sm font-medium text-gray-400">
-                              <div className="px-4 py-2 text-white border-b-2 border-r border-r-white/10 border-b-orange-500 bg-white/5">
-                                codeDemo.tsx
-                              </div>
-                              <div className="px-4 py-2 transition-colors border-r cursor-pointer border-gray-600/10 hover:bg-white/5">
-                                output.log
-                              </div>
-                            </div>
-                          </div>
-                          <div className="px-6 pt-6 pb-10 overflow-hidden font-mono text-xs text-gray-100 sm:text-sm">
-                            <SyntaxHighlighter
-                              language="javascript"
-                              style={nightOwl}
-                              customStyle={{
-                                margin: 0,
-                                background: "transparent",
-                                fontSize: "0.8rem",
-                                lineHeight: "1.5",
-                              }}
-                              showLineNumbers
-                            >
-{`const res = await axios.post("/api/execute", {
-  sourceCode: "print('hello from mockmate')",
-  languageId: 71,
-});
-
-console.log(res.data.stdout); // "hello from mockmate"`}
-                            </SyntaxHighlighter>
-                          </div>
-                        </motion.div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ),
-            }}
-          />
+          {featureCards.map(({ feature, index, content }) => (
+            <FeatureCard
+              key={feature.id}
+              index={index}
+              feature={{ content }}
+            />
+          ))}
         </div>
       </div>
     </motion.section>
   );
-}
+});
+
+export default Features;

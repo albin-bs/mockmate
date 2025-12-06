@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo, useCallback, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Trophy,
@@ -16,197 +16,455 @@ import {
   Plus,
   Filter,
   Search,
+  Shield,
 } from "lucide-react";
 
-export default function Community() {
+// ✅ Move static data outside component
+const STATS_DATA = [
+  {
+    icon: <Users className="w-6 h-6" />,
+    value: "12.5K",
+    label: "Active Users",
+    gradient: "from-blue-600 to-indigo-600",
+    bgGlow: "bg-blue-500/20",
+  },
+  {
+    icon: <TrendingUp className="w-6 h-6" />,
+    value: "850K",
+    label: "Solutions Submitted",
+    gradient: "from-emerald-600 to-teal-600",
+    bgGlow: "bg-emerald-500/20",
+  },
+  {
+    icon: <MessageSquare className="w-6 h-6" />,
+    value: "3.2K",
+    label: "Discord Members",
+    gradient: "from-purple-600 to-pink-600",
+    bgGlow: "bg-purple-500/20",
+  },
+  {
+    icon: <Trophy className="w-6 h-6" />,
+    value: "450",
+    label: "Active Streaks",
+    gradient: "from-amber-600 to-orange-600",
+    bgGlow: "bg-amber-500/20",
+  },
+];
+
+const TABS = [
+  { id: "leaderboard", label: "Leaderboard", icon: <Trophy className="w-4 h-4" /> },
+  { id: "discord", label: "Discord", icon: <MessageSquare className="w-4 h-4" /> },
+  { id: "discussions", label: "Discussions", icon: <Users className="w-4 h-4" /> },
+];
+
+const MOCK_LEADERBOARD = [
+  {
+    rank: 1,
+    userId: "user1",
+    username: "AlgoMaster",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=AlgoMaster",
+    solved: 245,
+    easy: 98,
+    medium: 120,
+    hard: 27,
+    streak: 45,
+    badges: ["top-1", "100-day-streak"],
+    points: 2450,
+  },
+  {
+    rank: 2,
+    userId: "user2",
+    username: "CodeNinja",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=CodeNinja",
+    solved: 198,
+    easy: 85,
+    medium: 95,
+    hard: 18,
+    streak: 32,
+    badges: ["top-10", "50-day-streak"],
+    points: 1980,
+  },
+  {
+    rank: 3,
+    userId: "user3",
+    username: "ByteWarrior",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=ByteWarrior",
+    solved: 167,
+    easy: 72,
+    medium: 80,
+    hard: 15,
+    streak: 28,
+    badges: ["top-10"],
+    points: 1670,
+  },
+  {
+    rank: 4,
+    userId: "user4",
+    username: "DevGuru",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=DevGuru",
+    solved: 154,
+    easy: 68,
+    medium: 74,
+    hard: 12,
+    streak: 21,
+    badges: ["top-100"],
+    points: 1540,
+  },
+  {
+    rank: 5,
+    userId: "user5",
+    username: "StackOverflow",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=StackOverflow",
+    solved: 142,
+    easy: 61,
+    medium: 69,
+    hard: 12,
+    streak: 19,
+    badges: ["top-100"],
+    points: 1420,
+  },
+];
+
+const MOCK_DISCUSSIONS = [
+  {
+    id: 1,
+    problem: "Two Sum",
+    title: "Alternative O(n) solution using sorted array",
+    author: "AlgoMaster",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=AlgoMaster",
+    replies: 12,
+    likes: 34,
+    timestamp: "2 hours ago",
+    tags: ["Algorithms", "Optimization"],
+  },
+  {
+    id: 2,
+    problem: "Valid Parentheses",
+    title: "Help: Getting TLE on test case 45",
+    author: "CodeNinja",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=CodeNinja",
+    replies: 8,
+    likes: 15,
+    timestamp: "5 hours ago",
+    tags: ["Stack", "Help Needed"],
+  },
+  {
+    id: 3,
+    problem: "Merge Intervals",
+    title: "Python vs Java performance comparison",
+    author: "DevGuru",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=DevGuru",
+    replies: 23,
+    likes: 56,
+    timestamp: "1 day ago",
+    tags: ["Performance", "Languages"],
+  },
+];
+
+const BADGE_CONFIG = {
+  "top-1": { icon: <Trophy className="w-4 h-4" />, color: "text-yellow-400" },
+  "top-10": { icon: <Medal className="w-4 h-4" />, color: "text-slate-300" },
+  "top-100": { icon: <Award className="w-4 h-4" />, color: "text-orange-500" },
+  "100-day-streak": { icon: <Flame className="w-4 h-4" />, color: "text-orange-400" },
+  "50-day-streak": { icon: <Flame className="w-4 h-4" />, color: "text-orange-400" },
+};
+
+const COMMUNITY_RULES = [
+  { emoji: "✅", text: "Be respectful and helpful" },
+  { emoji: "✅", text: "Share knowledge and solutions" },
+  { emoji: "✅", text: "Ask questions freely" },
+  { emoji: "❌", text: "No spam or self-promotion" },
+  { emoji: "❌", text: "No plagiarism" },
+];
+
+const DISCORD_STATS = [
+  { label: "Members", value: "3.2K", color: "text-slate-100" },
+  { label: "Online Now", value: "847", color: "text-emerald-400" },
+  { label: "Channels", value: "12", color: "text-slate-100" },
+];
+
+// ✅ Memoized Badge Icon
+const BadgeIcon = memo(function BadgeIcon({ badge }) {
+  const badgeData = BADGE_CONFIG[badge] || { icon: null, color: "" };
+  return (
+    <span className={`inline-flex items-center ${badgeData.color}`}>
+      {badgeData.icon}
+    </span>
+  );
+});
+
+// ✅ Memoized Rank Badge
+const RankBadge = memo(function RankBadge({ rank }) {
+  if (rank === 1) {
+    return (
+      <div className="flex items-center justify-center w-12 h-12 rounded-full shadow-lg bg-gradient-to-br from-yellow-400 to-yellow-600 shadow-yellow-500/50">
+        <Trophy className="w-6 h-6 text-white" />
+      </div>
+    );
+  }
+  if (rank === 2) {
+    return (
+      <div className="flex items-center justify-center w-12 h-12 rounded-full shadow-lg bg-gradient-to-br from-slate-300 to-slate-500 shadow-slate-400/50">
+        <Medal className="w-6 h-6 text-white" />
+      </div>
+    );
+  }
+  if (rank === 3) {
+    return (
+      <div className="flex items-center justify-center w-12 h-12 rounded-full shadow-lg bg-gradient-to-br from-orange-400 to-orange-600 shadow-orange-500/50">
+        <Award className="w-6 h-6 text-white" />
+      </div>
+    );
+  }
+  return (
+    <div className="flex items-center justify-center w-12 h-12 border-2 rounded-full bg-slate-800 border-slate-700">
+      <span className="text-lg font-bold text-slate-400">#{rank}</span>
+    </div>
+  );
+});
+
+// ✅ Memoized Stat Card
+const StatCard = memo(function StatCard({ stat, index }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ delay: 0.3 + index * 0.1 }}
+      whileHover={{ scale: 1.05, y: -4 }}
+      className={`relative p-6 rounded-2xl bg-gradient-to-br ${stat.gradient} shadow-lg overflow-hidden group cursor-pointer`}
+    >
+      <div className={`absolute inset-0 ${stat.bgGlow} blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
+      
+      <div className="relative">
+        <div className="flex items-center justify-between mb-3">
+          <div className="text-white/90">{stat.icon}</div>
+          <Star className="w-4 h-4 text-white/50" />
+        </div>
+        <p className="mb-1 text-3xl font-bold text-white">{stat.value}</p>
+        <p className="text-sm text-white/80">{stat.label}</p>
+      </div>
+    </motion.div>
+  );
+});
+
+// ✅ Memoized Tab Button
+const TabButton = memo(function TabButton({ tab, isActive, onClick }) {
+  return (
+    <motion.button
+      onClick={onClick}
+      whileHover={{ scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
+      className={`relative flex items-center gap-2 px-6 py-3 text-sm font-semibold rounded-lg transition-all ${
+        isActive
+          ? "bg-purple-600 text-white shadow-lg shadow-purple-500/30"
+          : "text-slate-400 hover:text-slate-200 hover:bg-slate-800"
+      }`}
+    >
+      {tab.icon}
+      {tab.label}
+      {isActive && (
+        <motion.div
+          layoutId="activeTab"
+          className="absolute inset-0 bg-purple-600 rounded-lg -z-10"
+          transition={{ type: "spring", stiffness: 380, damping: 30 }}
+        />
+      )}
+    </motion.button>
+  );
+});
+
+// ✅ Memoized Podium User
+const PodiumUser = memo(function PodiumUser({ user, actualRank, index }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 40 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.1 }}
+      className={`relative p-6 rounded-2xl border bg-gradient-to-br ${
+        actualRank === 1
+          ? "from-yellow-500/10 to-yellow-600/5 border-yellow-500/30"
+          : actualRank === 2
+          ? "from-slate-400/10 to-slate-500/5 border-slate-400/30"
+          : "from-orange-500/10 to-orange-600/5 border-orange-500/30"
+      } ${index === 1 ? "md:-mt-4" : ""}`}
+    >
+      <div className="flex flex-col items-center text-center">
+        <div className="mb-4">
+          <RankBadge rank={actualRank} />
+        </div>
+        <img
+          src={user.avatar}
+          alt={user.username}
+          className="w-16 h-16 mb-3 border-4 rounded-full border-slate-800"
+          loading="lazy"
+        />
+        <h3 className="mb-1 font-bold text-slate-100">{user.username}</h3>
+        <p className="mb-1 text-2xl font-bold text-purple-400">{user.solved}</p>
+        <p className="text-xs text-slate-500">problems solved</p>
+        <div className="flex items-center gap-1 mt-3">
+          <Flame className="w-4 h-4 text-orange-400" />
+          <span className="text-sm font-semibold text-slate-300">{user.streak}d</span>
+        </div>
+      </div>
+    </motion.div>
+  );
+});
+
+// ✅ Memoized Leaderboard Row
+const LeaderboardRow = memo(function LeaderboardRow({ user, index }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: -20 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ delay: index * 0.05 }}
+      whileHover={{ scale: 1.01, x: 4 }}
+      className="p-4 transition-all border cursor-pointer rounded-xl border-slate-800 bg-slate-900/50 hover:bg-slate-800/50 hover:border-slate-700"
+    >
+      <div className="flex items-center gap-4">
+        <span className="w-12 text-2xl font-bold text-center text-slate-400">
+          #{user.rank}
+        </span>
+        <img
+          src={user.avatar}
+          alt={user.username}
+          className="w-12 h-12 border-2 rounded-full border-slate-700"
+          loading="lazy"
+        />
+        <div className="flex-1">
+          <div className="flex items-center gap-2 mb-1">
+            <h3 className="font-semibold text-slate-100">{user.username}</h3>
+            <div className="flex gap-1">
+              {user.badges.map((badge, idx) => (
+                <BadgeIcon key={idx} badge={badge} />
+              ))}
+            </div>
+          </div>
+          <div className="flex items-center gap-4 text-xs text-slate-400">
+            <span className="flex items-center gap-1">
+              <span className="font-semibold text-emerald-400">{user.easy}</span> Easy
+            </span>
+            <span className="flex items-center gap-1">
+              <span className="font-semibold text-amber-400">{user.medium}</span> Med
+            </span>
+            <span className="flex items-center gap-1">
+              <span className="font-semibold text-rose-400">{user.hard}</span> Hard
+            </span>
+          </div>
+        </div>
+        <div className="flex flex-col items-end gap-2">
+          <span className="text-2xl font-bold text-slate-100">{user.solved}</span>
+          <div className="flex items-center gap-1 text-sm">
+            <Flame className="w-4 h-4 text-orange-400" />
+            <span className="font-semibold text-slate-300">{user.streak}d</span>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+});
+
+// ✅ Memoized Discussion Card
+const DiscussionCard = memo(function DiscussionCard({ discussion, index }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.1 }}
+      whileHover={{ scale: 1.01, x: 4 }}
+      className="p-6 transition-all border cursor-pointer rounded-2xl border-slate-800 bg-slate-900/50 hover:bg-slate-800/50 hover:border-slate-700"
+    >
+      <div className="flex items-start gap-4">
+        <img
+          src={discussion.avatar}
+          alt={discussion.author}
+          className="w-12 h-12 border-2 rounded-full border-slate-700"
+          loading="lazy"
+        />
+        <div className="flex-1">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="px-2 py-1 text-xs font-medium text-purple-300 rounded bg-purple-500/20">
+              {discussion.problem}
+            </span>
+            {discussion.tags.map((tag, i) => (
+              <span
+                key={i}
+                className="px-2 py-1 text-xs rounded bg-slate-800 text-slate-400"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+          <h3 className="mb-2 text-lg font-semibold text-slate-100">
+            {discussion.title}
+          </h3>
+          <div className="flex items-center gap-4 text-sm text-slate-400">
+            <span>by {discussion.author}</span>
+            <span>•</span>
+            <span className="flex items-center gap-1">
+              <Clock className="w-3 h-3" />
+              {discussion.timestamp}
+            </span>
+          </div>
+        </div>
+        <div className="flex flex-col items-end gap-3">
+          <div className="flex items-center gap-4 text-sm">
+            <span className="flex items-center gap-1 text-slate-400">
+              <MessageSquare className="w-4 h-4" />
+              {discussion.replies}
+            </span>
+            <span className="flex items-center gap-1 text-rose-400">
+              <Heart className="w-4 h-4" />
+              {discussion.likes}
+            </span>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+});
+
+// ✅ Main Community Component
+const Community = memo(function Community() {
   const [activeTab, setActiveTab] = useState("leaderboard");
   const [timeRange, setTimeRange] = useState("all-time");
   const [leaderboardData, setLeaderboardData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
-    loadLeaderboard();
+    setLeaderboardData(MOCK_LEADERBOARD);
   }, [timeRange]);
 
-  function loadLeaderboard() {
-    const mockData = [
-      {
-        rank: 1,
-        userId: "user1",
-        username: "AlgoMaster",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=AlgoMaster",
-        solved: 245,
-        easy: 98,
-        medium: 120,
-        hard: 27,
-        streak: 45,
-        badges: ["top-1", "100-day-streak"],
-        points: 2450,
-      },
-      {
-        rank: 2,
-        userId: "user2",
-        username: "CodeNinja",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=CodeNinja",
-        solved: 198,
-        easy: 85,
-        medium: 95,
-        hard: 18,
-        streak: 32,
-        badges: ["top-10", "50-day-streak"],
-        points: 1980,
-      },
-      {
-        rank: 3,
-        userId: "user3",
-        username: "ByteWarrior",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=ByteWarrior",
-        solved: 167,
-        easy: 72,
-        medium: 80,
-        hard: 15,
-        streak: 28,
-        badges: ["top-10"],
-        points: 1670,
-      },
-      {
-        rank: 4,
-        userId: "user4",
-        username: "DevGuru",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=DevGuru",
-        solved: 154,
-        easy: 68,
-        medium: 74,
-        hard: 12,
-        streak: 21,
-        badges: ["top-100"],
-        points: 1540,
-      },
-      {
-        rank: 5,
-        userId: "user5",
-        username: "StackOverflow",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=StackOverflow",
-        solved: 142,
-        easy: 61,
-        medium: 69,
-        hard: 12,
-        streak: 19,
-        badges: ["top-100"],
-        points: 1420,
-      },
+  // ✅ Memoize callbacks
+  const handleTabChange = useCallback((tabId) => {
+    setActiveTab(tabId);
+  }, []);
+
+  const handleTimeRangeChange = useCallback((e) => {
+    setTimeRange(e.target.value);
+  }, []);
+
+  const handleSearchChange = useCallback((e) => {
+    setSearchQuery(e.target.value);
+  }, []);
+
+  // ✅ Memoize filtered data
+  const filteredLeaderboard = useMemo(() => {
+    if (!searchQuery.trim()) return leaderboardData;
+    const query = searchQuery.toLowerCase();
+    return leaderboardData.filter(user =>
+      user.username.toLowerCase().includes(query)
+    );
+  }, [leaderboardData, searchQuery]);
+
+  // ✅ Memoize podium users
+  const podiumUsers = useMemo(() => {
+    if (filteredLeaderboard.length < 3) return [];
+    return [
+      { user: filteredLeaderboard[1], actualRank: 2, index: 0 },
+      { user: filteredLeaderboard[0], actualRank: 1, index: 1 },
+      { user: filteredLeaderboard[2], actualRank: 3, index: 2 },
     ];
-    setLeaderboardData(mockData);
-  }
-
-  function getBadgeIcon(badge) {
-    const badges = {
-      "top-1": { icon: <Trophy className="w-4 h-4" />, color: "text-yellow-400" },
-      "top-10": { icon: <Medal className="w-4 h-4" />, color: "text-slate-300" },
-      "top-100": { icon: <Award className="w-4 h-4" />, color: "text-orange-500" },
-      "100-day-streak": { icon: <Flame className="w-4 h-4" />, color: "text-orange-400" },
-      "50-day-streak": { icon: <Flame className="w-4 h-4" />, color: "text-orange-400" },
-    };
-    const badgeData = badges[badge] || { icon: null, color: "" };
-    return (
-      <span className={`inline-flex items-center ${badgeData.color}`}>
-        {badgeData.icon}
-      </span>
-    );
-  }
-
-  function getRankBadge(rank) {
-    if (rank === 1)
-      return (
-        <div className="flex items-center justify-center w-12 h-12 rounded-full shadow-lg bg-gradient-to-br from-yellow-400 to-yellow-600 shadow-yellow-500/50">
-          <Trophy className="w-6 h-6 text-white" />
-        </div>
-      );
-    if (rank === 2)
-      return (
-        <div className="flex items-center justify-center w-12 h-12 rounded-full shadow-lg bg-gradient-to-br from-slate-300 to-slate-500 shadow-slate-400/50">
-          <Medal className="w-6 h-6 text-white" />
-        </div>
-      );
-    if (rank === 3)
-      return (
-        <div className="flex items-center justify-center w-12 h-12 rounded-full shadow-lg bg-gradient-to-br from-orange-400 to-orange-600 shadow-orange-500/50">
-          <Award className="w-6 h-6 text-white" />
-        </div>
-      );
-    return (
-      <div className="flex items-center justify-center w-12 h-12 border-2 rounded-full bg-slate-800 border-slate-700">
-        <span className="text-lg font-bold text-slate-400">#{rank}</span>
-      </div>
-    );
-  }
-
-  const stats = [
-    {
-      icon: <Users className="w-6 h-6" />,
-      value: "12.5K",
-      label: "Active Users",
-      gradient: "from-blue-600 to-indigo-600",
-      bgGlow: "bg-blue-500/20",
-    },
-    {
-      icon: <TrendingUp className="w-6 h-6" />,
-      value: "850K",
-      label: "Solutions Submitted",
-      gradient: "from-emerald-600 to-teal-600",
-      bgGlow: "bg-emerald-500/20",
-    },
-    {
-      icon: <MessageSquare className="w-6 h-6" />,
-      value: "3.2K",
-      label: "Discord Members",
-      gradient: "from-purple-600 to-pink-600",
-      bgGlow: "bg-purple-500/20",
-    },
-    {
-      icon: <Trophy className="w-6 h-6" />,
-      value: "450",
-      label: "Active Streaks",
-      gradient: "from-amber-600 to-orange-600",
-      bgGlow: "bg-amber-500/20",
-    },
-  ];
-
-  const discussions = [
-    {
-      id: 1,
-      problem: "Two Sum",
-      title: "Alternative O(n) solution using sorted array",
-      author: "AlgoMaster",
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=AlgoMaster",
-      replies: 12,
-      likes: 34,
-      timestamp: "2 hours ago",
-      tags: ["Algorithms", "Optimization"],
-    },
-    {
-      id: 2,
-      problem: "Valid Parentheses",
-      title: "Help: Getting TLE on test case 45",
-      author: "CodeNinja",
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=CodeNinja",
-      replies: 8,
-      likes: 15,
-      timestamp: "5 hours ago",
-      tags: ["Stack", "Help Needed"],
-    },
-    {
-      id: 3,
-      problem: "Merge Intervals",
-      title: "Python vs Java performance comparison",
-      author: "DevGuru",
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=DevGuru",
-      replies: 23,
-      likes: 56,
-      timestamp: "1 day ago",
-      tags: ["Performance", "Languages"],
-    },
-  ];
+  }, [filteredLeaderboard]);
 
   return (
     <main className="min-h-screen px-4 pt-20 pb-12 bg-slate-950 text-slate-100 sm:px-6 lg:px-8">
@@ -237,27 +495,8 @@ export default function Community() {
           transition={{ delay: 0.2, duration: 0.6 }}
           className="grid grid-cols-2 gap-4 mb-8 md:grid-cols-4"
         >
-          {stats.map((stat, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.3 + index * 0.1 }}
-              whileHover={{ scale: 1.05, y: -4 }}
-              className={`relative p-6 rounded-2xl bg-gradient-to-br ${stat.gradient} shadow-lg overflow-hidden group cursor-pointer`}
-            >
-              {/* Glow effect */}
-              <div className={`absolute inset-0 ${stat.bgGlow} blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
-              
-              <div className="relative">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="text-white/90">{stat.icon}</div>
-                  <Star className="w-4 h-4 text-white/50" />
-                </div>
-                <p className="mb-1 text-3xl font-bold text-white">{stat.value}</p>
-                <p className="text-sm text-white/80">{stat.label}</p>
-              </div>
-            </motion.div>
+          {STATS_DATA.map((stat, index) => (
+            <StatCard key={index} stat={stat} index={index} />
           ))}
         </motion.div>
 
@@ -268,32 +507,13 @@ export default function Community() {
           transition={{ delay: 0.4 }}
           className="flex items-center gap-2 p-1 mb-8 border bg-slate-900 rounded-xl border-slate-800 w-fit"
         >
-          {[
-            { id: "leaderboard", label: "Leaderboard", icon: <Trophy className="w-4 h-4" /> },
-            { id: "discord", label: "Discord", icon: <MessageSquare className="w-4 h-4" /> },
-            { id: "discussions", label: "Discussions", icon: <Users className="w-4 h-4" /> },
-          ].map((tab) => (
-            <motion.button
+          {TABS.map((tab) => (
+            <TabButton
               key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className={`relative flex items-center gap-2 px-6 py-3 text-sm font-semibold rounded-lg transition-all ${
-                activeTab === tab.id
-                  ? "bg-purple-600 text-white shadow-lg shadow-purple-500/30"
-                  : "text-slate-400 hover:text-slate-200 hover:bg-slate-800"
-              }`}
-            >
-              {tab.icon}
-              {tab.label}
-              {activeTab === tab.id && (
-                <motion.div
-                  layoutId="activeTab"
-                  className="absolute inset-0 bg-purple-600 rounded-lg -z-10"
-                  transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                />
-              )}
-            </motion.button>
+              tab={tab}
+              isActive={activeTab === tab.id}
+              onClick={() => handleTabChange(tab.id)}
+            />
           ))}
         </motion.div>
 
@@ -321,13 +541,13 @@ export default function Community() {
                       type="text"
                       placeholder="Search users..."
                       value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
+                      onChange={handleSearchChange}
                       className="py-2 pl-10 pr-4 text-sm border rounded-lg bg-slate-800 border-slate-700 text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-purple-500"
                     />
                   </div>
                   <select
                     value={timeRange}
-                    onChange={(e) => setTimeRange(e.target.value)}
+                    onChange={handleTimeRangeChange}
                     className="px-4 py-2 text-sm border rounded-lg cursor-pointer bg-slate-800 border-slate-700 text-slate-100 focus:outline-none focus:ring-2 focus:ring-purple-500"
                   >
                     <option value="today">Today</option>
@@ -340,97 +560,20 @@ export default function Community() {
 
               {/* Top 3 Podium */}
               <div className="grid grid-cols-3 gap-4 mb-8">
-                {[
-                  leaderboardData[1],
-                  leaderboardData[0],
-                  leaderboardData[2],
-                ].map((user, index) => {
-                  if (!user) return null;
-                  const actualRank = index === 1 ? 1 : index === 0 ? 2 : 3;
-                  return (
-                    <motion.div
-                      key={user.userId}
-                      initial={{ opacity: 0, y: 40 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: index * 0.1 }}
-                      className={`relative p-6 rounded-2xl border bg-gradient-to-br ${
-                        actualRank === 1
-                          ? "from-yellow-500/10 to-yellow-600/5 border-yellow-500/30"
-                          : actualRank === 2
-                          ? "from-slate-400/10 to-slate-500/5 border-slate-400/30"
-                          : "from-orange-500/10 to-orange-600/5 border-orange-500/30"
-                      } ${index === 1 ? "md:-mt-4" : ""}`}
-                    >
-                      <div className="flex flex-col items-center text-center">
-                        <div className="mb-4">{getRankBadge(actualRank)}</div>
-                        <img
-                          src={user.avatar}
-                          alt={user.username}
-                          className="w-16 h-16 mb-3 border-4 rounded-full border-slate-800"
-                        />
-                        <h3 className="mb-1 font-bold text-slate-100">{user.username}</h3>
-                        <p className="mb-1 text-2xl font-bold text-purple-400">{user.solved}</p>
-                        <p className="text-xs text-slate-500">problems solved</p>
-                        <div className="flex items-center gap-1 mt-3">
-                          <Flame className="w-4 h-4 text-orange-400" />
-                          <span className="text-sm font-semibold text-slate-300">{user.streak}d</span>
-                        </div>
-                      </div>
-                    </motion.div>
-                  );
-                })}
+                {podiumUsers.map(({ user, actualRank, index }) => (
+                  <PodiumUser
+                    key={user.userId}
+                    user={user}
+                    actualRank={actualRank}
+                    index={index}
+                  />
+                ))}
               </div>
 
               {/* Leaderboard List */}
               <div className="space-y-3">
-                {leaderboardData.slice(3).map((user, index) => (
-                  <motion.div
-                    key={user.userId}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.05 }}
-                    whileHover={{ scale: 1.01, x: 4 }}
-                    className="p-4 transition-all border cursor-pointer rounded-xl border-slate-800 bg-slate-900/50 hover:bg-slate-800/50 hover:border-slate-700"
-                  >
-                    <div className="flex items-center gap-4">
-                      <span className="w-12 text-2xl font-bold text-center text-slate-400">
-                        #{user.rank}
-                      </span>
-                      <img
-                        src={user.avatar}
-                        alt={user.username}
-                        className="w-12 h-12 border-2 rounded-full border-slate-700"
-                      />
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-1">
-                          <h3 className="font-semibold text-slate-100">{user.username}</h3>
-                          <div className="flex gap-1">
-                            {user.badges.map((badge, idx) => (
-                              <span key={idx}>{getBadgeIcon(badge)}</span>
-                            ))}
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-4 text-xs text-slate-400">
-                          <span className="flex items-center gap-1">
-                            <span className="font-semibold text-emerald-400">{user.easy}</span> Easy
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <span className="font-semibold text-amber-400">{user.medium}</span> Med
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <span className="font-semibold text-rose-400">{user.hard}</span> Hard
-                          </span>
-                        </div>
-                      </div>
-                      <div className="flex flex-col items-end gap-2">
-                        <span className="text-2xl font-bold text-slate-100">{user.solved}</span>
-                        <div className="flex items-center gap-1 text-sm">
-                          <Flame className="w-4 h-4 text-orange-400" />
-                          <span className="font-semibold text-slate-300">{user.streak}d</span>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
+                {filteredLeaderboard.slice(3).map((user, index) => (
+                  <LeaderboardRow key={user.userId} user={user} index={index} />
                 ))}
               </div>
 
@@ -484,13 +627,7 @@ export default function Community() {
                     Community Guidelines
                   </h3>
                   <ul className="space-y-3 text-sm">
-                    {[
-                      { emoji: "✅", text: "Be respectful and helpful" },
-                      { emoji: "✅", text: "Share knowledge and solutions" },
-                      { emoji: "✅", text: "Ask questions freely" },
-                      { emoji: "❌", text: "No spam or self-promotion" },
-                      { emoji: "❌", text: "No plagiarism" },
-                    ].map((rule, i) => (
+                    {COMMUNITY_RULES.map((rule, i) => (
                       <li key={i} className="flex items-center gap-2 text-slate-300">
                         <span className="text-lg">{rule.emoji}</span>
                         {rule.text}
@@ -521,11 +658,7 @@ export default function Community() {
                 </div>
 
                 <div className="grid grid-cols-3 gap-4">
-                  {[
-                    { label: "Members", value: "3.2K", color: "text-slate-100" },
-                    { label: "Online Now", value: "847", color: "text-emerald-400" },
-                    { label: "Channels", value: "12", color: "text-slate-100" },
-                  ].map((stat, i) => (
+                  {DISCORD_STATS.map((stat, i) => (
                     <motion.div
                       key={i}
                       whileHover={{ scale: 1.05 }}
@@ -564,61 +697,12 @@ export default function Community() {
               </div>
 
               <div className="space-y-4">
-                {discussions.map((discussion, index) => (
-                  <motion.div
+                {MOCK_DISCUSSIONS.map((discussion, index) => (
+                  <DiscussionCard
                     key={discussion.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                    whileHover={{ scale: 1.01, x: 4 }}
-                    className="p-6 transition-all border cursor-pointer rounded-2xl border-slate-800 bg-slate-900/50 hover:bg-slate-800/50 hover:border-slate-700"
-                  >
-                    <div className="flex items-start gap-4">
-                      <img
-                        src={discussion.avatar}
-                        alt={discussion.author}
-                        className="w-12 h-12 border-2 rounded-full border-slate-700"
-                      />
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-2">
-                          <span className="px-2 py-1 text-xs font-medium text-purple-300 rounded bg-purple-500/20">
-                            {discussion.problem}
-                          </span>
-                          {discussion.tags.map((tag, i) => (
-                            <span
-                              key={i}
-                              className="px-2 py-1 text-xs rounded bg-slate-800 text-slate-400"
-                            >
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
-                        <h3 className="mb-2 text-lg font-semibold text-slate-100">
-                          {discussion.title}
-                        </h3>
-                        <div className="flex items-center gap-4 text-sm text-slate-400">
-                          <span>by {discussion.author}</span>
-                          <span>•</span>
-                          <span className="flex items-center gap-1">
-                            <Clock className="w-3 h-3" />
-                            {discussion.timestamp}
-                          </span>
-                        </div>
-                      </div>
-                      <div className="flex flex-col items-end gap-3">
-                        <div className="flex items-center gap-4 text-sm">
-                          <span className="flex items-center gap-1 text-slate-400">
-                            <MessageSquare className="w-4 h-4" />
-                            {discussion.replies}
-                          </span>
-                          <span className="flex items-center gap-1 text-rose-400">
-                            <Heart className="w-4 h-4" />
-                            {discussion.likes}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
+                    discussion={discussion}
+                    index={index}
+                  />
                 ))}
               </div>
             </motion.div>
@@ -627,4 +711,6 @@ export default function Community() {
       </div>
     </main>
   );
-}
+});
+
+export default Community;

@@ -4,7 +4,7 @@ import { problems } from "../data/problems";
 import axios from "axios";
 import Editor from "@monaco-editor/react";
 
-// at top of CodeDemo.jsx
+// Move constants outside component
 const LANGUAGES = [
   { id: 71, label: "Python 3", key: "python3" },
   { id: 63, label: "JavaScript (Node.js)", key: "nodejs" },
@@ -18,7 +18,6 @@ const LANGUAGES = [
   { id: 74, label: "TypeScript (Node.js)", key: "ts" },
 ];
 
-// default templates per language
 const DEFAULT_CODE = {
   python3: "# write your solution here\n",
   nodejs: "// write your solution here\n",
@@ -62,7 +61,6 @@ func main() {
 `,
 };
 
-// map internal key -> Monaco language id
 const MONACO_LANGUAGE_MAP = {
   python3: "python",
   nodejs: "javascript",
@@ -76,7 +74,6 @@ const MONACO_LANGUAGE_MAP = {
   php: "php",
 };
 
-// helper for colored labels
 function getStatusClasses(status) {
   if (!status) return "text-slate-200";
   const s = status.toLowerCase();
@@ -88,8 +85,20 @@ function getStatusClasses(status) {
   return "text-slate-200";
 }
 
+function getDifficultyColor(difficulty) {
+  switch (difficulty) {
+    case "Easy":
+      return "bg-emerald-500/10 text-emerald-400";
+    case "Medium":
+      return "bg-amber-500/10 text-amber-400";
+    case "Hard":
+      return "bg-rose-500/10 text-rose-400";
+    default:
+      return "bg-slate-500/10 text-slate-400";
+  }
+}
+
 export default function CodeDemo() {
-  // Get problem from URL parameter
   const [searchParams] = useSearchParams();
   const problemId = searchParams.get("problem") || "two-sum";
   const currentProblem = problems.find((p) => p.id === problemId) || problems[0];
@@ -108,13 +117,11 @@ export default function CodeDemo() {
   const [history, setHistory] = useState([]);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
 
-  // AI state
   const [aiExplainLoading, setAiExplainLoading] = useState(false);
   const [aiExplain, setAiExplain] = useState(null);
   const [aiFeedbackLoading, setAiFeedbackLoading] = useState(false);
   const [aiFeedback, setAiFeedback] = useState(null);
 
-  // Editor UX state
   const [editorFontSize, setEditorFontSize] = useState(
     Number(localStorage.getItem("mockmate-editor-font-size") || 13)
   );
@@ -122,7 +129,6 @@ export default function CodeDemo() {
     localStorage.getItem("mockmate-editor-theme") || "vs-dark"
   );
 
-  // AI extras state
   const [refactorLoading, setRefactorLoading] = useState(false);
   const [refactorModalOpen, setRefactorModalOpen] = useState(false);
   const [refactoredCode, setRefactoredCode] = useState("");
@@ -158,7 +164,6 @@ export default function CodeDemo() {
     } else {
       setHistory([]);
     }
-    // Reset failed runs counter when switching problems
     setFailedRuns(0);
   }, [problemId]);
 
@@ -415,27 +420,11 @@ export default function CodeDemo() {
     setIsHistoryOpen(false);
   }
 
-  function getDifficultyColor(difficulty) {
-    switch (difficulty) {
-      case "Easy":
-        return "bg-emerald-500/10 text-emerald-400";
-      case "Medium":
-        return "bg-amber-500/10 text-amber-400";
-      case "Hard":
-        return "bg-rose-500/10 text-rose-400";
-      default:
-        return "bg-slate-500/10 text-slate-400";
-    }
-  }
-
   const showHint1 = failedRuns >= 2;
   const showHint2 = failedRuns >= 4;
   const showHint3 = failedRuns >= 6;
 
   const lastRun = history[0];
-  const hasAccepted = history.some((r) =>
-    r.status.toLowerCase().includes("accepted")
-  );
 
   return (
     <main className="min-h-screen bg-[#0b1120] text-slate-100 pt-16">
@@ -552,7 +541,6 @@ export default function CodeDemo() {
                 {tab}
               </button>
             ))}
-            {/* Discuss Link */}
             <Link
               to={`/problems/${problemId}/discuss`}
               className="flex items-center gap-1 pb-1 transition-colors text-slate-400 hover:text-emerald-400"
@@ -730,6 +718,14 @@ export default function CodeDemo() {
                 automaticLayout: true,
                 wordWrap: "on",
               }}
+              loading={
+                <div className="flex items-center justify-center h-full bg-[#020617]">
+                  <div className="text-center">
+                    <div className="w-10 h-10 mx-auto mb-3 border-4 border-purple-500 rounded-full border-t-transparent animate-spin"></div>
+                    <p className="text-sm text-slate-400">Loading editor...</p>
+                  </div>
+                </div>
+              }
             />
           </div>
         </section>

@@ -86,7 +86,7 @@
     animation-delay: 700ms;
   }
 
-  .delay-1000 {  /* ✅ Added this */
+  .delay-1000 {
     animation-delay: 1000ms;
   }
 
@@ -194,6 +194,33 @@ body {
 }
 
 /* ============================================
+   HIDE SCROLLBAR (while keeping scroll functionality)
+   ============================================ */
+
+/* Hide scrollbar for all browsers */
+* {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+*::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+  width: 0;
+  height: 0;
+}
+
+html,
+body {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+/* ============================================
    CUSTOM COMPONENTS
    ============================================ */
 
@@ -251,25 +278,6 @@ body {
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(148, 163, 184, 0.1);
-}
-
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: #0f172a;
-}
-
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, #60a5fa, #a855f7);
-  border-radius: 5px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(to bottom, #3b82f6, #9333ea);
 }
 
 /* Focus visible styles */

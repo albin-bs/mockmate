@@ -21,6 +21,9 @@ build
 # Vite cache
 .vite
 node_modules/.vite
+stats.html
+*.br
+*.gz
 
 # Testing
 coverage

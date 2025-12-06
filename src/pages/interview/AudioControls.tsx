@@ -18,7 +18,8 @@ export default function AudioControls({ isRecording, onToggleRecording, sessionI
 
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const timerRef = useRef<number | null>(null);
+  // ✅ FIX: Use ReturnType<typeof setInterval> instead of number
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   // Recording timer
   useEffect(() => {
@@ -67,7 +68,7 @@ export default function AudioControls({ isRecording, onToggleRecording, sessionI
         mediaRecorderRef.current.stream.getTracks().forEach((track) => track.stop());
       }
     };
-  }, []);
+  }, [audioChunks]); // ✅ FIX: Add audioChunks dependency
 
   // Start/stop recording
   useEffect(() => {

@@ -1,8 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, memo } from "react";
 import { motion } from "framer-motion";
 import { TrendingUp, Award, Users, Zap, CheckCircle, Star } from "lucide-react";
 import SectionHeader from "./common/SectionHeader";
 
+// ✅ Memoize the count-up hook
 function useCountUpWhenVisible(end, duration = 1200) {
   const ref = useRef(null);
   const [started, setStarted] = useState(false);
@@ -33,7 +34,6 @@ function useCountUpWhenVisible(end, duration = 1200) {
 
     function tick(now) {
       const progress = Math.min((now - startTime) / duration, 1);
-      // Easing function for smoother animation
       const eased = 1 - Math.pow(1 - progress, 3);
       const current = Math.floor(end * eased);
       setValue(current);
@@ -46,11 +46,9 @@ function useCountUpWhenVisible(end, duration = 1200) {
   return { ref, value };
 }
 
-function StatCard({ item, index }) {
-  const { ref, value } = useCountUpWhenVisible(
-    item.value,
-    1200 + index * 100
-  );
+// ✅ Memoize StatCard component
+const StatCard = memo(function StatCard({ item, index }) {
+  const { ref, value } = useCountUpWhenVisible(item.value, 1200 + index * 100);
 
   const display =
     item.decimals != null
@@ -97,9 +95,21 @@ function StatCard({ item, index }) {
       <div className="absolute bottom-0 w-0 h-1 transition-all duration-300 -translate-x-1/2 rounded-full left-1/2 bg-gradient-to-r from-blue-500 to-indigo-500 group-hover:w-20" />
     </motion.div>
   );
-}
+});
 
-export default function Stats() {
+// ✅ Memoize TrustIndicator component
+const TrustIndicator = memo(function TrustIndicator({ icon: Icon, text }) {
+  return (
+    <div className="flex items-center gap-2">
+      <Icon className="w-4 h-4 text-blue-400" />
+      <span>{text}</span>
+    </div>
+  );
+});
+
+// ✅ Memoize main Stats component
+const Stats = memo(function Stats() {
+  // ✅ Move stats array outside component or memoize it
   const stats = [
     { 
       value: 10000, 
@@ -126,6 +136,12 @@ export default function Stats() {
       label: "See improvement within 2 weeks", 
       icon: <Zap className="w-6 h-6" />
     },
+  ];
+
+  const trustIndicators = [
+    { icon: Users, text: "50K+ active users" },
+    { icon: Award, text: "Industry-leading AI" },
+    { icon: TrendingUp, text: "Continuous improvement" },
   ];
 
   return (
@@ -175,22 +191,19 @@ export default function Stats() {
               transition={{ duration: 0.6, delay: 0.4 }}
               className="flex flex-wrap items-center justify-center gap-8 mt-12 text-sm text-slate-400"
             >
-              <div className="flex items-center gap-2">
-                <Users className="w-4 h-4 text-blue-400" />
-                <span>50K+ active users</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Award className="w-4 h-4 text-blue-400" />
-                <span>Industry-leading AI</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <TrendingUp className="w-4 h-4 text-blue-400" />
-                <span>Continuous improvement</span>
-              </div>
+              {trustIndicators.map((indicator, i) => (
+                <TrustIndicator 
+                  key={i} 
+                  icon={indicator.icon} 
+                  text={indicator.text} 
+                />
+              ))}
             </motion.div>
           </div>
         </motion.div>
       </div>
     </section>
   );
-}
+});
+
+export default Stats;

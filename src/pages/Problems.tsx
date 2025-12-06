@@ -201,8 +201,8 @@ export default function Problems() {
       <motion.div
         className="mx-auto max-w-7xl"
         variants={containerVariants}
-        initial="hidden"
-        animate={isLoaded ? "visible" : "hidden"}
+        initial={{ opacity: 1 }}
+        animate={{ opacity: 1 }}
       >
         {/* Header */}
         <motion.div variants={itemVariants} className="mb-8">

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo, useCallback, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { Line, Radar } from "react-chartjs-2";
 import {
@@ -26,6 +26,7 @@ ChartJS.register(
   Filler
 );
 
+// ✅ Move static data outside component
 const TIME_RANGES = ["7d", "30d", "90d"];
 const ROLES = ["All roles", "Software Engineer", "Product Manager", "Data Analyst"];
 
@@ -98,13 +99,257 @@ const streakVariants = {
   },
 };
 
-export default function Dashboard() {
+// ✅ Memoize ProfileCard
+const ProfileCard = memo(function ProfileCard({ user }) {
+  return (
+    <motion.div
+      variants={cardHoverVariants}
+      initial="rest"
+      whileHover="hover"
+      className="p-6 border shadow-lg lg:col-span-1 bg-gradient-to-br from-slate-900 to-slate-800 border-slate-700 rounded-xl"
+    >
+      <div className="flex items-center gap-4 mb-4">
+        <motion.img
+          whileHover={{ scale: 1.1, rotate: 5 }}
+          transition={{ type: "spring", stiffness: 300 }}
+          src={user.avatar}
+          alt={user.name}
+          className="w-16 h-16 border-2 rounded-full border-emerald-500"
+          loading="lazy"
+        />
+        <div>
+          <h2 className="text-lg font-semibold text-slate-100">
+            {user.name}
+          </h2>
+          <p className="text-sm text-slate-400">{user.email}</p>
+        </div>
+      </div>
+      <div className="flex items-center justify-between pt-4 border-t border-slate-700">
+        <div>
+          <p className="text-xs text-slate-400">Current Plan</p>
+          <motion.p
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.3 }}
+            className="text-sm font-semibold text-emerald-400"
+          >
+            {user.plan}
+          </motion.p>
+        </div>
+        <div>
+          <p className="text-xs text-slate-400">Member Since</p>
+          <p className="text-sm font-semibold text-slate-200">
+            {new Date(user.joinedDate).toLocaleDateString("en-US", {
+              month: "short",
+              year: "numeric",
+            })}
+          </p>
+        </div>
+      </div>
+    </motion.div>
+  );
+});
+
+// ✅ Memoize QuickActionCard
+const QuickActionCard = memo(function QuickActionCard({ 
+  to, 
+  icon: Icon, 
+  title, 
+  description, 
+  gradient,
+  isButton = false 
+}) {
+  const content = (
+    <>
+      <Icon className="w-8 h-8 mb-3 text-white" />
+      <h3 className="mb-1 text-lg font-semibold text-white">
+        {title}
+      </h3>
+      <p className="text-sm" style={{ color: gradient.includes('emerald') ? '#a7f3d0' : '#c7d2fe' }}>
+        {description}
+      </p>
+    </>
+  );
+
+  const className = `block p-6 transition-all shadow-lg group ${gradient} rounded-xl`;
+
+  if (isButton) {
+    return (
+      <motion.div
+        variants={cardHoverVariants}
+        initial="rest"
+        whileHover="hover"
+        whileTap={{ scale: 0.98 }}
+      >
+        <button className={`w-full text-left ${className}`}>
+          {content}
+        </button>
+      </motion.div>
+    );
+  }
+
+  return (
+    <motion.div
+      variants={cardHoverVariants}
+      initial="rest"
+      whileHover="hover"
+      whileTap={{ scale: 0.98 }}
+    >
+      <Link to={to} className={className}>
+        {content}
+      </Link>
+    </motion.div>
+  );
+});
+
+// ✅ Memoize ProgressBar
+const ProgressBar = memo(function ProgressBar({ 
+  difficulty, 
+  solved, 
+  total, 
+  color, 
+  delay 
+}) {
+  const percentage = Math.round((solved / total) * 100);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: -20 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ delay }}
+    >
+      <div className="flex items-center justify-between mb-2">
+        <div className="flex items-center gap-2">
+          <span className={`text-sm font-medium ${color}`}>{difficulty}</span>
+          <span className="text-xs text-slate-400">
+            {solved} / {total}
+          </span>
+        </div>
+        <motion.span
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: delay + 0.7 }}
+          className="text-sm font-semibold text-slate-200"
+        >
+          {percentage}%
+        </motion.span>
+      </div>
+      <div className="w-full h-3 overflow-hidden rounded-full bg-slate-800">
+        <motion.div
+          className={`h-3 rounded-full bg-gradient-to-r ${color.replace('text-', 'from-').replace('-400', '-500')} to-${color.split('-')[1]}-400`}
+          variants={progressBarVariants}
+          initial="hidden"
+          animate="visible"
+          custom={percentage}
+        />
+      </div>
+    </motion.div>
+  );
+});
+
+// ✅ Memoize SubmissionCard
+const SubmissionCard = memo(function SubmissionCard({ submission, index }) {
+  const difficultyColors = {
+    Easy: "text-emerald-400",
+    Medium: "text-amber-400",
+    Hard: "text-rose-400",
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: -20 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ delay: 1 + index * 0.1 }}
+      whileHover={{ scale: 1.02, x: 5 }}
+      className="flex items-center justify-between p-4 transition-colors border rounded-lg cursor-pointer bg-slate-800/50 border-slate-700 hover:bg-slate-800"
+    >
+      <div className="flex items-center gap-4">
+        <motion.div
+          animate={{
+            scale: [1, 1.2, 1],
+          }}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            repeatType: "reverse",
+          }}
+          className={`w-2 h-2 rounded-full ${
+            submission.status === "Accepted"
+              ? "bg-emerald-400"
+              : "bg-rose-400"
+          }`}
+        />
+        <div>
+          <h3 className="text-sm font-semibold text-slate-100">
+            {submission.problem}
+          </h3>
+          <div className="flex items-center gap-3 mt-1">
+            <span
+              className={`text-xs font-medium ${difficultyColors[submission.difficulty]}`}
+            >
+              {submission.difficulty}
+            </span>
+            <span className="text-xs text-slate-400">
+              {submission.language}
+            </span>
+            <span className="text-xs text-slate-500">
+              {new Date(submission.timestamp).toLocaleString()}
+            </span>
+          </div>
+        </div>
+      </div>
+      <motion.span
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.2 + index * 0.1 }}
+        className={`text-sm font-semibold ${
+          submission.status === "Accepted"
+            ? "text-emerald-400"
+            : "text-rose-400"
+        }`}
+      >
+        {submission.status}
+      </motion.span>
+    </motion.div>
+  );
+});
+
+// ✅ Memoize LineChart component
+const LineChart = memo(function LineChart({ data, options }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ delay: 0.8, duration: 0.5 }}
+      className="h-64"
+    >
+      <Line data={data} options={options} />
+    </motion.div>
+  );
+});
+
+// ✅ Memoize RadarChart component
+const RadarChart = memo(function RadarChart({ data, options }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, rotate: -10 }}
+      animate={{ opacity: 1, rotate: 0 }}
+      transition={{ delay: 0.9, duration: 0.5 }}
+      className="flex items-center justify-center h-64"
+    >
+      <Radar data={data} options={options} />
+    </motion.div>
+  );
+});
+
+// ✅ Main Dashboard component
+const Dashboard = memo(function Dashboard() {
   const [range, setRange] = useState("7d");
   const [role, setRole] = useState("All roles");
   const [isLoaded, setIsLoaded] = useState(false);
 
   // Mock user data
-  const [user, setUser] = useState({
+  const [user] = useState({
     name: "John Doe",
     email: "john@example.com",
     avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=John",
@@ -113,14 +358,14 @@ export default function Dashboard() {
   });
 
   // Progress data
-  const [progress, setProgress] = useState({
+  const [progress] = useState({
     easy: { solved: 12, total: 50 },
     medium: { solved: 8, total: 100 },
     hard: { solved: 3, total: 80 },
   });
 
   // Recent submissions
-  const [recentSubmissions, setRecentSubmissions] = useState([
+  const [recentSubmissions] = useState([
     {
       id: 1,
       problem: "Two Sum",
@@ -147,7 +392,6 @@ export default function Dashboard() {
     },
   ]);
 
-  // Streak counter
   const [streak, setStreak] = useState(0);
 
   useEffect(() => {
@@ -185,10 +429,28 @@ export default function Dashboard() {
     }
   }
 
-  const totalSolved = progress.easy.solved + progress.medium.solved + progress.hard.solved;
-  const totalProblems = progress.easy.total + progress.medium.total + progress.hard.total;
+  // ✅ Memoize callbacks
+  const handleRangeChange = useCallback((e) => {
+    setRange(e.target.value);
+  }, []);
 
-  const lineData = {
+  const handleRoleChange = useCallback((e) => {
+    setRole(e.target.value);
+  }, []);
+
+  // ✅ Memoize computed values
+  const totalSolved = useMemo(
+    () => progress.easy.solved + progress.medium.solved + progress.hard.solved,
+    [progress]
+  );
+
+  const totalProblems = useMemo(
+    () => progress.easy.total + progress.medium.total + progress.hard.total,
+    [progress]
+  );
+
+  // ✅ Memoize chart data
+  const lineData = useMemo(() => ({
     labels: SESSIONS_PER_DAY[range].map((_, i) => {
       if (range === "7d") return `Day ${i + 1}`;
       if (range === "30d") return i % 5 === 0 ? `Day ${i + 1}` : "";
@@ -206,9 +468,9 @@ export default function Dashboard() {
         pointHoverRadius: 6,
       },
     ],
-  };
+  }), [range]);
 
-  const radarData = {
+  const radarData = useMemo(() => ({
     labels: SKILL_RADAR.labels,
     datasets: [
       {
@@ -223,9 +485,10 @@ export default function Dashboard() {
         pointHoverBorderColor: "#10b981",
       },
     ],
-  };
+  }), []);
 
-  const chartOptions = {
+  // ✅ Memoize chart options
+  const chartOptions = useMemo(() => ({
     responsive: true,
     maintainAspectRatio: true,
     plugins: {
@@ -248,9 +511,9 @@ export default function Dashboard() {
         grid: { color: "rgba(51, 65, 85, 0.3)" },
       },
     },
-  };
+  }), []);
 
-  const radarOptions = {
+  const radarOptions = useMemo(() => ({
     responsive: true,
     maintainAspectRatio: true,
     plugins: {
@@ -278,7 +541,7 @@ export default function Dashboard() {
         },
       },
     },
-  };
+  }), []);
 
   return (
     <main className="min-h-screen bg-[#0b1120] text-slate-100 pt-20 pb-12 px-4 sm:px-6 lg:px-8">
@@ -319,7 +582,7 @@ export default function Dashboard() {
           >
             <select
               value={range}
-              onChange={(e) => setRange(e.target.value)}
+              onChange={handleRangeChange}
               className="px-3 py-2 text-sm transition-all border rounded-lg bg-slate-900 border-slate-700 text-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 hover:border-emerald-500"
             >
               {TIME_RANGES.map((r) => (
@@ -330,7 +593,7 @@ export default function Dashboard() {
             </select>
             <select
               value={role}
-              onChange={(e) => setRole(e.target.value)}
+              onChange={handleRoleChange}
               className="px-3 py-2 text-sm transition-all border rounded-lg bg-slate-900 border-slate-700 text-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 hover:border-emerald-500"
             >
               {ROLES.map((r) => (
@@ -345,92 +608,24 @@ export default function Dashboard() {
           variants={itemVariants}
           className="grid grid-cols-1 gap-6 mb-8 lg:grid-cols-3"
         >
-          {/* Profile Card */}
-          <motion.div
-            variants={cardHoverVariants}
-            initial="rest"
-            whileHover="hover"
-            className="p-6 border shadow-lg lg:col-span-1 bg-gradient-to-br from-slate-900 to-slate-800 border-slate-700 rounded-xl"
-          >
-            <div className="flex items-center gap-4 mb-4">
-              <motion.img
-                whileHover={{ scale: 1.1, rotate: 5 }}
-                transition={{ type: "spring", stiffness: 300 }}
-                src={user.avatar}
-                alt={user.name}
-                className="w-16 h-16 border-2 rounded-full border-emerald-500"
-              />
-              <div>
-                <h2 className="text-lg font-semibold text-slate-100">
-                  {user.name}
-                </h2>
-                <p className="text-sm text-slate-400">{user.email}</p>
-              </div>
-            </div>
-            <div className="flex items-center justify-between pt-4 border-t border-slate-700">
-              <div>
-                <p className="text-xs text-slate-400">Current Plan</p>
-                <motion.p
-                  initial={{ scale: 0.8, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ delay: 0.3 }}
-                  className="text-sm font-semibold text-emerald-400"
-                >
-                  {user.plan}
-                </motion.p>
-              </div>
-              <div>
-                <p className="text-xs text-slate-400">Member Since</p>
-                <p className="text-sm font-semibold text-slate-200">
-                  {new Date(user.joinedDate).toLocaleDateString("en-US", {
-                    month: "short",
-                    year: "numeric",
-                  })}
-                </p>
-              </div>
-            </div>
-          </motion.div>
+          <ProfileCard user={user} />
 
           {/* Quick Actions */}
           <div className="grid grid-cols-1 gap-4 lg:col-span-2 sm:grid-cols-2">
-            <motion.div
-              variants={cardHoverVariants}
-              initial="rest"
-              whileHover="hover"
-              whileTap={{ scale: 0.98 }}
-            >
-              <Link
-                to="/code-demo"
-                className="block p-6 transition-all shadow-lg group bg-gradient-to-br from-emerald-600 to-emerald-700 hover:from-emerald-500 hover:to-emerald-600 rounded-xl"
-              >
-                {/* REMOVED icon animation wrapper */}
-                <Code className="w-8 h-8 mb-3 text-white" />
-                <h3 className="mb-1 text-lg font-semibold text-white">
-                  Start Coding
-                </h3>
-                <p className="text-sm text-emerald-100">
-                  Solve problems and improve your skills
-                </p>
-              </Link>
-            </motion.div>
-
-            <motion.div
-              variants={cardHoverVariants}
-              initial="rest"
-              whileHover="hover"
-              whileTap={{ scale: 0.98 }}
-            >
-              <button className="w-full p-6 text-left transition-all shadow-lg group bg-gradient-to-br from-indigo-600 to-indigo-700 hover:from-indigo-500 hover:to-indigo-600 rounded-xl">
-                {/* REMOVED icon animation wrapper */}
-                <Trophy className="w-8 h-8 mb-3 text-white" />
-                <h3 className="mb-1 text-lg font-semibold text-white">
-                  Mock Interview
-                </h3>
-                <p className="text-sm text-indigo-100">
-                  Practice with AI-powered interviews
-                </p>
-              </button>
-            </motion.div>
+            <QuickActionCard
+              to="/code-demo"
+              icon={Code}
+              title="Start Coding"
+              description="Solve problems and improve your skills"
+              gradient="bg-gradient-to-br from-emerald-600 to-emerald-700 hover:from-emerald-500 hover:to-emerald-600"
+            />
+            <QuickActionCard
+              icon={Trophy}
+              title="Mock Interview"
+              description="Practice with AI-powered interviews"
+              gradient="bg-gradient-to-br from-indigo-600 to-indigo-700 hover:from-indigo-500 hover:to-indigo-600"
+              isButton={true}
+            />
           </div>
         </motion.div>
 
@@ -467,104 +662,27 @@ export default function Dashboard() {
 
           {/* Progress Bars */}
           <div className="space-y-6">
-            {/* Easy */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.5 }}
-            >
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium text-emerald-400">Easy</span>
-                  <span className="text-xs text-slate-400">
-                    {progress.easy.solved} / {progress.easy.total}
-                  </span>
-                </div>
-                <motion.span
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 1.2 }}
-                  className="text-sm font-semibold text-slate-200"
-                >
-                  {Math.round((progress.easy.solved / progress.easy.total) * 100)}%
-                </motion.span>
-              </div>
-              <div className="w-full h-3 overflow-hidden rounded-full bg-slate-800">
-                <motion.div
-                  className="h-3 rounded-full bg-gradient-to-r from-emerald-500 to-emerald-400"
-                  variants={progressBarVariants}
-                  initial="hidden"
-                  animate="visible"
-                  custom={(progress.easy.solved / progress.easy.total) * 100}
-                />
-              </div>
-            </motion.div>
-
-            {/* Medium */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.6 }}
-            >
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium text-amber-400">Medium</span>
-                  <span className="text-xs text-slate-400">
-                    {progress.medium.solved} / {progress.medium.total}
-                  </span>
-                </div>
-                <motion.span
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 1.3 }}
-                  className="text-sm font-semibold text-slate-200"
-                >
-                  {Math.round((progress.medium.solved / progress.medium.total) * 100)}%
-                </motion.span>
-              </div>
-              <div className="w-full h-3 overflow-hidden rounded-full bg-slate-800">
-                <motion.div
-                  className="h-3 rounded-full bg-gradient-to-r from-amber-500 to-amber-400"
-                  variants={progressBarVariants}
-                  initial="hidden"
-                  animate="visible"
-                  custom={(progress.medium.solved / progress.medium.total) * 100}
-                />
-              </div>
-            </motion.div>
-
-            {/* Hard */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.7 }}
-            >
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium text-rose-400">Hard</span>
-                  <span className="text-xs text-slate-400">
-                    {progress.hard.solved} / {progress.hard.total}
-                  </span>
-                </div>
-                <motion.span
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 1.4 }}
-                  className="text-sm font-semibold text-slate-200"
-                >
-                  {Math.round((progress.hard.solved / progress.hard.total) * 100)}%
-                </motion.span>
-              </div>
-              <div className="w-full h-3 overflow-hidden rounded-full bg-slate-800">
-                <motion.div
-                  className="h-3 rounded-full bg-gradient-to-r from-rose-500 to-rose-400"
-                  variants={progressBarVariants}
-                  initial="hidden"
-                  animate="visible"
-                  custom={(progress.hard.solved / progress.hard.total) * 100}
-                />
-              </div>
-            </motion.div>
+            <ProgressBar
+              difficulty="Easy"
+              solved={progress.easy.solved}
+              total={progress.easy.total}
+              color="text-emerald-400"
+              delay={0.5}
+            />
+            <ProgressBar
+              difficulty="Medium"
+              solved={progress.medium.solved}
+              total={progress.medium.total}
+              color="text-amber-400"
+              delay={0.6}
+            />
+            <ProgressBar
+              difficulty="Hard"
+              solved={progress.hard.solved}
+              total={progress.hard.total}
+              color="text-rose-400"
+              delay={0.7}
+            />
           </div>
         </motion.div>
 
@@ -583,14 +701,7 @@ export default function Dashboard() {
             <h2 className="mb-4 text-lg font-semibold text-slate-100">
               Sessions over time
             </h2>
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.8, duration: 0.5 }}
-              className="h-64"
-            >
-              <Line data={lineData} options={chartOptions} />
-            </motion.div>
+            <LineChart data={lineData} options={chartOptions} />
           </motion.div>
 
           {/* Skill radar */}
@@ -603,14 +714,7 @@ export default function Dashboard() {
             <h2 className="mb-4 text-lg font-semibold text-slate-100">
               Skill Analysis
             </h2>
-            <motion.div
-              initial={{ opacity: 0, rotate: -10 }}
-              animate={{ opacity: 1, rotate: 0 }}
-              transition={{ delay: 0.9, duration: 0.5 }}
-              className="flex items-center justify-center h-64"
-            >
-              <Radar data={radarData} options={radarOptions} />
-            </motion.div>
+            <RadarChart data={radarData} options={radarOptions} />
           </motion.div>
         </motion.section>
 
@@ -638,68 +742,11 @@ export default function Dashboard() {
           ) : (
             <div className="space-y-3">
               {recentSubmissions.map((submission, index) => (
-                <motion.div
+                <SubmissionCard
                   key={submission.id}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 1 + index * 0.1 }}
-                  whileHover={{ scale: 1.02, x: 5 }}
-                  className="flex items-center justify-between p-4 transition-colors border rounded-lg cursor-pointer bg-slate-800/50 border-slate-700 hover:bg-slate-800"
-                >
-                  <div className="flex items-center gap-4">
-                    <motion.div
-                      animate={{
-                        scale: [1, 1.2, 1],
-                      }}
-                      transition={{
-                        duration: 2,
-                        repeat: Infinity,
-                        repeatType: "reverse",
-                      }}
-                      className={`w-2 h-2 rounded-full ${
-                        submission.status === "Accepted"
-                          ? "bg-emerald-400"
-                          : "bg-rose-400"
-                      }`}
-                    />
-                    <div>
-                      <h3 className="text-sm font-semibold text-slate-100">
-                        {submission.problem}
-                      </h3>
-                      <div className="flex items-center gap-3 mt-1">
-                        <span
-                          className={`text-xs font-medium ${
-                            submission.difficulty === "Easy"
-                              ? "text-emerald-400"
-                              : submission.difficulty === "Medium"
-                              ? "text-amber-400"
-                              : "text-rose-400"
-                          }`}
-                        >
-                          {submission.difficulty}
-                        </span>
-                        <span className="text-xs text-slate-400">
-                          {submission.language}
-                        </span>
-                        <span className="text-xs text-slate-500">
-                          {new Date(submission.timestamp).toLocaleString()}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  <motion.span
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 1.2 + index * 0.1 }}
-                    className={`text-sm font-semibold ${
-                      submission.status === "Accepted"
-                        ? "text-emerald-400"
-                        : "text-rose-400"
-                    }`}
-                  >
-                    {submission.status}
-                  </motion.span>
-                </motion.div>
+                  submission={submission}
+                  index={index}
+                />
               ))}
             </div>
           )}
@@ -707,4 +754,6 @@ export default function Dashboard() {
       </motion.div>
     </main>
   );
-}
+});
+
+export default Dashboard;
